@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/bottom_nav_homePage"
+        android:title=""
+        android:icon="@drawable/outline_home_26"
+        />
+    <item
+        android:id="@+id/bottom_nav_search"
+        android:title=""
+        android:icon="@drawable/outline_search_26"
+        />
+    <item
+        android:id="@+id/bottom_nav_userIdentify"
+        android:title=""
+        android:icon="@drawable/outline_person_26"
+        />
+    <item
+        android:id="@+id/bottom_nav_setting"
+        android:icon="@drawable/outline_settings_26"
+        android:title=""/>
+</menu>
