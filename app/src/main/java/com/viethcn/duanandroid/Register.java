@@ -19,6 +19,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 
 public class Register extends AppCompatActivity {
 
@@ -69,7 +70,13 @@ public class Register extends AppCompatActivity {
                                     startActivity(new Intent(Register.this, Login.class));
                                     finish();
                                 } else {
-                                    Toast.makeText(Register.this, "Đăng ký thất bại: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                    if (task.getException() instanceof FirebaseAuthUserCollisionException) {
+                                        // Thông báo nếu email đã tồn tại
+                                        Toast.makeText(Register.this, "Email này đã được đăng ký. Vui lòng thử với email khác.", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        // Thông báo lỗi chung nếu không phải lỗi trùng email
+                                        Toast.makeText(Register.this, "Đăng ký thất bại: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
                                 }
                             }
                         });

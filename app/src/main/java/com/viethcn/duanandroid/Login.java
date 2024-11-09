@@ -50,15 +50,20 @@ public class Login extends AppCompatActivity {
             public void onClick(View v) {
                 String tenDangNhap = edtTenDangNhap.getText().toString();
                 String matKhau = edtMatKhau.getText().toString();
+
+                if (tenDangNhap.isEmpty() || matKhau.isEmpty()) {
+                    Toast.makeText(Login.this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 firebaseAuth.signInWithEmailAndPassword(tenDangNhap, matKhau).addOnCompleteListener(Login.this,
                         new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                                    Toast.makeText(Login.this, "Dang nhap thanh cong", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(Login.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
                                     startActivity(new Intent(Login.this, MainActivity.class));
                                 } else {
-                                    Toast.makeText(Login.this, "Dang nhap khong thanh cong", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(Login.this, "Đăng nhập thất bại", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
