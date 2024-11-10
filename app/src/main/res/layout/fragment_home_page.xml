@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Fragments.HomePageFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:text="Bakery Shop"
+            android:textAlignment="center"
+            android:textColor="@color/blackCustom"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            />
+        <com.denzcoskun.imageslider.ImageSlider
+            android:id="@+id/image_slider"
+
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+
+            app:iss_auto_cycle="true"
+            app:iss_period="2000"
+            app:iss_delay="2000"
+            app:iss_text_align="CENTER" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+
+            android:text="Popular Products"
+            android:textColor="@color/blackCustom"
+            android:gravity="center"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            />
+
+        <ImageView
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="175dp"
+
+            android:src="@drawable/banner03"
+            android:scaleType="centerCrop"
+            />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/productRcV"
+
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="240dp"
+            android:orientation="horizontal"
+            />
+    </LinearLayout>
+</FrameLayout>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:gravity="center"
+
+    app:cardCornerRadius="10dp"
+    app:cardElevation="10dp"
+    app:cardPreventCornerOverlap="false"
+    app:cardUseCompatPadding="true"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+        <ImageView
+            android:id="@+id/img_product"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:background="@color/blackCustom"
+            android:src="@drawable/product01"
+            android:scaleType="centerCrop"
+            />
+        <TextView
+            android:id="@+id/txt_prodcut_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:text="Bánh Mì"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            android:textColor="@color/blackCustom"
+            android:textStyle="bold"
+            />
+        <TextView
+            android:id="@+id/txt_prodcut_price"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:textAlignment="center"
+            android:text="Giá: 62K"
+            android:textSize="18sp"
+            android:textColor="@color/blackCustom"
+            android:textStyle="normal"
+            />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

@@ -3,4 +3,6 @@
     <string name="quenmatkhau"> <u>Quên mật khẩu?</u> </string>
     <string name="dangky">Bạn chưa có tài khoản? <u>Đăng ký</u> </string>
     <string name="dangnhap">Đã có tài khoản! <u>Đăng nhập</u></string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
