@@ -18,10 +18,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.WindowCompat;
 
 
-import com.facebook.CallbackManager;
-
-import com.facebook.login.widget.LoginButton;
-
 import com.google.firebase.auth.FirebaseAuth;
 
 
