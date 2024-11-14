@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -12,58 +12,40 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
+
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.WindowCompat;
 
-import com.facebook.AccessToken;
+
 import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.login.LoginBehavior;
-import com.facebook.login.LoginResult;
+
 import com.facebook.login.widget.LoginButton;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FacebookAuthProvider;
+
 import com.google.firebase.auth.FirebaseAuth;
-import com.viethcn.duanandroid.Models.MyLogin;
 
-import java.util.Arrays;
 
-public class Login extends AppCompatActivity implements MyLogin {
+
+
+public class Login extends AppCompatActivity {
     private TextView txtDangKy, txtQuenMk;
     private EditText edtTenDangNhap, edtMatKhau;
     private Button btnDangNhap;
-    private LoginButton btnFB;
     private FirebaseAuth firebaseAuth;
-    private CallbackManager callbackManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         WindowCompat.setDecorFitsSystemWindows(getWindow(), false); // Thay thế EdgeToEdge
         setContentView(R.layout.activity_login);
-
-        firebaseAuth = FirebaseAuth.getInstance();
-        setupUI();
-        setupActions();
-        setLoginFB();
-    }
-
-    @Override
-    public void setupUI() {
         txtDangKy = findViewById(R.id.txtDangky);
         edtTenDangNhap = findViewById(R.id.edtTenDangNhap);
         edtMatKhau = findViewById(R.id.edtMatKhau);
         btnDangNhap = findViewById(R.id.btnDangNhap);
         txtQuenMk = findViewById(R.id.txtQuenMk);
-        btnFB = findViewById(R.id.login_button);
-    }
 
-    @Override
-    public void setupActions() {
+        firebaseAuth = FirebaseAuth.getInstance();
         btnDangNhap.setOnClickListener(v -> {
             String tenDangNhap = edtTenDangNhap.getText().toString();
             String matKhau = edtMatKhau.getText().toString();
@@ -85,57 +67,7 @@ public class Login extends AppCompatActivity implements MyLogin {
         txtQuenMk.setOnClickListener(v -> showDialogQuenMK());
 
         txtDangKy.setOnClickListener(v -> startActivity(new Intent(Login.this, Register.class)));
-    }
 
-    private void handleFbAccessToken(AccessToken accessToken) {
-        AuthCredential authCredential = FacebookAuthProvider.getCredential(accessToken.getToken());
-        firebaseAuth.signInWithCredential(authCredential).addOnCompleteListener(this, task -> {
-            if (task.isSuccessful()) {
-                startActivity(new Intent(Login.this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-            } else {
-                Toast.makeText(Login.this, "Lỗi xác thực Facebook", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    private void setLoginFB() {
-        callbackManager = CallbackManager.Factory.create();
-        btnFB.setReadPermissions(Arrays.asList("email", "public_profile"));
-        btnFB.setLoginBehavior(LoginBehavior.DIALOG_ONLY);
-
-
-
-
-
-        btnFB.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                AccessToken accessToken = loginResult.getAccessToken();
-                if (accessToken != null) {
-                    Log.d("AccessToken", accessToken.getToken());
-                    handleFbAccessToken(accessToken);
-                }
-            }
-
-            @Override
-            public void onCancel() {
-                Toast.makeText(Login.this, "Hủy đăng nhập Facebook", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onError(FacebookException error) {
-                Log.e("Facebook Login", "Error: " + error.getMessage());
-                Toast.makeText(Login.this, "Lỗi đăng nhập Facebook: " + error.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (callbackManager != null) {
-            callbackManager.onActivityResult(requestCode, resultCode, data);
-        }
     }
 
     private void showDialogQuenMK() {
