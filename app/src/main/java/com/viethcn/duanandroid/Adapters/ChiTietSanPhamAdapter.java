@@ -14,7 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.viethcn.duanandroid.Models.Product;
 import com.viethcn.duanandroid.R;
 
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class ChiTietSanPhamAdapter extends RecyclerView.Adapter<ChiTietSanPhamAdapter.ProductViewHolder> {
 
@@ -37,7 +39,9 @@ public class ChiTietSanPhamAdapter extends RecyclerView.Adapter<ChiTietSanPhamAd
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
         Product product = mList.get(position);
-        String priceView = (mList.get(position).getPrice()) +"VND";
+
+        NumberFormat formatter = NumberFormat.getInstance(new Locale("vi", "VN"));
+        String priceView = formatter.format(product.getPrice()) + " VND";
 
         holder.productName.setText(product.getName());
         holder.productPrice.setText(priceView);
