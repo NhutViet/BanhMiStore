@@ -132,13 +132,21 @@ public class Login extends AppCompatActivity {
                     map.put("profile", user.getPhotoUrl());
 
                     database.getReference().child("users").child(user.getUid()).setValue(map);
-                    startActivity(new Intent(Login.this, Profile.class));
+
+                    // Chuyển tới MainActivity khi đăng nhập Google thành công
+                    Intent intent = new Intent(Login.this, MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  // Đảm bảo các activity trước đó được xoá khỏi ngăn xếp
+                    startActivity(intent);
+
+                    // Đóng màn hình Login để người dùng không quay lại được
+                    finish();
                 } else {
                     Toast.makeText(Login.this, "Đăng nhập Google thất bại", Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
+
 
     private void showDialogQuenMK() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
