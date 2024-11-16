@@ -11,19 +11,21 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.viethcn.duanandroid.Models.Productchitiet;
+import com.viethcn.duanandroid.Models.Product;
 import com.viethcn.duanandroid.R;
 
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
-public class chitietsanphamAdapter extends RecyclerView.Adapter<chitietsanphamAdapter.ProductViewHolder> {
+public class ChiTietSanPhamAdapter extends RecyclerView.Adapter<ChiTietSanPhamAdapter.ProductViewHolder> {
 
-    private List<Productchitiet> productList;
-    private Context context;
+     List<Product> mList;
+     Context context;
 
     // Constructor sửa lại một tham số
-    public chitietsanphamAdapter(List<Productchitiet> productList, Context context) {
-        this.productList = productList;
+    public ChiTietSanPhamAdapter(List<Product> mList, Context context) {
+        this.mList = mList;
         this.context = context;
     }
 
@@ -36,15 +38,19 @@ public class chitietsanphamAdapter extends RecyclerView.Adapter<chitietsanphamAd
 
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
-        Productchitiet product = productList.get(position);
+        Product product = mList.get(position);
+
+        NumberFormat formatter = NumberFormat.getInstance(new Locale("vi", "VN"));
+        String priceView = formatter.format(product.getPrice()) + " VND";
+
         holder.productName.setText(product.getName());
-        holder.productPrice.setText(product.getPrice());
-        holder.productImage.setImageResource(product.getImageResourceId());
+        holder.productPrice.setText(priceView);
+        holder.productImage.setImageResource(product.getImg());
     }
 
     @Override
     public int getItemCount() {
-        return productList.size();
+        return mList.size();
     }
 
     public static class ProductViewHolder extends RecyclerView.ViewHolder {

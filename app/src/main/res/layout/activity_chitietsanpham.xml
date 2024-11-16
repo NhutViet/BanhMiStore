@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -6,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFF5E1"
-    tools:context=".chitietsanpham">
+    tools:context=".ChiTietSanPhamAcitivity">
 
     <!-- Ảnh sản phẩm chính -->
     <ImageView
@@ -14,74 +13,88 @@
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:src="@drawable/banhmi"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"
+        android:layout_marginBottom="12dp"/>
 
-
-    <TextView
-        android:id="@+id/txtTensp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:layout_marginStart="16dp"
-        android:text="Bánh Mì Đặc Biệt"
-        android:textColor="#000"
-        android:textSize="22sp"
-        android:textStyle="bold" />
-    <TextView
-        android:id="@+id/txtGiasp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="16dp"
-        android:text="68.000 VND"
-        android:textColor="#E82A1C"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-    <!-- Nút chi tiết sản phẩm -->
-    <Button
-        android:id="@+id/btnThemGioHang"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        android:backgroundTint="#E82A1C"
-        android:padding="10dp"
-        android:text="Thêm Giỏ hàng"
-        android:textAllCaps="true"
-        android:textColor="#FFF" />
-
-
-    <TextView
-        android:id="@+id/txtMotaSp"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="Một ổ bánh mì siêu to với đầy ụ nhân: thịt nguội, chả lụa, dăm bông, chà bông,... ăn kèm với đồ chua muối sẵn theo công thức độc quyền."
-        android:textColor="#000"
-        android:textSize="16sp" />
+        android:orientation="horizontal"
+        android:layout_marginBottom="8dp"
+        >
+
+        <TextView
+            android:id="@+id/txtTensp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:textAlignment="center"
+            android:layout_height="wrap_content"
+            android:text="Bánh Mì Đặc Biệt"
+            android:textColor="#000"
+            android:textSize="22sp"
+            android:textStyle="bold"
+             />
+
+        <!-- Giá sản phẩm -->
+        <TextView
+            android:id="@+id/txtGiasp"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="68.000 VND"
+            android:textColor="#E82A1C"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            />
+    </LinearLayout>
+
+    <!-- Tên sản phẩm -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/txtMotaSp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="2dp"
+            android:text="Một ổ bánh mì siêu to với đầy ụ nhân: thịt nguội, chả lụa, dăm bông, chà bông."
+            android:textSize="16sp"
+           />
+
+        <Button
+            android:id="@+id/btnThemGioHang"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#BC0909"
+            android:text="Thêm Giỏ hàng"
+            android:textAllCaps="true"
+            android:textColor="#FFF"
+          />
+    </LinearLayout>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="SẢN PHẨM KHÁC"
         android:textStyle="bold"
-        android:layout_marginLeft="120dp"
-        android:layout_marginTop="10dp"
+        android:textAlignment="center"
         android:textColor="#E82C2C"
-        android:textSize="20dp"/>
-    <!-- LinearLayout chứa các thẻ sản phẩm, căn đều hai sản phẩm trong một hàng -->
+        android:textSize="20sp"
+        />
+
+    <!-- RecyclerView cho sản phẩm khác -->
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/recyclerViewSanPhamKhac"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:padding="8dp"
-        android:clipToPadding="false"/>
-
-
-
-
-
+        android:clipToPadding="false"
+        android:padding="5dp"
+        tools:listitem="@layout/activity_main" />
 </LinearLayout>
