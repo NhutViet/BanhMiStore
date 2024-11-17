@@ -1,65 +1,93 @@
 package com.viethcn.duanandroid.Fragments;
 
+import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.firebase.auth.FirebaseAuth;
 import com.viethcn.duanandroid.R;
 
 public class ProfileFragment extends Fragment {
 
      EditText nameField, emailField, genderField, phoneField;
      Button editButton, saveButton;
-     Boolean isEditing = false;
+     ImageView profileImage;
+     boolean isEditing = false;
 
-     public ProfileFragment() {}
+     FirebaseAuth firebaseAuth;
+
+     Context context;
+
+    public ProfileFragment(Context context){this.context = context;}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(context);
+
+        if (account != null) {
+
+            String email = account.getEmail();
+            String name = account.getDisplayName();
+            Uri photo = account.getPhotoUrl();
+
+            emailField.setText(email);
+            nameField.setText(name);
+
+            Glide.with(this).load(photo).into(profileImage);
+        }
 
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View viewHolder = inflater.inflate(R.layout.fragment_personal, container, false);
+        View view = inflater.inflate(R.layout.fragment_personal, container, false);
 
-        nameField = viewHolder.findViewById(R.id.nameField);
-        emailField = viewHolder.findViewById(R.id.emailField);
-        genderField = viewHolder.findViewById(R.id.genderField);
-        phoneField = viewHolder.findViewById(R.id.phoneField);
-        editButton = viewHolder.findViewById(R.id.editButton);
-        saveButton = viewHolder.findViewById(R.id.saveButton);
+        nameField = view.findViewById(R.id.nameField);
+        emailField = view.findViewById(R.id.emailField);
+        genderField = view.findViewById(R.id.genderField);
+        phoneField = view.findViewById(R.id.phoneField);
+        editButton = view.findViewById(R.id.editButton);
+        saveButton = view.findViewById(R.id.saveButton);
+        profileImage = view.findViewById(R.id.profileImage);
 
-         // Edit button click listener
         editButton.setOnClickListener( v -> {
             isEditing = true;
             setFieldsEditable(true);
             saveButton.setEnabled(true); // Enable the save button
-            Toast.makeText(getContext(), "Bạn có thể chỉnh sửa hồ sơ", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Bạn có thể chỉnh sửa hồ sơ", Toast.LENGTH_SHORT).show();
         });
 
         // Save button click listener
         saveButton.setOnClickListener( v -> {
             if (isEditing) {
                 // Save profile changes
-                Toast.makeText(getContext(), "Lưu thành công", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Lưu thành công", Toast.LENGTH_SHORT).show();
                 setFieldsEditable(false); // Make fields non-editable again
                 saveButton.setEnabled(false); // Disable the save button again
                 isEditing = false; // Reset editing state
             }
         });
 
-        return viewHolder;
+        return view;
     }
 
     // Method to toggle editability of fields

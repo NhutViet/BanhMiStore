@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
             if (index == R.id.bottom_nav_search) {
                 replaceFragment(new SearchFragment());
             } else if (index == R.id.bottom_nav_userIdentify) {
-                replaceFragment(new ProfileFragment());
+                replaceFragment(new ProfileFragment(this));
             } else if (index == R.id.bottom_nav_setting) {
                 replaceFragment(new SettingFragment());
             } else if (index == R.id.bottom_nav_homePage) {
