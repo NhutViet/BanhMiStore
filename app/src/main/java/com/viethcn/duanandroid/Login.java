@@ -31,6 +31,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.FirebaseDatabase;
+import com.viethcn.duanandroid.Fragments.ProfileFragment;
 
 import java.util.HashMap;
 
@@ -132,7 +133,7 @@ public class Login extends AppCompatActivity {
                     map.put("profile", user.getPhotoUrl());
 
                     database.getReference().child("users").child(user.getUid()).setValue(map);
-                    startActivity(new Intent(Login.this, Profile.class));
+                    startActivity(new Intent(Login.this, ProfileFragment.class));
                 } else {
                     Toast.makeText(Login.this, "Đăng nhập Google thất bại", Toast.LENGTH_SHORT).show();
                 }

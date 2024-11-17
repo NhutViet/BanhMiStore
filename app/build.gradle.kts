@@ -46,10 +46,12 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
 
     implementation(platform(libs.firebase.bom))
+    implementation (libs.com.google.firebase.firebase.auth)
+    implementation (libs.firebase.firestore)
+
     implementation(libs.firebase.analytics)
-    implementation(libs.firebase.bom)
-    implementation("com.google.firebase:firebase-auth")
-    implementation("com.google.android.gms:play-services-auth:21.2.0")
+    implementation(libs.google.firebase.auth)
+    implementation(libs.play.services.auth)
 
 
 }

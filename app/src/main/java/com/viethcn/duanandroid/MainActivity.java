@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.viethcn.duanandroid.Fragments.HomePageFragment;
-import com.viethcn.duanandroid.Fragments.PersonalFragment;
+import com.viethcn.duanandroid.Fragments.ProfileFragment;
 import com.viethcn.duanandroid.Fragments.SearchFragment;
 import com.viethcn.duanandroid.Fragments.SettingFragment;
 
@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
             if (index == R.id.bottom_nav_search) {
                 replaceFragment(new SearchFragment());
             } else if (index == R.id.bottom_nav_userIdentify) {
-                replaceFragment(new PersonalFragment());
+                replaceFragment(new ProfileFragment());
             } else if (index == R.id.bottom_nav_setting) {
                 replaceFragment(new SettingFragment());
             } else if (index == R.id.bottom_nav_homePage) {
