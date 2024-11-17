@@ -1,6 +1,6 @@
 [versions]
 agp = "8.3.2"
-firebaseBom = "33.5.1"
+firebaseBom = "33.6.0"
 imageslideshow = "0.1.2"
 junit = "4.13.2"
 junitVersion = "1.2.1"
@@ -12,10 +12,15 @@ constraintlayout = "2.2.0"
 firebaseAuth = "23.1.0"
 googleServices = "4.4.2"
 firebaseDatabase = "21.0.0"
+googleGmsGoogleServices = "4.4.2"
+playServicesAuth = "21.2.0"
 
 [libraries]
+com-google-firebase-firebase-auth = { module = "com.google.firebase:firebase-auth" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
+firebase-firestore = { module = "com.google.firebase:firebase-firestore" }
+google-firebase-auth = { module = "com.google.firebase:firebase-auth" }
 imageslideshow = { module = "com.github.denzcoskun:ImageSlideshow", version.ref = "imageslideshow" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
@@ -27,7 +32,9 @@ constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayo
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
 google-services = { group = "com.google.gms", name = "google-services", version.ref = "googleServices" }
 firebase-database = { group = "com.google.firebase", name = "firebase-database", version.ref = "firebaseDatabase" }
+play-services-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "playServicesAuth" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
+googleGmsGoogleServices = { id = "com.google.gms.google-services", version.ref = "googleGmsGoogleServices" }
 
