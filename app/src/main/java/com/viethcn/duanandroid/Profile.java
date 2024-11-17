@@ -1,31 +1,58 @@
 package com.viethcn.duanandroid;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.bumptech.glide.Glide;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class Profile extends AppCompatActivity {
 
     private EditText nameField, emailField, genderField, phoneField;
     private Button editButton, saveButton;
+    ImageView profileImage;
     private boolean isEditing = false;
+
+    FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        // Initialize fields and buttons
+
         nameField = findViewById(R.id.nameField);
         emailField = findViewById(R.id.emailField);
         genderField = findViewById(R.id.genderField);
         phoneField = findViewById(R.id.phoneField);
         editButton = findViewById(R.id.editButton);
         saveButton = findViewById(R.id.saveButton);
+        profileImage = findViewById(R.id.profileImage);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        if (account != null) {
+
+            String email = account.getEmail();
+            String name = account.getDisplayName();
+            Uri photo = account.getPhotoUrl();
+
+            emailField.setText(email);
+            nameField.setText(name);
+
+            Glide.with(this).load(photo).into(profileImage);
+        }
+
 
         // Set fields to be non-editable initially
         setFieldsEditable(false);
