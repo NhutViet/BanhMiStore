@@ -141,6 +141,7 @@ public class Login extends AppCompatActivity {
                 HashMap<String, Object> map = new HashMap<>();
                 map.put("id", user.getUid());
                 map.put("name", user.getDisplayName());
+                map.put("phone", user.getPhoneNumber());
                 map.put("profile", user.getPhotoUrl() != null ? user.getPhotoUrl().toString() : null);
 
                 database.getReference().child("users").child(user.getUid()).setValue(map);
