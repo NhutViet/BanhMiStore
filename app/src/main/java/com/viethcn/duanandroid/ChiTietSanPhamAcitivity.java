@@ -1,11 +1,10 @@
 package com.viethcn.duanandroid;
 
 import android.os.Bundle;
-
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 
 import com.viethcn.duanandroid.Adapters.ChiTietSanPhamAdapter;
 import com.viethcn.duanandroid.Models.Product;
@@ -13,23 +12,22 @@ import com.viethcn.duanandroid.Models.Product;
 import java.util.ArrayList;
 import java.util.List;
 
-public class chitietsanpham extends AppCompatActivity {
+public class ChiTietSanPhamAcitivity extends AppCompatActivity {
 
-    private RecyclerView recyclerView;
-    private ChiTietSanPhamAdapter productAdapter;
-    private List<Product> productList;
+     RecyclerView recyclerView;
+     ChiTietSanPhamAdapter productAdapter;
+     List<Product> productList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_chitietsanpham); // Ensure this layout file exists
 
         recyclerView = findViewById(R.id.recyclerViewSanPhamKhac);
 
         // Cài đặt GridLayoutManager với 2 cột
-        LinearLayoutManager gridLayoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
-        recyclerView.setLayoutManager(gridLayoutManager);
+        LinearLayoutManager layout = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false );
+        recyclerView.setLayoutManager(layout);
 
         // Tạo danh sách sản phẩm mẫu
         productList = new ArrayList<>();
@@ -46,7 +44,4 @@ public class chitietsanpham extends AppCompatActivity {
         productAdapter = new ChiTietSanPhamAdapter(productList, this);
         recyclerView.setAdapter(productAdapter);
     }
-
-
-    }
-
+}

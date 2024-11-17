@@ -7,28 +7,31 @@
     app:cardCornerRadius="8dp"
     app:cardElevation="8dp">
 
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="8dp">
-
+        <!-- ImageView for product image -->
         <ImageView
-            android:id="@+id/productImage"
+            android:id="@+id/menuItemImage"
             android:layout_width="220dp"
             android:layout_height="170dp"
             android:scaleType="fitCenter" />
 
+        <!-- TextView for product name -->
         <TextView
-            android:id="@+id/productName"
+            android:id="@+id/menuItemName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:textSize="18sp"
             android:textStyle="bold" />
 
+        <!-- TextView for product price -->
         <TextView
-            android:id="@+id/productPrice"
+            android:id="@+id/menuItemPrice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="#E82A1C"
@@ -36,6 +39,7 @@
             android:textSize="18sp"
             />
 
+        <!-- Button for "MUA NGAY" -->
         <Button
             android:id="@+id/btnBuyNow"
             android:layout_width="wrap_content"
@@ -46,4 +50,5 @@
             android:layout_gravity="center"
             />
     </LinearLayout>
+
 </androidx.cardview.widget.CardView>
