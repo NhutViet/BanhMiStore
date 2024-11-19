@@ -7,5 +7,9 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="default_web_client_id">89243383321-ksacbrc0ldeakv44p970e6unjp5i11v0.apps.googleusercontent.com</string>
 
-
+    <string-array name="eWalletOptions">
+        <item>MoMo</item>
+        <item>ZaloPay</item>
+        <item>VNPay</item>
+    </string-array>
 </resources>

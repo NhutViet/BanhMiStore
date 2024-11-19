@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -34,7 +35,23 @@ public class CheckoutActivity extends AppCompatActivity {
         totalAmount = findViewById(R.id.totalAmount);
         shippingFee = findViewById(R.id.shippingFee);
         grandTotal = findViewById(R.id.grandTotal);
+        RadioGroup paymentOptions = findViewById(R.id.paymentOptions);
+        LinearLayout subMenuCreditCard = findViewById(R.id.subMenuCreditCard);
+        LinearLayout subMenuEWallet = findViewById(R.id.subMenuEWallet);
 
+
+        paymentOptions.setOnCheckedChangeListener((group, checkedId) -> {
+
+            subMenuCreditCard.setVisibility(View.GONE);
+            subMenuEWallet.setVisibility(View.GONE);
+
+
+            if (checkedId == R.id.rbCreditCard) {
+                subMenuCreditCard.setVisibility(View.VISIBLE);
+            } else if (checkedId == R.id.rbEWallet) {
+                subMenuEWallet.setVisibility(View.VISIBLE);
+            }
+        });
         // Tính toán và cập nhật tổng cộng
         updateTotal();
 
@@ -77,4 +94,6 @@ public class CheckoutActivity extends AppCompatActivity {
         shippingFee.setText("Phí vận chuyển: " + shippingCost + " VND");
         grandTotal.setText("Tổng cộng: " + grandTotalAmount + " VND");
     }
+
+
 }

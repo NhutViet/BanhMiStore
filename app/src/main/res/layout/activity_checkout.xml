@@ -134,29 +134,92 @@
             android:textStyle="bold"
             android:paddingTop="16dp" />
 
-        <RadioGroup
-            android:id="@+id/paymentOptions"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
 
-            <RadioButton
-                android:id="@+id/rbCreditCard"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Thẻ tín dụng/Ghi nợ" />
+            <!-- RadioGroup -->
+            <RadioGroup
+                android:id="@+id/paymentOptions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <RadioButton
-                android:id="@+id/rbCashOnDelivery"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Thanh toán khi nhận hàng" />
+                <RadioButton
+                    android:id="@+id/rbCreditCard"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Thẻ tín dụng/Ghi nợ" />
 
-            <RadioButton
-                android:id="@+id/rbEWallet"
-                android:layout_width="wrap_content"
+                <RadioButton
+                    android:id="@+id/rbCashOnDelivery"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Thanh toán khi nhận hàng" />
+
+                <RadioButton
+                    android:id="@+id/rbEWallet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ví điện tử" />
+            </RadioGroup>
+
+            <!-- Submenu for Credit Card -->
+            <LinearLayout
+                android:id="@+id/subMenuCreditCard"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Ví điện tử" />
-        </RadioGroup>
+                android:orientation="vertical"
+                android:visibility="gone"
+                android:padding="8dp"
+                android:background="#f0f0f0">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nhập thông tin thẻ tín dụng"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Số thẻ" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Ngày hết hạn (MM/YY)" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Mã bảo mật (CVV)" />
+            </LinearLayout>
+
+            <!-- Submenu for E-Wallet -->
+            <LinearLayout
+                android:id="@+id/subMenuEWallet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                android:padding="8dp"
+                android:background="#f0f0f0">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Chọn ví điện tử"
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/eWalletOptions" />
+            </LinearLayout>
+
+        </LinearLayout>
 
         <!-- Bước 3: Xác nhận thanh toán -->
 
