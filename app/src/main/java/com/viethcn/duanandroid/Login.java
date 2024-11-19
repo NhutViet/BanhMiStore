@@ -38,7 +38,7 @@ import java.util.HashMap;
 public class Login extends AppCompatActivity {
     private TextView txtDangKy, txtQuenMk;
     private EditText edtTenDangNhap, edtMatKhau;
-    private Button btnDangNhap;
+    private TextView btnDangNhap;
     private ImageView imgGG;
     private FirebaseAuth firebaseAuth;
     private FirebaseDatabase database;
@@ -114,10 +114,11 @@ public class Login extends AppCompatActivity {
     // XỬ lý đăng nhập bằng google
     private void googleSignIn() {
         googleSignInClient.signOut().addOnCompleteListener(task -> {
-            Intent intent = googleSignInClient.getSignInIntent();
-            startActivityForResult(intent, RC_SIGN_IN);
+            Intent signInIntent = googleSignInClient.getSignInIntent();
+            startActivityForResult(signInIntent, RC_SIGN_IN);
         });
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
