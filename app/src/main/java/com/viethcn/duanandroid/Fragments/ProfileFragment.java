@@ -46,7 +46,7 @@ public class ProfileFragment extends Fragment {
         // Disable save button initially
         saveButton.setEnabled(false);
 
-        // Load Google account info
+        // lấy data từ google
         loadGoogleAccountInfo();
 
         // Edit button click listener
