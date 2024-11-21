@@ -64,11 +64,11 @@ public class Login extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
 
         // Cấu hình Google Sign-In
-        GoogleSignInOptions gos = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
-        googleSignInClient = GoogleSignIn.getClient(this, gos);
+        googleSignInClient = GoogleSignIn.getClient(this, gso);
 
         // Xử lý sự kiện click
         imgGG.setOnClickListener(v -> googleSignIn());
