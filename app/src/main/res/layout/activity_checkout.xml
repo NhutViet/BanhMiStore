@@ -1,4 +1,3 @@
-<!-- res/layout/activity_checkout.xml -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -20,7 +19,7 @@
             android:textSize="20sp"
             android:paddingBottom="8dp"
             android:textStyle="bold"
-             />
+            />
 
         <LinearLayout
             android:id="@+id/productContainer"
@@ -68,7 +67,16 @@
                     android:layout_height="wrap_content"
                     android:text="Số lượng: 1"
                     android:textSize="14sp" />
+
+                <!-- Thêm TextView để hiển thị topping đã chọn -->
+                <TextView
+                    android:id="@+id/selectedToppings"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Toppings: "
+                    android:textSize="14sp" />
             </LinearLayout>
+
         </LinearLayout>
 
         <!-- Phần: Thành tiền và phí vận chuyển -->
@@ -129,7 +137,7 @@
             android:id="@+id/stepTwoTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=" Phương thức thanh toán"
+            android:text="Phương thức thanh toán"
             android:textSize="18sp"
             android:textStyle="bold"
             android:paddingTop="16dp" />
@@ -221,9 +229,38 @@
 
         </LinearLayout>
 
-        <!-- Bước 3: Xác nhận thanh toán -->
+        <!-- Bước 3: Thêm Voucher và Ghi chú -->
+        <TextView
+            android:id="@+id/stepThreeTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Voucher"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:paddingTop="16dp" />
 
+        <EditText
+            android:id="@+id/etVoucher"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nhập mã giảm giá (nếu có)" />
 
+        <TextView
+            android:id="@+id/stepFourTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ghi chú"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:paddingTop="16dp" />
+
+        <EditText
+            android:id="@+id/etNote"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Ghi chú cho đơn hàng" />
+
+        <!-- Bước 4: Xác nhận thanh toán -->
         <Button
             android:id="@+id/btnCheckout"
             android:layout_width="match_parent"
@@ -232,5 +269,6 @@
             android:backgroundTint="@color/design_default_color_primary"
             android:textColor="#FFFFFF"
             android:layout_marginTop="16dp" />
+
     </LinearLayout>
 </ScrollView>
