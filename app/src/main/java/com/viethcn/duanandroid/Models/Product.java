@@ -3,10 +3,15 @@ package com.viethcn.duanandroid.Models;
 public class Product {
     private int img;
     private String name;
-    private int price;
+    private String price;
 
-    public Product(int img, String name, int price) {
+    public Product(int img, String name, String price) {
         this.img = img;
+        this.name = name;
+        this.price = price;
+    }
+
+    public Product(String name, String price) {
         this.name = name;
         this.price = price;
     }
@@ -17,7 +22,7 @@ public class Product {
     public String getName() {
         return name;
     }
-    public int getPrice() {
+    public String getPrice() {
         return price;
     }
 
@@ -27,7 +32,7 @@ public class Product {
     public void setName(String name) {
         this.name = name;
     }
-    public void setPrice(int price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 }
