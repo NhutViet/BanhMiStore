@@ -5,7 +5,14 @@
     <string name="dangnhap">Đã có tài khoản! <u>Đăng nhập</u></string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
     <string name="default_web_client_id">89243383321-ksacbrc0ldeakv44p970e6unjp5i11v0.apps.googleusercontent.com</string>
+
+
+    <string name="facebook_app_id">560590053232806</string>
+    <string name="fb_login_protocol_scheme">fb1234</string>
+    <string name="facebook_client_token">c1ef77785ad713eb7133b2a18437856a</string>
+    <string name="default_web_client_id">89243383321-q4gkork7u149llrha3bvku7a6021mch4.apps.googleusercontent.com</string>
 
 
 </resources>

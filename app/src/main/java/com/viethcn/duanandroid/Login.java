@@ -13,12 +13,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+
+import androidx.annotation.NonNull;
+
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.WindowCompat;
-
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -27,13 +31,14 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.FirebaseDatabase;
 
+
 import java.util.HashMap;
+
 
 public class Login extends AppCompatActivity {
     private TextView txtDangKy, txtQuenMk;
@@ -41,9 +46,15 @@ public class Login extends AppCompatActivity {
     private Button btnDangNhap;
     private ImageView imgGG;
     private FirebaseAuth firebaseAuth;
+
     private FirebaseDatabase database;
     private GoogleSignInClient googleSignInClient;
     private final int RC_SIGN_IN = 20;
+
+    private FirebaseDatabase firebaseDatabase;
+    private GoogleSignInClient googleSignInClient;
+    private static final int RC_SIGN_IN = 123; // Mã yêu cầu đăng nhập Google
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +62,6 @@ public class Login extends AppCompatActivity {
         WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
         setContentView(R.layout.activity_login);
 
-        // Ánh xạ view
         txtDangKy = findViewById(R.id.txtDangky);
         edtTenDangNhap = findViewById(R.id.edtTenDangNhap);
         edtMatKhau = findViewById(R.id.edtMatKhau);
@@ -61,7 +71,21 @@ public class Login extends AppCompatActivity {
 
         // Firebase Authentication & Database
         firebaseAuth = FirebaseAuth.getInstance();
+
         database = FirebaseDatabase.getInstance();
+        firebaseDatabase = FirebaseDatabase.getInstance();
+
+        // Cấu hình đăng nhập Google
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+        googleSignInClient = GoogleSignIn.getClient(this, gso);
+
+        // Xử lý nút đăng nhập với Firebase
+        btnDangNhap.setOnClickListener(v -> {
+            String tenDangNhap = edtTenDangNhap.getText().toString();
+            String matKhau = edtMatKhau.getText().toString();
 
         // Cấu hình Google Sign-In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -70,11 +94,56 @@ public class Login extends AppCompatActivity {
                 .build();
         googleSignInClient = GoogleSignIn.getClient(this, gso);
 
+
         // Xử lý sự kiện click
         imgGG.setOnClickListener(v -> googleSignIn());
         btnDangNhap.setOnClickListener(v -> handleLogin());
         txtQuenMk.setOnClickListener(v -> showDialogQuenMK());
         txtDangKy.setOnClickListener(v -> startActivity(new Intent(Login.this, Register.class)));
+        // Xử lý nút "Quên mật khẩu"
+        txtQuenMk.setOnClickListener(v -> showDialogQuenMK());
+
+        // Xử lý nút "Đăng ký"
+        txtDangKy.setOnClickListener(v -> startActivity(new Intent(Login.this, Register.class)));
+
+        // Xử lý đăng nhập Google
+        imgGG.setOnClickListener(v -> signInWithGoogle());
+    }
+
+    private void signInWithGoogle() {
+        Intent signInIntent = googleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @NonNull Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // Xử lý kết quả đăng nhập Google
+        if (requestCode == RC_SIGN_IN) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                firebaseAuthWithGoogle(account);
+            } catch (ApiException e) {
+                Toast.makeText(this, "Đăng nhập Google thất bại", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    private void firebaseAuthWithGoogle(GoogleSignInAccount account) {
+        AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
+        firebaseAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        FirebaseUser user = firebaseAuth.getCurrentUser();
+                        Toast.makeText(Login.this, "Đăng nhập Google thành công", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(Login.this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                    } else {
+                        Toast.makeText(Login.this, "Xác thực Google thất bại", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
     }
 
 

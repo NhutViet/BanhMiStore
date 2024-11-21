@@ -47,10 +47,14 @@ dependencies {
 
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
+
     implementation (libs.firebase.auth.v2210)
     implementation(libs.play.services.auth)
     implementation (libs.glide)
     implementation ("com.github.bumptech.glide:glide:4.16.0")
 
+
+    implementation("com.google.firebase:firebase-auth")
+    implementation("com.google.android.gms:play-services-auth:21.2.0")
 
 }
