@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
+import com.viethcn.duanandroid.DAO.ProductDAO;
 import com.viethcn.duanandroid.Models.Product;
 import com.viethcn.duanandroid.R;
 
@@ -23,9 +24,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     public ProductAdapter(Context context, List<Product> productList) {
         this.context = context;
         this.listProduct = productList;
-    }
-
-    public ProductAdapter(String bánhBaoĐặcBiệt, String s, int banhbao) {
     }
 
     @NonNull

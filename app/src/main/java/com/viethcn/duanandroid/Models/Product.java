@@ -5,6 +5,8 @@ public class Product {
     private String name;
     private String price;
 
+    public Product(){}
+
     public Product(int img, String name, String price) {
         this.img = img;
         this.name = name;
