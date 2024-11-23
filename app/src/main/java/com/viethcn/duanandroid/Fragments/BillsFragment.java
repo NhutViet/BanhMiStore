@@ -12,9 +12,9 @@ import android.view.ViewGroup;
 
 import com.viethcn.duanandroid.R;
 
-public class SearchFragment extends Fragment {
+public class BillsFragment extends Fragment {
 
-    public SearchFragment() {
+    public BillsFragment() {
         // Required empty public constructor
     }
 
@@ -26,7 +26,7 @@ public class SearchFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_search, container, false);
+        View view = inflater.inflate(R.layout.fragment_bills, container, false);
         RecyclerView rcv = view.findViewById(R.id.rcvInf);
         LinearLayoutManager layout = new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false);
         rcv.setLayoutManager(layout);
