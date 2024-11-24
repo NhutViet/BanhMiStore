@@ -68,12 +68,11 @@
                 android:layout_marginTop="16dp"
                 android:gravity="center_vertical">
 
-                <Button
+                <ImageView
                     android:id="@+id/btnDecrease"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:backgroundTint="#FF9800"
-                    android:foregroundTint="#FFFFFF"
+
                     android:background="@drawable/minus" />
                    />
 
@@ -86,12 +85,11 @@
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
-                <Button
+                <ImageView
                     android:id="@+id/btnIncrease"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:backgroundTint="#FF9800"
-                    android:foregroundTint="#FFFFFF"
+
                     android:background="@drawable/plus" />
             </LinearLayout>
 
