@@ -9,11 +9,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
+
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class CartActivity extends AppCompatActivity {
 
-    private TextView tvQuantity, tvTotalPrice, tvProductPrice;
+    private TextView tvQuantity, tvTotalPrice, tvProductPrice, tvProductName;
     private Button btnDecrease, btnIncrease, btnCheckout;
     private CheckBox cbTopping1, cbTopping2, cbTopping3, cbTopping4, cbTopping5;
+
+    CircleImageView ivProductImage;
 
     private int quantity = 1; // Số lượng mặc định
     private double basePrice = 100000; // Giá bánh mì cơ bản
@@ -27,6 +33,7 @@ public class CartActivity extends AppCompatActivity {
         // Liên kết các view từ XML
         tvQuantity = findViewById(R.id.tvQuantity);
         tvTotalPrice = findViewById(R.id.tvTotalPrice);
+        tvProductName = findViewById(R.id.tvProductName);
         tvProductPrice = findViewById(R.id.tvProductPrice);
         btnDecrease = findViewById(R.id.btnDecrease);
         btnIncrease = findViewById(R.id.btnIncrease);
@@ -36,9 +43,18 @@ public class CartActivity extends AppCompatActivity {
         cbTopping3 = findViewById(R.id.cbTopping3);
         cbTopping4 = findViewById(R.id.cbTopping4);
         cbTopping5 = findViewById(R.id.cbTopping5);
+        ivProductImage = findViewById(R.id.ivProductImage);
+
+        String name = getIntent().getStringExtra("name");
+        String price = getIntent().getStringExtra("price");
+        String img = getIntent().getStringExtra("img");
+
+        tvProductName.setText(name);
+        tvProductPrice.setText(price);
+        Glide.with(this).load(img).into(ivProductImage);
 
         // Cập nhật giá cơ bản
-        tvProductPrice.setText(String.format("Giá: %.2f VND", basePrice));
+//        tvProductPrice.setText(String.format("Giá: %.2f VND", basePrice));
 
         // Xử lý sự kiện khi chọn topping
         View.OnClickListener toppingListener = v -> calculateTotalPrice();
