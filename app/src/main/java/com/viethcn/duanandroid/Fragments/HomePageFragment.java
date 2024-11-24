@@ -1,5 +1,6 @@
 package com.viethcn.duanandroid.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
@@ -16,6 +18,7 @@ import com.denzcoskun.imageslider.models.SlideModel;
 import com.viethcn.duanandroid.Adapters.ProductAdapter;
 import com.viethcn.duanandroid.Models.Product;
 import com.viethcn.duanandroid.R;
+import com.viethcn.duanandroid.TestListData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +32,8 @@ public class HomePageFragment extends Fragment {
 
     // Obj của thư viện bên t3, và các bên liên quan
     ImageSlider imgSlider;
+
+    TextView txtXemThem;
     List<SlideModel> imgList = new ArrayList<>();
 
     public HomePageFragment() {}
@@ -51,12 +56,22 @@ public class HomePageFragment extends Fragment {
 
         // Khởi tạo recyclerView và set adapter
         productRcv = viewHolder.findViewById(R.id.productRcV);
+        txtXemThem = viewHolder.findViewById(R.id.txtXemThem);
         ProductAdapter adapter = new ProductAdapter(getContext(), listProduct);
         productRcv.setAdapter(adapter);
         productRcv.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
         // Khởi tạo slider và set ảnh lên imgSlider
         imgSlider = viewHolder.findViewById(R.id.image_slider);
+
+
+        txtXemThem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), TestListData.class));
+            }
+        });
+
         setImgSlider();
 
         return viewHolder;
