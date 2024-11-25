@@ -1,0 +1,23 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Nền (Shape) -->
+    <item>
+        <shape>
+            <corners android:radius="20dp" />
+            <solid android:color="@android:color/transparent" />
+            <stroke
+                android:color="#FFFFFF"
+                android:width="2dp" />
+            <size
+                android:width="165dp"
+                android:height="40dp" />
+        </shape>
+    </item>
+
+    <!-- Hình ảnh -->
+    <item
+        android:drawable="@drawable/rightarrow"
+        android:width="24dp"
+        android:height="24dp"
+        android:gravity="center" />
+</layer-list>

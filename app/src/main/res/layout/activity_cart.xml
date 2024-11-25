@@ -28,12 +28,11 @@
             android:padding="16dp"
             android:layout_marginBottom="16dp">
 
-            <!-- Product Image -->
-            <ImageView
+
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/ivProductImage"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:scaleType="centerCrop"
+                android:layout_height="150dp"
                 android:src="@drawable/banhmi" />
 
             <!-- Product Details -->
