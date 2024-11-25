@@ -1,5 +1,6 @@
 package com.viethcn.duanandroid;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -16,7 +17,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class CartActivity extends AppCompatActivity {
 
     private TextView tvQuantity, tvTotalPrice, tvProductPrice, tvProductName;
-    private Button btnDecrease, btnIncrease, btnCheckout;
+    private Button imgDecrease, imgIncrease, btnCheckout;
     private CheckBox cbTopping1, cbTopping2, cbTopping3, cbTopping4, cbTopping5;
 
     CircleImageView ivProductImage;
@@ -25,6 +26,7 @@ public class CartActivity extends AppCompatActivity {
     private double basePrice = 100000; // Giá bánh mì cơ bản
     private double totalPrice = basePrice; // Tổng giá
 
+    @SuppressLint({"WrongViewCast", "MissingInflatedId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,8 +37,8 @@ public class CartActivity extends AppCompatActivity {
         tvTotalPrice = findViewById(R.id.tvTotalPrice);
         tvProductName = findViewById(R.id.tvProductName);
         tvProductPrice = findViewById(R.id.tvProductPrice);
-        btnDecrease = findViewById(R.id.btnDecrease);
-        btnIncrease = findViewById(R.id.btnIncrease);
+        imgDecrease = findViewById(R.id.imgDecrease);
+        imgIncrease = findViewById(R.id.imgIncrease);
         btnCheckout = findViewById(R.id.btnCheckout);
         cbTopping1 = findViewById(R.id.cbTopping1);
         cbTopping2 = findViewById(R.id.cbTopping2);
@@ -65,14 +67,14 @@ public class CartActivity extends AppCompatActivity {
         cbTopping5.setOnClickListener(toppingListener);
 
         // Nút tăng số lượng
-        btnIncrease.setOnClickListener(v -> {
+        imgIncrease.setOnClickListener(v -> {
             quantity++;
             tvQuantity.setText(String.valueOf(quantity)); // Cập nhật giao diện
             calculateTotalPrice(); // Tính lại tổng giá
         });
 
         // Nút giảm số lượng
-        btnDecrease.setOnClickListener(v -> {
+        imgDecrease.setOnClickListener(v -> {
             if (quantity > 1) { // Không cho phép số lượng < 1
                 quantity--;
                 tvQuantity.setText(String.valueOf(quantity)); // Cập nhật giao diện
