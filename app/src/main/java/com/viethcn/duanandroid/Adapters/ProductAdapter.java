@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
-import com.viethcn.duanandroid.DAO.ProductDAO;
 import com.viethcn.duanandroid.Models.Product;
 import com.viethcn.duanandroid.R;
 

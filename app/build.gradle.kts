@@ -51,5 +51,11 @@ dependencies {
     implementation(libs.play.services.auth)
     implementation (libs.glide)
 
+    implementation("com.firebaseui:firebase-ui-database:8.0.1")
+    implementation ("de.hdodenhof:circleimageview:3.1.0")
+    implementation("androidx.recyclerview:recyclerview:1.3.2")
+    implementation("androidx.cardview:cardview:1.0.0")
+
+
 
 }
