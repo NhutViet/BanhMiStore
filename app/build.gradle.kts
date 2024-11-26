@@ -33,28 +33,23 @@ android {
 }
 
 dependencies {
-    // 3rd party
-    implementation (libs.glide)
     implementation (libs.imageslideshow)
 
-    // OS libs
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
+    implementation(libs.firebase.auth)
+    implementation(libs.firebase.database)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 
-    // Firebase
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
     implementation (libs.firebase.auth.v2210)
-    implementation(libs.firebase.auth)
-    implementation(libs.firebase.database)
-    implementation(libs.firebase.firestore)
-    implementation(libs.firebase.storage)
     implementation(libs.play.services.auth)
+    implementation (libs.glide)
 
 
 }
