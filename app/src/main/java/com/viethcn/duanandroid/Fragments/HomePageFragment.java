@@ -18,7 +18,7 @@ import com.denzcoskun.imageslider.models.SlideModel;
 import com.viethcn.duanandroid.Adapters.ProductAdapter;
 import com.viethcn.duanandroid.Models.Product;
 import com.viethcn.duanandroid.R;
-import com.viethcn.duanandroid.MenuBanhMi;
+import com.viethcn.duanandroid.TestListData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,7 +68,7 @@ public class HomePageFragment extends Fragment {
         txtXemThem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getContext(), MenuBanhMi.class));
+                startActivity(new Intent(getContext(), TestListData.class));
             }
         });
 
