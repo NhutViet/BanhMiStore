@@ -16,7 +16,7 @@
         android:theme="@style/Theme.DuAnAndroid"
         tools:targetApi="31">
         <activity
-            android:name=".InsrtPrdctActivity"
+            android:name=".Fragments.InsrtPrdctFraqment"
             android:exported="false" />
         <activity
             android:name=".MhChao"

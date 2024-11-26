@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,6 +16,7 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.FirebaseDatabase;
 import com.viethcn.duanandroid.Adapters.MainAdapter;
+import com.viethcn.duanandroid.Fragments.InsrtPrdctFraqment;
 import com.viethcn.duanandroid.Models.MainModel;
 
 public class MenuBanhMi extends Fragment {
@@ -28,14 +31,20 @@ public class MenuBanhMi extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout
         View view = inflater.inflate(R.layout.activity_test_list_data, container, false);
+
         recyclerViewMain = view.findViewById(R.id.recyclerMain);
         fabAdd = view.findViewById(R.id.fabAdd);
 
         setMenuData();
 
         fabAdd.setOnClickListener(v -> {
-            startActivity( new Intent(getActivity(), InsrtPrdctActivity.class));
+            Fragment insertProductFragment = new InsrtPrdctFraqment();
+            requireActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.mainViewHomePage, insertProductFragment) // ID của container cần thay thế
+                    .addToBackStack(null) // Thêm vào BackStack
+                    .commit();
         });
+
 
         return view;
     }
