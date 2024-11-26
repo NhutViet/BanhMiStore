@@ -38,8 +38,8 @@ public class MenuBanhMiFragment extends Fragment {
         fabAdd.setOnClickListener(v -> {
             Fragment insertProductFragment = new InsrtPrdctFraqment();
             requireActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.mainViewHomePage, insertProductFragment) // ID của container cần thay thế
-                    .addToBackStack(null) // Thêm vào BackStack
+                    .replace(R.id.mainViewHomePage, insertProductFragment)
+                    .addToBackStack(null)
                     .commit();
         });
 
@@ -48,16 +48,14 @@ public class MenuBanhMiFragment extends Fragment {
     }
 
     private void setMenuData(){
-        // Set layout manager
         gridLayoutManager = new GridLayoutManager(getContext(), 2); // 2 columns
         recyclerViewMain.setLayoutManager(gridLayoutManager);
-        // Setup Firebase options
+
         options = new FirebaseRecyclerOptions.Builder<MainModel>()
                 .setQuery(FirebaseDatabase.getInstance().getReference().child("Product"), MainModel.class)
                 .build();
-        // Initialize adapter
+
         mainAdapter = new MenuAdapter(options);
-        // Attach adapter to RecyclerView
         recyclerViewMain.setAdapter(mainAdapter);
 
     }
@@ -65,14 +63,12 @@ public class MenuBanhMiFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        // Start listening for data changes when the fragment starts
         mainAdapter.startListening();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        // Stop listening for data changes when the fragment stops
         mainAdapter.stopListening();
     }
 }

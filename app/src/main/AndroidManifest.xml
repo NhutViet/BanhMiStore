@@ -16,10 +16,7 @@
         android:theme="@style/Theme.DuAnAndroid"
         tools:targetApi="31">
         <activity
-            android:name=".Fragments.InsrtPrdctFraqment"
-            android:exported="false" />
-        <activity
-            android:name=".MainActivity"
+            android:name=".MhChao"
             android:exported="false" />
         <activity
             android:name=".CartActivity"
@@ -37,7 +34,7 @@
             android:name=".Register"
             android:exported="false" />
         <activity
-            android:name=".MhChao"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
