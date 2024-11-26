@@ -5,10 +5,11 @@
     android:id="@+id/MenuMainLayout_Container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MenuBanhMi"
     android:background="#F7EAD3"
     >
     <RelativeLayout
+        tools:context=".Fragments.MenuBanhMiFragment"
+        android:background="#F7EAD3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="10dp"
@@ -42,4 +43,5 @@
             android:id="@+id/fabAdd"
             />
     </RelativeLayout>
+
 </FrameLayout>

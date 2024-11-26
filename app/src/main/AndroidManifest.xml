@@ -19,7 +19,7 @@
             android:name=".Fragments.InsrtPrdctFraqment"
             android:exported="false" />
         <activity
-            android:name=".MhChao"
+            android:name=".MainActivity"
             android:exported="false" />
         <activity
             android:name=".CartActivity"
@@ -37,10 +37,7 @@
             android:name=".Register"
             android:exported="false" />
         <activity
-            android:name=".ThucDonActivity"
-            android:exported="false" />
-        <activity
-            android:name=".MainActivity"
+            android:name=".MhChao"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

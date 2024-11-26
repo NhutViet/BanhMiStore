@@ -1,28 +1,26 @@
-package com.viethcn.duanandroid;
+package com.viethcn.duanandroid.Fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.FirebaseDatabase;
-import com.viethcn.duanandroid.Adapters.MainAdapter;
-import com.viethcn.duanandroid.Fragments.InsrtPrdctFraqment;
-import com.viethcn.duanandroid.Models.MainModel;
+import com.viethcn.duanandroid.Adapters.MenuAdapter;
 
-public class MenuBanhMi extends Fragment {
+import com.viethcn.duanandroid.Models.MainModel;
+import com.viethcn.duanandroid.R;
+
+public class MenuBanhMiFragment extends Fragment {
 
     RecyclerView recyclerViewMain;
-    MainAdapter mainAdapter;
+    MenuAdapter mainAdapter;
     GridLayoutManager gridLayoutManager;
     FirebaseRecyclerOptions<MainModel> options;
     FloatingActionButton fabAdd;
@@ -58,7 +56,7 @@ public class MenuBanhMi extends Fragment {
                 .setQuery(FirebaseDatabase.getInstance().getReference().child("Product"), MainModel.class)
                 .build();
         // Initialize adapter
-        mainAdapter = new MainAdapter(options);
+        mainAdapter = new MenuAdapter(options);
         // Attach adapter to RecyclerView
         recyclerViewMain.setAdapter(mainAdapter);
 
