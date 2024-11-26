@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="#fff"
+    android:layout_height="match_parent">
+    
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sửa sản phẩm"
+        android:background="#F7EAD3"
+        android:textSize="25dp"
+        android:gravity="center"/>
+
+    <EditText
+        android:id="@+id/edtNamePR"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Sản phẩm"
+        />
+
+    <EditText
+        android:id="@+id/edtPricePR"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:hint="Gía"
+        />
+
+    <EditText
+        android:id="@+id/edtImgPR"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Hình"
+        />
+
+    <Button
+        android:id="@+id/btnUpdate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="25dp"
+        android:text="Sửa"/>
+
+
+
+
+
+</LinearLayout>

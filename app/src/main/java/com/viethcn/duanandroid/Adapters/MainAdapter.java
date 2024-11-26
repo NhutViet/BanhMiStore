@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -27,7 +26,6 @@ public class MainAdapter extends FirebaseRecyclerAdapter<MainModel, MainAdapter.
 
     @Override
     protected void onBindViewHolder(@NonNull myViewHolder myViewHolder, int i, @NonNull MainModel mainModel) {
-
         myViewHolder.name.setText("Tên: " + mainModel.getName());
         myViewHolder.price.setText("Giá: "+ mainModel.getPrice());
 
@@ -54,8 +52,6 @@ public class MainAdapter extends FirebaseRecyclerAdapter<MainModel, MainAdapter.
             }
         });
 
-
-
     }
 
 
@@ -67,12 +63,11 @@ public class MainAdapter extends FirebaseRecyclerAdapter<MainModel, MainAdapter.
         return new myViewHolder(view);
     }
 
-    static class myViewHolder extends RecyclerView.ViewHolder{
+    class myViewHolder extends RecyclerView.ViewHolder{
         CircleImageView img;
         TextView name, price;
 
         Button btnBuyNow;
-        ImageView btnEdit, btnDelete;
 
 
         public myViewHolder(@NonNull View itemView) {
@@ -82,9 +77,6 @@ public class MainAdapter extends FirebaseRecyclerAdapter<MainModel, MainAdapter.
             name = itemView.findViewById(R.id.menuItemName);
             price = itemView.findViewById(R.id.menuItemPrice);
             btnBuyNow = itemView.findViewById(R.id.btnBuyNow);
-            btnEdit = itemView.findViewById(R.id.btnEdit);
-            btnDelete = itemView.findViewById(R.id.btnDelete);
-
         }
     }
 
