@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -21,36 +20,29 @@ public class TestListData extends Fragment {
     MainAdapter mainAdapter;
     GridLayoutManager gridLayoutManager;
     FirebaseRecyclerOptions<MainModel> options;
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        FirebaseRecyclerOptions<MainModel> options =
-                new FirebaseRecyclerOptions.Builder<MainModel>()
-                        .setQuery(FirebaseDatabase.getInstance().getReference().child("Product"), MainModel.class)
-                        .build();
-
-        mainAdapter = new MainAdapter(options);
-        recyclerViewMain.setAdapter(mainAdapter);
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // Inflate the layout
         View view = inflater.inflate(R.layout.activity_test_list_data, container, false);
 
+        // Initialize RecyclerView
         recyclerViewMain = view.findViewById(R.id.recyclerMain);
 
-        gridLayoutManager = new GridLayoutManager(getContext(), 2); // 2 cột
+        // Set layout manager
+        gridLayoutManager = new GridLayoutManager(getContext(), 2); // 2 columns
+        recyclerViewMain.setLayoutManager(gridLayoutManager);
 
+        // Setup Firebase options
         options = new FirebaseRecyclerOptions.Builder<MainModel>()
                 .setQuery(FirebaseDatabase.getInstance().getReference().child("Product"), MainModel.class)
                 .build();
 
-
+        // Initialize adapter
         mainAdapter = new MainAdapter(options);
-        recyclerViewMain.setAdapter(mainAdapter);
-        recyclerViewMain.setLayoutManager(gridLayoutManager);
 
+        // Attach adapter to RecyclerView
+        recyclerViewMain.setAdapter(mainAdapter);
 
         return view;
     }
@@ -58,12 +50,14 @@ public class TestListData extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        // Start listening for data changes when the fragment starts
         mainAdapter.startListening();
     }
 
     @Override
     public void onStop() {
         super.onStop();
+        // Stop listening for data changes when the fragment stops
         mainAdapter.stopListening();
     }
 }
