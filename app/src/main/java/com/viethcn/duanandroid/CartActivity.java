@@ -34,10 +34,7 @@ public class CartActivity extends AppCompatActivity {
         tvQuantity = findViewById(R.id.tvQuantity);
         tvTotalPrice = findViewById(R.id.tvTotalPrice);
         tvProductName = findViewById(R.id.tvProductName);
-        tvProductPrice = findViewById(R.id.tvProductPrice);
-        btnDecrease = findViewById(R.id.btnDecrease);
-        btnIncrease = findViewById(R.id.btnIncrease);
-        btnCheckout = findViewById(R.id.btnCheckout);
+        tvProductPrice = findViewById(R.id.tvProductPrice);btnCheckout = findViewById(R.id.btnCheckout);
         cbTopping1 = findViewById(R.id.cbTopping1);
         cbTopping2 = findViewById(R.id.cbTopping2);
         cbTopping3 = findViewById(R.id.cbTopping3);
@@ -52,9 +49,6 @@ public class CartActivity extends AppCompatActivity {
         tvProductName.setText(name);
         tvProductPrice.setText(price);
         Glide.with(this).load(img).into(ivProductImage);
-
-        // Cập nhật giá cơ bản
-//        tvProductPrice.setText(String.format("Giá: %.2f VND", basePrice));
 
         // Xử lý sự kiện khi chọn topping
         View.OnClickListener toppingListener = v -> calculateTotalPrice();

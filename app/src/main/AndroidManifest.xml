@@ -22,13 +22,13 @@
             android:name=".CartActivity"
             android:exported="false" />
         <activity
-            android:name=".TestListData"
+            android:name=".Login"
             android:exported="false" />
         <activity
             android:name=".chitietsanpham"
             android:exported="false" />
         <activity
-            android:name=".ThucDonActivity"
+            android:name=".MainActivity"
             android:exported="false" />
         <activity
             android:name=".CheckoutActivity"
@@ -37,10 +37,10 @@
             android:name=".Register"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".ThucDonActivity"
             android:exported="false" />
         <activity
-            android:name=".Login"
+            android:name=".TestListData"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

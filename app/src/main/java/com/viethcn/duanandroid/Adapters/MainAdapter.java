@@ -26,8 +26,8 @@ public class MainAdapter extends FirebaseRecyclerAdapter<MainModel, MainAdapter.
 
     @Override
     protected void onBindViewHolder(@NonNull myViewHolder myViewHolder, int i, @NonNull MainModel mainModel) {
-        myViewHolder.name.setText(mainModel.getName());
-        myViewHolder.price.setText(mainModel.getPrice());
+        myViewHolder.name.setText("Tên: " + mainModel.getName());
+        myViewHolder.price.setText("Giá: "+ mainModel.getPrice());
 
 
 
@@ -42,9 +42,10 @@ public class MainAdapter extends FirebaseRecyclerAdapter<MainModel, MainAdapter.
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), CartActivity.class);
-                intent.putExtra("name", mainModel.getName());
+                intent.putExtra( "name", mainModel.getName());
                 intent.putExtra("price", mainModel.getPrice());
                 intent.putExtra("img", mainModel.getImg());
+
 
                 v.getContext().startActivity(intent);
 

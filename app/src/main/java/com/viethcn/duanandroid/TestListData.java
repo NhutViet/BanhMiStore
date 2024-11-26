@@ -3,6 +3,7 @@ package com.viethcn.duanandroid;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,6 +24,9 @@ public class TestListData extends AppCompatActivity {
 
         recyclerViewMain = findViewById(R.id.recyclerMain);
         recyclerViewMain.setLayoutManager(new LinearLayoutManager(this));
+
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2); // 2 cột
+        recyclerViewMain.setLayoutManager(gridLayoutManager);
 
         FirebaseRecyclerOptions<MainModel> options =
                 new FirebaseRecyclerOptions.Builder<MainModel>()
