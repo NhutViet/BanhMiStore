@@ -78,8 +78,6 @@
             android:layout_width="0dp"
             android:src="@drawable/delete"
             android:layout_height="wrap_content"/>
-
-
-
     </LinearLayout>
+
 </LinearLayout>
