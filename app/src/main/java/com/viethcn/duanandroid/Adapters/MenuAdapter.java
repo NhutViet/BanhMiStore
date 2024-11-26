@@ -1,7 +1,6 @@
 package com.viethcn.duanandroid.Adapters;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,9 +27,9 @@ import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MainAdapter extends FirebaseRecyclerAdapter<MainModel, MainAdapter.myViewHolder> {
+public class MenuAdapter extends FirebaseRecyclerAdapter<MainModel, MenuAdapter.myViewHolder> {
 
-    public MainAdapter(@NonNull FirebaseRecyclerOptions<MainModel> options) {
+    public MenuAdapter(@NonNull FirebaseRecyclerOptions<MainModel> options) {
         super(options);
     }
 
@@ -101,6 +100,13 @@ public class MainAdapter extends FirebaseRecyclerAdapter<MainModel, MainAdapter.
             builder.setNegativeButton("Huỷ", (dialog, which) -> dialog.dismiss());
             builder.show();
         });
+    }
+
+    // Đảm bảo RecyclerView luôn cập nhật khi dữ liệu thay đổi
+    @Override
+    public void onDataChanged() {
+        super.onDataChanged();
+        notifyDataSetChanged();
     }
 
     @NonNull
