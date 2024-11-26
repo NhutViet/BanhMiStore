@@ -35,19 +35,19 @@ public class ThucDonActivity extends AppCompatActivity{
 
         // Tạo danh sách sản phẩm mẫu
         productList = new ArrayList<>();
-        productList.add(new Product( R.drawable.banhbao, "Bánh bao đặc biệt",35000));
-        productList.add(new Product(R.drawable.chalua,"Chả lụa",140000));
-        productList.add(new Product(R.drawable.pate,"Pate gan",90000));
-        productList.add(new Product(R.drawable.thitheo,"Xá xíu heo quay",300000));
-        productList.add(new Product(R.drawable.comchay,"Cơm cháy",50000));
-        productList.add(new Product(R.drawable.giothu,"Giò thủ",150000));
-        productList.add(new Product(R.drawable.giothu,"Giò thủ",150000));
-        productList.add(new Product(R.drawable.giothu,"Giò thủ",150000));
-        productList.add(new Product(R.drawable.giothu,"Giò thủ",150000));
-        productList.add(new Product(R.drawable.giothu,"Giò thủ",150000));
-        productList.add(new Product(R.drawable.giothu,"Giò thủ",150000));
-        productList.add(new Product(R.drawable.giothu,"Giò thủ",150000));
-        productList.add(new Product(R.drawable.giothu,"Giò thủ",150000));
+        productList.add(new Product( R.drawable.banhbao, "Bánh bao đặc biệt","35000"));
+        productList.add(new Product(R.drawable.chalua,"Chả lụa","140000"));
+        productList.add(new Product(R.drawable.pate,"Pate gan","90000"));
+        productList.add(new Product(R.drawable.thitheo,"Xá xíu heo quay","300000"));
+        productList.add(new Product(R.drawable.comchay,"Cơm cháy","50000"));
+        productList.add(new Product(R.drawable.giothu,"Giò thủ","150000"));
+        productList.add(new Product(R.drawable.giothu,"Giò thủ","150000"));
+        productList.add(new Product(R.drawable.giothu,"Giò thủ","150000"));
+        productList.add(new Product(R.drawable.giothu,"Giò thủ","150000"));
+        productList.add(new Product(R.drawable.giothu,"Giò thủ","150000"));
+        productList.add(new Product(R.drawable.giothu,"Giò thủ","150000"));
+        productList.add(new Product(R.drawable.giothu,"Giò thủ","150000"));
+        productList.add(new Product(R.drawable.giothu,"Giò thủ","150000"));
 
 
         // Thêm các sản phẩm khác vào productList...

@@ -30,13 +30,13 @@ public class MainAdapter extends FirebaseRecyclerAdapter<MainModel, MainAdapter.
         myViewHolder.price.setText("Giá: "+ mainModel.getPrice());
 
 
-
         Glide.with(myViewHolder.img.getContext())
                 .load(mainModel.getImg())
                 .placeholder(com.google.android.gms.auth.api.R.drawable.common_google_signin_btn_icon_dark)
                 .circleCrop()
                 .error(com.firebase.ui.database.R.drawable.common_google_signin_btn_icon_dark_normal)
                 .into(myViewHolder.img);
+
 
         myViewHolder.btnBuyNow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,8 +53,6 @@ public class MainAdapter extends FirebaseRecyclerAdapter<MainModel, MainAdapter.
         });
 
     }
-
-
 
 
     @NonNull

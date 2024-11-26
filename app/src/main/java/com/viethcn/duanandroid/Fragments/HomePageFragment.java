@@ -42,10 +42,10 @@ public class HomePageFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        listProduct.add(new Product(R.drawable.product01, "Banh mi", 12000));
-        listProduct.add(new Product(R.drawable.product01, "Banh my", 13000));
-        listProduct.add(new Product(R.drawable.product01, "Banh mi's", 14000));
-        listProduct.add(new Product(R.drawable.product01, "Banh my's", 15000));
+        listProduct.add(new Product(R.drawable.product01, "Banh mi", "12000"));
+        listProduct.add(new Product(R.drawable.product01, "Banh my", "13000"));
+        listProduct.add(new Product(R.drawable.product01, "Banh mi's", "14000"));
+        listProduct.add(new Product(R.drawable.product01, "Banh my's", "15000"));
     }
 
 

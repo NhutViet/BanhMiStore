@@ -28,9 +28,6 @@
             android:name=".chitietsanpham"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
-            android:exported="false" />
-        <activity
             android:name=".CheckoutActivity"
             android:exported="false" />
         <activity
@@ -40,7 +37,7 @@
             android:name=".ThucDonActivity"
             android:exported="false" />
         <activity
-            android:name=".TestListData"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
