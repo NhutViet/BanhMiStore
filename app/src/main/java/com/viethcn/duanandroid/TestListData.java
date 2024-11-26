@@ -5,8 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+<<<<<<< Updated upstream
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+=======
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+>>>>>>> Stashed changes
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,9 +30,28 @@ public class TestListData extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+<<<<<<< Updated upstream
+=======
+        FirebaseRecyclerOptions<MainModel> options =
+                new FirebaseRecyclerOptions.Builder<MainModel>()
+                        .setQuery(FirebaseDatabase.getInstance().getReference().child("Product"), MainModel.class)
+                        .build();
+
+        mainAdapter = new MainAdapter(options);
+        recyclerViewMain.setAdapter(mainAdapter);
+>>>>>>> Stashed changes
+    }
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_test_list_data, container, false);
+
+        recyclerViewMain = view.findViewById(R.id.recyclerMain);
+        recyclerViewMain.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        return view;
     }
 
     @Override
+<<<<<<< Updated upstream
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_test_list_data, container, false);
 
@@ -49,6 +73,8 @@ public class TestListData extends Fragment {
     }
 
     @Override
+=======
+>>>>>>> Stashed changes
     public void onStart() {
         super.onStart();
         mainAdapter.startListening();
