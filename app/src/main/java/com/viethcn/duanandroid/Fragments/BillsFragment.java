@@ -15,7 +15,6 @@ import com.viethcn.duanandroid.R;
 public class BillsFragment extends Fragment {
 
     public BillsFragment() {
-        // Required empty public constructor
     }
 
     @Override

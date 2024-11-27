@@ -1,6 +1,8 @@
 package com.viethcn.duanandroid;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +13,9 @@ import com.viethcn.duanandroid.Fragments.HomePageFragment;
 import com.viethcn.duanandroid.Fragments.BillsFragment;
 import com.viethcn.duanandroid.Fragments.MenuBanhMiFragment;
 import com.viethcn.duanandroid.Fragments.SettingFragment;
+import com.viethcn.duanandroid.Models.MainModel;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -46,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
             return true;
         });
     }
-
     // This func to take the main fragment off and then replace another fragment
     private void replaceFragment(Fragment layout) {
         getSupportFragmentManager().beginTransaction().replace(R.id.mainViewHomePage, layout).commit();

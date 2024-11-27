@@ -19,11 +19,11 @@ import java.util.List;
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
 
     Context context;
-    List<MainModel> listProduct;
+    List<MainModel> mList;
 
     public ProductAdapter(Context context, List<MainModel> productList) {
         this.context = context;
-        this.listProduct = productList;
+        this.mList = productList;
     }
 
     @NonNull
@@ -36,7 +36,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
 
-        MainModel item = listProduct.get(position);
+        MainModel item = mList.get(position);
 
         Glide.with(holder.imgProduct.getContext())
                 .load(item.getImg())
@@ -52,7 +52,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
     @Override
     public int getItemCount() {
-        return listProduct.size();
+        return mList.size();
     }
 
     public static class ProductViewHolder extends ViewHolder {
