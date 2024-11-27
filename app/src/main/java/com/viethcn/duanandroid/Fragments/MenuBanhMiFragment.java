@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,15 +26,33 @@ public class MenuBanhMiFragment extends Fragment {
     FirebaseRecyclerOptions<MainModel> options;
     FloatingActionButton fabAdd;
 
+    SearchView searchView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout
-        View view = inflater.inflate(R.layout.activity_test_list_data, container, false);
+        View view = inflater.inflate(R.layout.fragment_menu, container, false);
 
         recyclerViewMain = view.findViewById(R.id.recyclerMain);
         fabAdd = view.findViewById(R.id.fabAdd);
+        searchView = view.findViewById(R.id.searchView);
 
         setMenuData();
+
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                txtSearch(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                txtSearch(newText);
+                return false;
+            }
+        });
 
         fabAdd.setOnClickListener(v -> {
             Fragment insertProductFragment = new InsrtPrdctFraqment();
@@ -71,4 +90,19 @@ public class MenuBanhMiFragment extends Fragment {
         super.onStop();
         mainAdapter.stopListening();
     }
+
+
+    private void txtSearch(String str) {
+        FirebaseRecyclerOptions<MainModel> options = new FirebaseRecyclerOptions.Builder<MainModel>()
+                .setQuery(FirebaseDatabase.getInstance().getReference().child("Product").orderByChild("name").startAt(str).endAt(str+"~"), MainModel.class)
+                .build();
+
+
+        mainAdapter = new MenuAdapter(options);
+
+        mainAdapter.startListening();
+        recyclerViewMain.setAdapter(mainAdapter);
+    }
+
+
 }
