@@ -14,7 +14,6 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:text="Bakery Shop"
             android:textAlignment="center"
             android:textColor="@color/blackCustom"
@@ -24,9 +23,9 @@
         <com.denzcoskun.imageslider.ImageSlider
             android:id="@+id/image_slider"
 
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:layout_width="match_parent"
-            android:layout_height="160dp"
+            android:layout_height="170dp"
 
             app:iss_auto_cycle="true"
             app:iss_period="2000"
@@ -62,7 +61,7 @@
             android:layout_marginTop="10dp"
             android:text="@string/xem_th_m"
             android:drawableEnd="@drawable/right_14"
-            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
         />
 
         <androidx.recyclerview.widget.RecyclerView

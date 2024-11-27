@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
             int index = item.getItemId();
             if (index == R.id.bottom_nav_search) {
                 replaceFragment(new BillsFragment());
-            } else if (index == R.id.bottom_nav_userIdentify) {
+            } else if (index == R.id.bottom_nav_menu) {
                 replaceFragment(new MenuBanhMiFragment());
             } else if (index == R.id.bottom_nav_setting) {
                 replaceFragment(new SettingFragment());
@@ -49,6 +49,6 @@ public class MainActivity extends AppCompatActivity {
 
     // This func to take the main fragment off and then replace another fragment
     private void replaceFragment(Fragment layout) {
-        getSupportFragmentManager().beginTransaction().replace(R.id.homePageMain, layout).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.mainViewHomePage, layout).commit();
     }
 }

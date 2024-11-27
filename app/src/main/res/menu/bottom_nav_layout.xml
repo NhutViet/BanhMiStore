@@ -11,7 +11,7 @@
         android:icon="@drawable/outline_search_26"
         />
     <item
-        android:id="@+id/bottom_nav_userIdentify"
+        android:id="@+id/bottom_nav_menu"
         android:title=""
         android:icon="@drawable/baseline_restaurant_menu_24"
         />

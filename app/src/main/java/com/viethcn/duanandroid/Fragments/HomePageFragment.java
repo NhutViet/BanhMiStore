@@ -1,12 +1,12 @@
 package com.viethcn.duanandroid.Fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +15,13 @@ import android.widget.TextView;
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.viethcn.duanandroid.Adapters.ProductAdapter;
-import com.viethcn.duanandroid.Models.Product;
+import com.viethcn.duanandroid.Models.MainModel;
 import com.viethcn.duanandroid.R;
 
 import java.util.ArrayList;
@@ -25,61 +30,64 @@ import java.util.List;
 public class HomePageFragment extends Fragment {
 
     RecyclerView productRcv;
-
-    // Danh sách sản phẩm
-    List<Product> listProduct = new ArrayList<>();
-
-    // Obj của thư viện bên t3, và các bên liên quan
+    List<MainModel> mList;
     ImageSlider imgSlider;
-
     TextView txtXemThem;
     List<SlideModel> imgList = new ArrayList<>();
-
-    public HomePageFragment() {}
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        listProduct.add(new Product(R.drawable.product01, "Banh mi", "12000"));
-        listProduct.add(new Product(R.drawable.product01, "Banh my", "13000"));
-        listProduct.add(new Product(R.drawable.product01, "Banh mi's", "14000"));
-        listProduct.add(new Product(R.drawable.product01, "Banh my's", "15000"));
-    }
-
+    DatabaseReference ref;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View viewHolder = inflater.inflate(R.layout.fragment_home_page, container, false);
-
-        // Khởi tạo recyclerView và set adapter
         productRcv = viewHolder.findViewById(R.id.productRcV);
         txtXemThem = viewHolder.findViewById(R.id.txtXemThem);
-        ProductAdapter adapter = new ProductAdapter(getContext(), listProduct);
+        fetchData();
+
+        ProductAdapter adapter = new ProductAdapter(getContext(), mList);
         productRcv.setAdapter(adapter);
         productRcv.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
-        // Khởi tạo slider và set ảnh lên imgSlider
         imgSlider = viewHolder.findViewById(R.id.image_slider);
 
-
-        txtXemThem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(), MenuBanhMiFragment.class));
-            }
-        });
+        txtXemThem.setOnClickListener(v -> requireActivity()
+                .getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.mainViewHomePage, new MenuBanhMiFragment())
+                .commit());
 
         setImgSlider();
 
         return viewHolder;
+
+    }
+    private void fetchData() {
+        ref = FirebaseDatabase.getInstance().getReference("Product");
+
+        mList = new ArrayList<>();
+
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                mList.clear();
+
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    String img = dataSnapshot.child("img").getValue(String.class);
+                    String name = dataSnapshot.child("name").getValue(String.class);
+                    String price = dataSnapshot.child("price").getValue(String.class);
+                    mList.add(new MainModel(img, name, price));
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError error) {
+                Log.w("///===ERROR", error.getMessage() );
+            }
+        });
     }
 
     private void setImgSlider(){
         imgList.add(new SlideModel(R.drawable.banner01, ScaleTypes.FIT));
         imgList.add(new SlideModel(R.drawable.banner02, ScaleTypes.FIT));
         imgSlider.setImageList(imgList);
-
     }
 }
