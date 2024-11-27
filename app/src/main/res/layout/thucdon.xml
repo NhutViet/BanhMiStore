@@ -54,7 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:backgroundTint="#E82A1C"
-        android:text="MUA NGAY"
+        android:text="THÊM GIỎ HÀNG"
         android:textColor="#FFF"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"

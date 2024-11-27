@@ -10,11 +10,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.viethcn.duanandroid.Adapters.PaymenAdapter;
+import com.viethcn.duanandroid.Models.MainModel;
 import com.viethcn.duanandroid.R;
 
-public class BillsFragment extends Fragment {
+import java.util.List;
 
-    public BillsFragment() {
+public class CardPaymentFragment extends Fragment {
+    RecyclerView rcv;
+    List<MainModel> mList;
+    PaymenAdapter adapter;
+
+    public CardPaymentFragment() {
     }
 
     @Override
@@ -25,9 +32,10 @@ public class BillsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_bills, container, false);
-        RecyclerView rcv = view.findViewById(R.id.rcvInf);
-        LinearLayoutManager layout = new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false);
+        View view = inflater.inflate(R.layout.activity_checkout, container, false);
+        rcv = view.findViewById(R.id.paymentRcV);
+
+        LinearLayoutManager layout = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL,false);
         rcv.setLayoutManager(layout);
         rcv.setHasFixedSize(true);
         return view;

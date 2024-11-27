@@ -18,7 +18,7 @@ public class CheckoutActivity extends AppCompatActivity {
     private EditText etName, etAddress, etPhone;
     private RadioGroup paymentOptions;
     private Button btnCheckout;
-    private TextView totalAmount, shippingFee, grandTotal, tvProductQuantity, tvProductTotalPrice, tvSelectedToppings;
+    private TextView  grandTotal, tvSelectedToppings;
 
     private int productPrice = 100000;  // Giá sản phẩm cơ bản
     private int shippingCost = 20000;   // Phí vận chuyển cố định
@@ -36,11 +36,7 @@ public class CheckoutActivity extends AppCompatActivity {
         etPhone = findViewById(R.id.etPhone);
         paymentOptions = findViewById(R.id.paymentOptions);
         btnCheckout = findViewById(R.id.btnCheckout);
-        totalAmount = findViewById(R.id.totalAmount);
-        shippingFee = findViewById(R.id.shippingFee);
         grandTotal = findViewById(R.id.grandTotal);
-        tvProductQuantity = findViewById(R.id.productQuantity);
-        tvProductTotalPrice = findViewById(R.id.totalAmount);
         tvSelectedToppings = findViewById(R.id.selectedToppings);
         LinearLayout subMenuCreditCard = findViewById(R.id.subMenuCreditCard);
         LinearLayout subMenuEWallet = findViewById(R.id.subMenuEWallet);
@@ -54,10 +50,6 @@ public class CheckoutActivity extends AppCompatActivity {
         boolean topping3 = getIntent().getBooleanExtra("topping3", false);
         boolean topping4 = getIntent().getBooleanExtra("topping4", false);
         boolean topping5 = getIntent().getBooleanExtra("topping5", false);
-
-        // Hiển thị dữ liệu sản phẩm
-        tvProductQuantity.setText("Số lượng: " + quantity);
-        tvProductTotalPrice.setText("Thành tiền: " + String.format("%.2f VND", totalPrice));
 
         // Lấy và hiển thị tên topping đã chọn
         StringBuilder toppings = new StringBuilder("Toppings: ");
@@ -133,9 +125,6 @@ public class CheckoutActivity extends AppCompatActivity {
         int total = productTotal + toppingTotal;
         int grandTotalAmount = total + shippingCost;
 
-        // Cập nhật giao diện
-        totalAmount.setText("Thành tiền: " + productTotal + " VND");
-        shippingFee.setText("Phí vận chuyển: " + shippingCost + " VND");
         grandTotal.setText("Tổng cộng: " + grandTotalAmount + " VND");
     }
 }

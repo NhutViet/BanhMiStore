@@ -1,8 +1,6 @@
 package com.viethcn.duanandroid;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,12 +8,9 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.viethcn.duanandroid.Fragments.HomePageFragment;
-import com.viethcn.duanandroid.Fragments.BillsFragment;
+import com.viethcn.duanandroid.Fragments.CardPaymentFragment;
 import com.viethcn.duanandroid.Fragments.MenuBanhMiFragment;
 import com.viethcn.duanandroid.Fragments.SettingFragment;
-import com.viethcn.duanandroid.Models.MainModel;
-
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         bottomNav.setOnItemSelectedListener(item -> {
             int index = item.getItemId();
             if (index == R.id.bottom_nav_search) {
-                replaceFragment(new BillsFragment());
+                replaceFragment(new CardPaymentFragment());
             } else if (index == R.id.bottom_nav_menu) {
                 replaceFragment(new MenuBanhMiFragment());
             } else if (index == R.id.bottom_nav_setting) {

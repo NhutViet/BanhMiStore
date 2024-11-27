@@ -1,8 +1,4 @@
-package com.viethcn.duanandroid;
-
-import android.util.Log;
-
-import androidx.annotation.NonNull;
+package com.viethcn.duanandroid.DAO;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

@@ -18,7 +18,7 @@ import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.viethcn.duanandroid.Adapters.ProductAdapter;
 import com.viethcn.duanandroid.Models.MainModel;
-import com.viethcn.duanandroid.ProductDAO;
+import com.viethcn.duanandroid.DAO.ProductDAO;
 import com.viethcn.duanandroid.R;
 
 import java.util.ArrayList;
