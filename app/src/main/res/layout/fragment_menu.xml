@@ -12,7 +12,7 @@
         android:background="#F7EAD3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="10dp"
+        android:layout_marginTop="30dp"
         >
         <TextView
             android:layout_width="match_parent"
@@ -25,13 +25,22 @@
             android:layout_alignParentTop="true"
             />
 
+
+
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/searchView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerMain"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvtitel"
-            android:layout_marginTop="16dp"
-            />
+            android:layout_below="@+id/searchView"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="-2dp" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:layout_width="wrap_content"
