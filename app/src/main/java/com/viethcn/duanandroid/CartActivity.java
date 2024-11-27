@@ -6,122 +6,155 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.bumptech.glide.Glide;
-
-import de.hdodenhof.circleimageview.CircleImageView;
+import java.text.NumberFormat;
 
 public class CartActivity extends AppCompatActivity {
 
-    private TextView tvQuantity, tvTotalPrice, tvProductPrice, tvProductName;
-    private Button imgDecrease, imgIncrease, btnCheckout;
-    private CheckBox cbTopping1, cbTopping2, cbTopping3, cbTopping4, cbTopping5;
+    // Khai báo các thành phần giao diện người dùng
+    private TextView tvCartTotal, tvTotalPayment, tvDeliveryFee, tvQuantity1, tvQuantity2;
+    private ImageView btnIncrease1, btnDecrease1, btnIncrease2, btnDecrease2, btnDelete1, btnDelete2;
+    private CheckBox toppingEgg1, toppingCheese1, toppingEgg2, toppingCheese2;
+    private Button btnApplyPromo, btnProceedCheckout;
+    private EditText etPromoCode;
 
-    CircleImageView ivProductImage;
+    private int item1Quantity = 1;
+    private int item2Quantity = 1;
+    private int item1Price = 80000;
+    private int item2Price = 80000;
+    private int deliveryFee = 15000;
+    private int discount = 0;
 
-    private int quantity = 1; // Số lượng mặc định
-    private double basePrice = 100000; // Giá bánh mì cơ bản
-    private double totalPrice = basePrice; // Tổng giá
-
-    @SuppressLint({"WrongViewCast", "MissingInflatedId"})
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cart);
+        setContentView(R.layout.activity_main);
 
-        // Liên kết các view từ XML
-        tvQuantity = findViewById(R.id.tvQuantity);
-        tvTotalPrice = findViewById(R.id.tvTotalPrice);
-        tvProductName = findViewById(R.id.tvProductName);
-        tvProductPrice = findViewById(R.id.tvProductPrice);
-        imgDecrease = findViewById(R.id.imgDecrease);
-        imgIncrease = findViewById(R.id.imgIncrease);
-        btnCheckout = findViewById(R.id.btnCheckout);
-        cbTopping1 = findViewById(R.id.cbTopping1);
-        cbTopping2 = findViewById(R.id.cbTopping2);
-        cbTopping3 = findViewById(R.id.cbTopping3);
-        cbTopping4 = findViewById(R.id.cbTopping4);
-        cbTopping5 = findViewById(R.id.cbTopping5);
-        ivProductImage = findViewById(R.id.ivProductImage);
+        // Khởi tạo các thành phần giao diện người dùng
+        tvCartTotal = findViewById(R.id.tv_cart_total);
+        tvTotalPayment = findViewById(R.id.tv_total_payment);
+        tvDeliveryFee = findViewById(R.id.tv_delivery_fee);
+        tvQuantity1 = findViewById(R.id.tv_quantity_1);
+        tvQuantity2 = findViewById(R.id.tv_quantity_2);
+        btnIncrease1 = findViewById(R.id.btn_increase_1);
+        btnDecrease1 = findViewById(R.id.btn_decrease_1);
+        btnIncrease2 = findViewById(R.id.btn_increase_2);
+        btnDecrease2 = findViewById(R.id.btn_decrease_2);
+        btnDelete1 = findViewById(R.id.ic_delete);
+        btnDelete2 = findViewById(R.id.ic_delete_2);
+        toppingEgg1 = findViewById(R.id.topping_egg_1);
+        toppingCheese1 = findViewById(R.id.topping_cheese_1);
+        toppingEgg2 = findViewById(R.id.topping_egg);
+        toppingCheese2 = findViewById(R.id.topping_cheese);
+        btnApplyPromo = findViewById(R.id.btn_apply_promo);
+        btnProceedCheckout = findViewById(R.id.btn_proceed_checkout);
+        etPromoCode = findViewById(R.id.et_promo_code);
 
-        String name = getIntent().getStringExtra("name");
-        String price = getIntent().getStringExtra("price");
-        String img = getIntent().getStringExtra("img");
+        // Cập nhật giá trị ban đầu
+        updateCartSummary();
 
-        tvProductName.setText(name);
-        tvProductPrice.setText(price);
-        Glide.with(this).load(img).into(ivProductImage);
-
-        // Cập nhật giá cơ bản
-//        tvProductPrice.setText(String.format("Giá: %.2f VND", basePrice));
-
-        // Xử lý sự kiện khi chọn topping
-        View.OnClickListener toppingListener = v -> calculateTotalPrice();
-        cbTopping1.setOnClickListener(toppingListener);
-        cbTopping2.setOnClickListener(toppingListener);
-        cbTopping3.setOnClickListener(toppingListener);
-        cbTopping4.setOnClickListener(toppingListener);
-        cbTopping5.setOnClickListener(toppingListener);
-
-        // Nút tăng số lượng
-        imgIncrease.setOnClickListener(v -> {
-            quantity++;
-            tvQuantity.setText(String.valueOf(quantity)); // Cập nhật giao diện
-            calculateTotalPrice(); // Tính lại tổng giá
+        // Tăng/giảm số lượng cho món 1
+        btnIncrease1.setOnClickListener(v -> {
+            item1Quantity++;
+            tvQuantity1.setText(String.valueOf(item1Quantity));
+            updateCartSummary();
         });
 
-        // Nút giảm số lượng
-        imgDecrease.setOnClickListener(v -> {
-            if (quantity > 1) { // Không cho phép số lượng < 1
-                quantity--;
-                tvQuantity.setText(String.valueOf(quantity)); // Cập nhật giao diện
-                calculateTotalPrice(); // Tính lại tổng giá
+        btnDecrease1.setOnClickListener(v -> {
+            if (item1Quantity > 1) {
+                item1Quantity--;
+                tvQuantity1.setText(String.valueOf(item1Quantity));
+                updateCartSummary();
             }
         });
 
-        btnCheckout.setOnClickListener(v -> {
-            // Hiển thị thông báo Toast
-            Toast.makeText(CartActivity.this, "Đặt hàng thành công!", Toast.LENGTH_SHORT).show();
-
-            // Delay 1 giây trước khi chuyển Activity
-            new android.os.Handler().postDelayed(() -> {
-                Intent intent = new Intent(CartActivity.this, CheckoutActivity.class);
-
-                // Truyền số lượng, tổng giá và topping
-                intent.putExtra("quantity", quantity);
-                intent.putExtra("totalPrice", totalPrice);
-
-                // Truyền topping đã chọn
-                intent.putExtra("topping1", cbTopping1.isChecked());
-                intent.putExtra("topping2", cbTopping2.isChecked());
-                intent.putExtra("topping3", cbTopping3.isChecked());
-                intent.putExtra("topping4", cbTopping4.isChecked());
-                intent.putExtra("topping5", cbTopping5.isChecked());
-
-                // Chuyển đến CheckoutActivity
-                startActivity(intent);
-            }, 1000);
+        // Tăng/giảm số lượng cho món 2
+        btnIncrease2.setOnClickListener(v -> {
+            item2Quantity++;
+            tvQuantity2.setText(String.valueOf(item2Quantity));
+            updateCartSummary();
         });
+
+        btnDecrease2.setOnClickListener(v -> {
+            if (item2Quantity > 1) {
+                item2Quantity--;
+                tvQuantity2.setText(String.valueOf(item2Quantity));
+                updateCartSummary();
+            }
+        });
+
+        // Xóa món 1
+        btnDelete1.setOnClickListener(v -> {
+            item1Quantity = 0;
+            updateCartSummary();
+        });
+
+        // Xóa món 2
+        btnDelete2.setOnClickListener(v -> {
+            item2Quantity = 0;
+            updateCartSummary();
+        });
+
+        // Xử lý chọn topping cho món 1
+        toppingEgg1.setOnCheckedChangeListener((buttonView, isChecked) -> updateCartSummary());
+        toppingCheese1.setOnCheckedChangeListener((buttonView, isChecked) -> updateCartSummary());
+
+        // Xử lý chọn topping cho món 2
+        toppingEgg2.setOnCheckedChangeListener((buttonView, isChecked) -> updateCartSummary());
+        toppingCheese2.setOnCheckedChangeListener((buttonView, isChecked) -> updateCartSummary());
+
+        // Áp dụng mã giảm giá
+        btnApplyPromo.setOnClickListener(v -> {
+            String promoCode = etPromoCode.getText().toString();
+            if (promoCode.equalsIgnoreCase("DISCOUNT10")) {
+                discount = 10; // Giảm giá 10%
+            } else {
+                discount = 0;
+            }
+            updateCartSummary();
+        });
+
+        // Tiến hành thanh toán
+        btnProceedCheckout.setOnClickListener(v -> {
+            // Logic để chuyển sang màn hình thanh toán
+            Toast.makeText(CartActivity.this, "Tiến hành thanh toán", Toast.LENGTH_SHORT).show();
+        });
+        // Tạo một Intent để chuyển sang màn hình CheckoutActivity
+        Intent intent = new Intent(CartActivity.this, CheckoutActivity.class);
+
+        // Truyền dữ liệu cần thiết (ví dụ như tổng giỏ hàng, phí giao hàng, v.v.)
+        intent.putExtra("TOTAL_CART", tvCartTotal.getText().toString());
+        intent.putExtra("TOTAL_PAYMENT", tvTotalPayment.getText().toString());
+        intent.putExtra("DELIVERY_FEE", tvDeliveryFee.getText().toString());
+
+        // Khởi động màn hình CheckoutActivity
+        startActivity(intent);
     }
 
-    // Phương thức tính tổng giá
-    private void calculateTotalPrice() {
-        double toppingsPrice = 0;
+    private void updateCartSummary() {
+        // Tính toán tổng giá trị giỏ hàng
+        int item1Total = item1Price * item1Quantity;
+        int item2Total = item2Price * item2Quantity;
 
-        // Kiểm tra từng topping
-        if (cbTopping1.isChecked()) toppingsPrice += 10000;
-        if (cbTopping2.isChecked()) toppingsPrice += 10000;
-        if (cbTopping3.isChecked()) toppingsPrice += 10000;
-        if (cbTopping4.isChecked()) toppingsPrice += 10000;
-        if (cbTopping5.isChecked()) toppingsPrice += 10000;
+        // Tính tổng giá trị các topping
+        int toppingCost1 = (toppingEgg1.isChecked() ? 5000 : 0) + (toppingCheese1.isChecked() ? 7000 : 0);
+        int toppingCost2 = (toppingEgg2.isChecked() ? 5000 : 0) + (toppingCheese2.isChecked() ? 7000 : 0);
 
-        // Tổng giá = (giá cơ bản + giá topping) * số lượng
-        totalPrice = (basePrice + toppingsPrice) * quantity;
+        // Tính tổng chi phí
+        int cartTotal = item1Total + item2Total + toppingCost1 + toppingCost2 + deliveryFee;
+        int totalAfterDiscount = cartTotal - (cartTotal * discount / 100);
 
-        // Cập nhật tổng giá hiển thị
-        tvTotalPrice.setText(String.format("Tổng tiền: %.2f VND", totalPrice));
+        // Cập nhật giao diện
+        tvCartTotal.setText("Tổng giỏ hàng: " + NumberFormat.getInstance().format(cartTotal));
+        tvDeliveryFee.setText("Phí giao hàng: " + NumberFormat.getInstance().format(deliveryFee));
+        tvTotalPayment.setText("Tổng thanh toán: " + NumberFormat.getInstance().format(totalAfterDiscount));
     }
 }
+
