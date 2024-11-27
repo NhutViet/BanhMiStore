@@ -4,31 +4,91 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Fragments.SettingFragment"
+    android:background="#fff"
     >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="25dp"
-
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
         android:orientation="vertical"
         >
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:text="Cài đặt"
             android:textSize="35sp"
             android:textStyle="bold"
 
             android:textAlignment="center"
             />
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+
+        android:layout_gravity="center"
+        android:layout_margin="8dp">
+
+        <ImageView
+            android:id="@+id/profileImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+        android:src="@drawable/profile" />
+    </androidx.cardview.widget.CardView>
+
+
+
+    <!-- Profile Settings Fields -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Họ Tên"
+            android:textSize="14sp"
+            android:textColor="#808080"
+            android:layout_marginTop="16dp" />
+
+        <TextView
+            android:id="@+id/nameField"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/rounded_background"
+            android:textSize="16sp"
+            android:padding="8dp"
+            android:inputType="textPersonName"
+            android:focusable="false"
+            android:clickable="false" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Email"
+            android:textSize="14sp"
+            android:textColor="#808080"
+            android:layout_marginTop="8dp" />
+
+        <EditText
+            android:id="@+id/emailField"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/rounded_background"
+            android:textSize="16sp"
+            android:padding="8dp"
+            android:inputType="textEmailAddress"
+            android:focusable="false"
+            android:clickable="false" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:padding="15dp"
-            android:layout_marginVertical="15dp"
+         android:layout_marginTop="10dp"
             >
             <ImageView
                 android:layout_width="40dp"
@@ -57,7 +117,6 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:padding="15dp"
-            android:layout_marginVertical="15dp"
             >
             <ImageView
                 android:layout_width="40dp"
@@ -86,7 +145,6 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:padding="15dp"
-            android:layout_marginVertical="15dp"
             >
             <ImageView
                 android:layout_width="40dp"
@@ -115,7 +173,6 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:padding="15dp"
-            android:layout_marginVertical="15dp"
             >
             <ImageView
                 android:layout_width="40dp"
