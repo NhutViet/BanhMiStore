@@ -10,7 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
-import com.viethcn.duanandroid.Models.Product;
+import com.bumptech.glide.Glide;
+import com.viethcn.duanandroid.Models.MainModel;
 import com.viethcn.duanandroid.R;
 
 import java.util.List;
@@ -18,14 +19,11 @@ import java.util.List;
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
 
     Context context;
-    List<Product> listProduct;
+    List<MainModel> mList;
 
-    public ProductAdapter(Context context, List<Product> productList) {
+    public ProductAdapter(Context context, List<MainModel> productList) {
         this.context = context;
-        this.listProduct = productList;
-    }
-
-    public ProductAdapter(String bánhBaoĐặcBiệt, String s, int banhbao) {
+        this.mList = productList;
     }
 
     @NonNull
@@ -37,9 +35,16 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
-        Product item = listProduct.get(position);
 
-        holder.imgProduct.setImageResource(item.getImg());
+        MainModel item = mList.get(position);
+
+        Glide.with(holder.imgProduct.getContext())
+                .load(item.getImg())
+                .placeholder(com.firebase.ui.database.R.drawable.common_google_signin_btn_icon_dark)
+                .error(com.firebase.ui.database.R.drawable.common_google_signin_btn_icon_dark_normal)
+                .centerCrop()
+                .into(holder.imgProduct);
+
         holder.txtName.setText(item.getName());
         String priceValue = "Giá: " + item.getPrice();
         holder.txtPrice.setText(priceValue);
@@ -47,12 +52,14 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
     @Override
     public int getItemCount() {
-        return listProduct.size();
+        return mList.size();
     }
 
     public static class ProductViewHolder extends ViewHolder {
+
         ImageView imgProduct;
         TextView txtName, txtPrice;
+
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
 

@@ -39,21 +39,21 @@ dependencies {
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
+    implementation(libs.firebase.auth)
+    implementation(libs.firebase.database)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 
-    implementation(libs.firebase.auth)
-    implementation(libs.firebase.database)
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
     implementation (libs.firebase.auth.v2210)
     implementation(libs.play.services.auth)
     implementation (libs.glide)
-    implementation("com.firebaseui:firebase-ui-database:8.0.1")
-    implementation ("de.hdodenhof:circleimageview:3.1.0")
-    implementation("androidx.recyclerview:recyclerview:1.3.2")
-    implementation("androidx.cardview:cardview:1.0.0")
+    implementation(libs.firebase.ui.database)
 
-
+    implementation (libs.circleimageview)
+    implementation(libs.recyclerview)
+    implementation(libs.cardview)
+    implementation(libs.dialogplus)
 }

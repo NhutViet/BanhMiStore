@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 
-public class MhChao extends AppCompatActivity {
+public class WelcomeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +24,7 @@ public class MhChao extends AppCompatActivity {
 
         // Delay navigation to Login screen
         new Handler().postDelayed(() -> {
-            Intent intent = new Intent(MhChao.this, Login.class);
+            Intent intent = new Intent(WelcomeActivity.this, LoginActivity.class);
             startActivity(intent);
             finish(); // Close splash screen
         }, 9000);
