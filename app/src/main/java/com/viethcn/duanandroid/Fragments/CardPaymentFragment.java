@@ -9,11 +9,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.viethcn.duanandroid.Adapters.PaymenAdapter;
+import com.viethcn.duanandroid.DAO.ProductDAO;
 import com.viethcn.duanandroid.Models.MainModel;
 import com.viethcn.duanandroid.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CardPaymentFragment extends Fragment {
@@ -21,12 +24,12 @@ public class CardPaymentFragment extends Fragment {
     List<MainModel> mList;
     PaymenAdapter adapter;
 
-    public CardPaymentFragment() {
-    }
+    public CardPaymentFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mList = new ArrayList<>();
 
     }
 
@@ -38,6 +41,7 @@ public class CardPaymentFragment extends Fragment {
         LinearLayoutManager layout = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL,false);
         rcv.setLayoutManager(layout);
         rcv.setHasFixedSize(true);
+
         return view;
     }
 }

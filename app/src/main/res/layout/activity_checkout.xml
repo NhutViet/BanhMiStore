@@ -11,11 +11,10 @@
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:orientation="vertical"
-        android:layout_marginTop="20dp">
+        >
 
         <!-- Phần: Thông tin sản phẩm -->
         <TextView
-            android:id="@+id/productSectionTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Sản phẩm"
@@ -26,23 +25,22 @@
             />
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="240dp"
             android:id="@+id/paymentRcV"
             android:orientation="horizontal"
             />
 
         <TextView
-            android:id="@+id/grandTotal"
+            android:id="@+id/totalAmount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Tổng cộng: 120,000 VND"
+            android:text="Tổng cộng: 0 VND"
             android:textSize="18sp"
             android:padding="5dp"
             android:textColor="#FF5722" />
 
         <!-- Các bước thanh toán -->
         <TextView
-            android:id="@+id/stepOneTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Thông tin giao hàng"
@@ -53,26 +51,32 @@
             />
 
         <EditText
-            android:id="@+id/etName"
+            android:id="@+id/cartBillOwner"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Tên người nhận" />
+            android:layout_height="50dp"
+            android:hint="Tên người nhận"
+            android:singleLine="true"
+            />
 
         <EditText
-            android:id="@+id/etAddress"
+            android:id="@+id/cartBillAddressOwner"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Địa chỉ giao hàng" />
+            android:layout_height="50dp"
+            android:hint="Địa chỉ giao hàng"
+            android:singleLine="true"
+            />
 
         <EditText
-            android:id="@+id/etPhone"
+            android:id="@+id/cartBillPhoneOwner"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Số điện thoại" />
+            android:layout_height="50dp"
+            android:hint="Số điện thoại"
+            android:singleLine="true"
+            android:inputType="numberDecimal"
+            />
 
         <!-- Bước 2: Phương thức thanh toán -->
         <TextView
-            android:id="@+id/stepTwoTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Phương thức thanh toán"
@@ -85,7 +89,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="10dp">
 
             <!-- RadioGroup -->
             <RadioGroup
@@ -94,57 +98,24 @@
                 android:layout_height="wrap_content">
 
                 <RadioButton
-                    android:id="@+id/rbCreditCard"
+                    android:id="@+id/rdbCreditCard"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Thẻ tín dụng/Ghi nợ" />
 
                 <RadioButton
-                    android:id="@+id/rbCashOnDelivery"
+                    android:id="@+id/rdbCashOnDelivery"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Thanh toán khi nhận hàng" />
 
                 <RadioButton
-                    android:id="@+id/rbEWallet"
+                    android:id="@+id/rdbEWallet"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Ví điện tử" />
             </RadioGroup>
 
-            <!-- Submenu for Credit Card -->
-            <LinearLayout
-                android:id="@+id/subMenuCreditCard"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="gone"
-                android:padding="8dp"
-                android:background="#f0f0f0">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Nhập thông tin thẻ tín dụng"
-                    android:textStyle="bold" />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Số thẻ" />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Ngày hết hạn (MM/YY)" />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Mã bảo mật (CVV)" />
-            </LinearLayout>
-
-            <!-- Submenu for E-Wallet -->
             <LinearLayout
                 android:id="@+id/subMenuEWallet"
                 android:layout_width="match_parent"
@@ -181,7 +152,7 @@
         <EditText
             android:id="@+id/etVoucher"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:hint="Nhập mã giảm giá (nếu có)" />
 
         <TextView
@@ -196,7 +167,7 @@
         <EditText
             android:id="@+id/etNote"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:hint="Ghi chú cho đơn hàng" />
 
         <!-- Bước 4: Xác nhận thanh toán -->
@@ -207,7 +178,7 @@
             android:text="Hoàn tất thanh toán"
             android:backgroundTint="@color/design_default_color_primary"
             android:textColor="#FFFFFF"
-            android:layout_marginTop="16dp" />
+            android:layout_marginTop="15dp" />
 
     </LinearLayout>
 </ScrollView>

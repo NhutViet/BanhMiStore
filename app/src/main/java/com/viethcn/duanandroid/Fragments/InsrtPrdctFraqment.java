@@ -21,19 +21,16 @@ import java.util.Map;
 public class InsrtPrdctFraqment extends Fragment {
 
     EditText edtPrdctName, edtPrdctPrice, edtPrdctImg;
-    Button btnInsertPrdct, btnBack;
+    Button btnInsertPrdct;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_insrt_prdct, container, false);
+        View view = inflater.inflate(R.layout.fragment_insrt_prdct, container, false);
 
         initUI(view);
 
         btnInsertPrdct.setOnClickListener(v -> InsertData());
-        btnBack.setOnClickListener(v -> requireActivity()
-                .getSupportFragmentManager()
-                .popBackStack());
 
         return view;
     }
@@ -43,7 +40,6 @@ public class InsrtPrdctFraqment extends Fragment {
         edtPrdctImg = view.findViewById(R.id.edtPrdctImg);
 
         btnInsertPrdct = view.findViewById(R.id.btnInsertPrdct);
-        btnBack = view.findViewById(R.id.btnBack);
     }
     private void InsertData() {
         Map<String, Object> map = new HashMap<>();

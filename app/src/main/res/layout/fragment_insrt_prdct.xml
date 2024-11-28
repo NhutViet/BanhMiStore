@@ -14,6 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:gravity="center"
         >
 
         <TextView
@@ -30,6 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:layout_marginBottom="20dp"
+            android:singleLine="true"
             android:hint="Tên sản phẩm" />
 
         <EditText
@@ -37,6 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:layout_marginBottom="20dp"
+            android:inputType="numberDecimal"
             android:hint="Giá sản phẩm" />
 
         <EditText
@@ -44,6 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:layout_marginBottom="20dp"
+            android:singleLine="true"
             android:hint="Link hình sản phẩm" />
 
         <Button
@@ -56,13 +60,6 @@
             android:text="Thêm"
             android:textSize="20sp" />
 
-        <Button
-            android:id="@+id/btnBack"
-            android:layout_width="140dp"
-            android:layout_height="60dp"
-            android:layout_gravity="center"
-            android:text="Trở về"
-            android:textSize="20sp" />
     </LinearLayout>
 
 </FrameLayout>

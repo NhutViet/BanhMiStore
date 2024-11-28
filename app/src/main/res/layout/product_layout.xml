@@ -31,7 +31,7 @@
 
             android:text="Bánh Mì"
             android:textAlignment="center"
-            android:textSize="24sp"
+            android:textSize="20sp"
             android:textColor="@color/blackCustom"
             android:textStyle="bold"
             />
