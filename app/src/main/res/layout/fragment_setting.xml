@@ -3,9 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragments.SettingFragment"
-    android:background="#fff"
-    >
+    android:background="@drawable/background">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -30,16 +30,18 @@
         <androidx.cardview.widget.CardView
             android:layout_width="120dp"
             android:layout_height="120dp"
+            android:layout_gravity="center"
+            app:cardCornerRadius="100dp"
+            app:cardElevation="4dp"
 
-        android:layout_gravity="center"
-        android:layout_margin="8dp">
+            android:layout_margin="8dp">
 
         <ImageView
             android:id="@+id/profileImage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-        android:src="@drawable/profile" />
+            android:src="@drawable/profile" />
     </androidx.cardview.widget.CardView>
 
 
@@ -49,7 +51,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Họ Tên"
-            android:textSize="14sp"
+            android:textSize="16sp"
+            android:textStyle="bold"
             android:textColor="#808080"
             android:layout_marginTop="16dp" />
 
@@ -58,8 +61,9 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@drawable/rounded_background"
-            android:textSize="16sp"
+            android:textSize="18sp"
             android:padding="8dp"
+
             android:inputType="textPersonName"
             android:focusable="false"
             android:clickable="false" />
@@ -68,7 +72,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Email"
-            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textSize="16sp"
             android:textColor="#808080"
             android:layout_marginTop="8dp" />
 
@@ -77,7 +82,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@drawable/rounded_background"
-            android:textSize="16sp"
+            android:textSize="18sp"
             android:padding="8dp"
             android:inputType="textEmailAddress"
             android:focusable="false"
@@ -199,12 +204,10 @@
 
         <Button
             android:id="@+id/logOutSettingFragment"
-
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_gravity="center"
-
             android:text="Đăng xuất"
             android:textSize="24sp"
             android:background="@drawable/rounded_button_bg"
