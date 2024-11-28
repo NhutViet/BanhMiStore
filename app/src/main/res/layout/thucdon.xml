@@ -24,28 +24,44 @@
             android:src="@drawable/banhmi" />
     </FrameLayout>
 
-    <!-- Tên sản phẩm -->
+
+
+
     <TextView
         android:id="@+id/menuItemName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:gravity="center"
         android:text="Tên sản phẩm"
         android:textColor="#000"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
         android:textSize="16sp"
         android:textStyle="bold" />
+
+
+    <LinearLayout
+        android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:text="Giá: "
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
     <!-- Giá sản phẩm -->
     <TextView
         android:id="@+id/menuItemPrice"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:text="Giá sản phẩm"
         android:textColor="#E82A1C"
         android:textSize="14sp"
         android:textStyle="bold" />
+    </LinearLayout>
 
     <!-- Nút MUA NGAY -->
     <Button
