@@ -210,7 +210,7 @@
             android:layout_gravity="center"
             android:text="Đăng xuất"
             android:textSize="24sp"
-            android:background="@drawable/rounded_button_bg"
+            android:backgroundTint="#896422"
             />
     </LinearLayout>
 

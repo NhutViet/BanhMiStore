@@ -24,6 +24,8 @@ import com.viethcn.duanandroid.Adapters.ProductAdapter;
 import com.viethcn.duanandroid.Models.MainModel;
 import com.viethcn.duanandroid.R;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,27 +65,45 @@ public class HomePageFragment extends Fragment {
     }
     private void fetchData() {
         ref = FirebaseDatabase.getInstance().getReference("Product");
-
         mList = new ArrayList<>();
 
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                mList.clear();
+                // Định dạng số cho giá trị giá (price)
+                NumberFormat numberFormat = new DecimalFormat("#,###");
+                mList.clear(); // Xóa danh sách cũ trước khi thêm dữ liệu mới
 
+                // Duyệt qua tất cả các sản phẩm trong cơ sở dữ liệu
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     String img = dataSnapshot.child("img").getValue(String.class);
                     String name = dataSnapshot.child("name").getValue(String.class);
                     String price = dataSnapshot.child("price").getValue(String.class);
-                    mList.add(new MainModel(img, name, price));
+
+                    // Xử lý giá trị price: nếu có giá trị hợp lệ thì định dạng lại, nếu không thì đặt giá mặc định là "0"
+                    double priceValue = 0.0;
+                    if (price != null && !price.isEmpty()) {
+                        try {
+                            priceValue = Double.parseDouble(price);
+                        } catch (NumberFormatException e) {
+                            priceValue = 0.0; // Nếu lỗi khi chuyển giá trị, dùng giá trị mặc định là 0
+                        }
+                    }
+                    // Định dạng giá trị price
+                    String formattedPrice = numberFormat.format(priceValue);
+
+                    // Thêm vào danh sách mList với các giá trị đã xử lý
+                    mList.add(new MainModel(name, formattedPrice, img));
                 }
             }
+
             @Override
             public void onCancelled(DatabaseError error) {
-                Log.w("///===ERROR", error.getMessage() );
+                Log.w("///===ERROR", error.getMessage());
             }
         });
     }
+
 
     private void setImgSlider(){
         imgList.add(new SlideModel(R.drawable.banner01, ScaleTypes.FIT));
