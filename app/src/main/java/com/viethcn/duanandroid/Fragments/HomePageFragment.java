@@ -20,11 +20,16 @@ import com.viethcn.duanandroid.Adapters.ProductAdapter;
 import com.viethcn.duanandroid.Models.MainModel;
 import com.viethcn.duanandroid.DAO.ProductDAO;
 import com.viethcn.duanandroid.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+
 public class HomePageFragment extends Fragment {
 
     private List<MainModel> mList;
@@ -59,28 +64,16 @@ public class HomePageFragment extends Fragment {
                 .replace(R.id.mainViewHomePage, new MenuBanhMiFragment())
                 .commit());
 
-
-        mDAO.getListProduct(new ProductDAO.ProductCallback() {
-            @SuppressLint("NotifyDataSetChanged")
-            @Override
-            public void onCallback(List<MainModel> productList) {
-                mList.clear();
-                mList.addAll(productList);
-                adapter.notifyDataSetChanged();
-
-        setImgSlider();
+        // Fetch dữ liệu từ Firebase
+        fetchData();
 
         return viewHolder;
-
     }
-    private void fetchData() {
-        ref = FirebaseDatabase.getInstance().getReference("Product");
-        mList = new ArrayList<>();
 
-        ref.addValueEventListener(new ValueEventListener() {
+    private void fetchData() {
+        FirebaseDatabase.getInstance().getReference("Product").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                // Định dạng số cho giá trị giá (price)
                 NumberFormat numberFormat = new DecimalFormat("#,###");
                 mList.clear(); // Xóa danh sách cũ trước khi thêm dữ liệu mới
 
@@ -105,28 +98,18 @@ public class HomePageFragment extends Fragment {
                     // Thêm vào danh sách mList với các giá trị đã xử lý
                     mList.add(new MainModel(name, formattedPrice, img));
                 }
-
+                // Cập nhật adapter sau khi có dữ liệu mới
+                adapter.notifyDataSetChanged();
             }
 
             @Override
-
-            public void onError(Exception exception) {
-                Toast.makeText(getContext(), exception.getMessage(), Toast.LENGTH_SHORT).show();
-
             public void onCancelled(DatabaseError error) {
-                Log.w("///===ERROR", error.getMessage());
-
+                Toast.makeText(getContext(), "Lỗi khi lấy dữ liệu: " + error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-        return viewHolder;
     }
 
-
     private void setImgSlider() {
-
-
-    private void setImgSlider(){
-
         imgList.add(new SlideModel(R.drawable.banner01, ScaleTypes.FIT));
         imgList.add(new SlideModel(R.drawable.banner02, ScaleTypes.FIT));
         imgSlider.setImageList(imgList);
