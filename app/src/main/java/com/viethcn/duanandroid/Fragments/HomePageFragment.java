@@ -1,8 +1,8 @@
 package com.viethcn.duanandroid.Fragments;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,7 +18,6 @@ import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.viethcn.duanandroid.Adapters.ProductAdapter;
 import com.viethcn.duanandroid.Models.MainModel;
-import com.viethcn.duanandroid.DAO.ProductDAO;
 import com.viethcn.duanandroid.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -35,13 +34,11 @@ public class HomePageFragment extends Fragment {
     private List<MainModel> mList;
     private ImageSlider imgSlider;
     private final List<SlideModel> imgList = new ArrayList<>();
-    private ProductDAO mDAO;
     private ProductAdapter adapter; // Khai báo adapter
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mDAO = ProductDAO.getInstance();
         mList = new ArrayList<>();
     }
 
@@ -73,7 +70,7 @@ public class HomePageFragment extends Fragment {
     private void fetchData() {
         FirebaseDatabase.getInstance().getReference("Product").addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot snapshot) {
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
                 NumberFormat numberFormat = new DecimalFormat("#,###");
                 mList.clear(); // Xóa danh sách cũ trước khi thêm dữ liệu mới
 
@@ -103,7 +100,7 @@ public class HomePageFragment extends Fragment {
             }
 
             @Override
-            public void onCancelled(DatabaseError error) {
+            public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(getContext(), "Lỗi khi lấy dữ liệu: " + error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

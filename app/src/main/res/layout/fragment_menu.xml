@@ -5,14 +5,11 @@
     android:id="@+id/MenuMainLayout_Container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F7EAD3"
     >
     <RelativeLayout
         tools:context=".Fragments.MenuBanhMiFragment"
-        android:background="#F7EAD3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="30dp"
         >
         <TextView
             android:layout_width="match_parent"
@@ -25,13 +22,12 @@
             android:layout_alignParentTop="true"
             />
 
-
-
         <androidx.appcompat.widget.SearchView
             android:id="@+id/searchView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp" />
+            android:background="@color/whiteCustom"
+            android:layout_below="@+id/tvtitel"  />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerMain"

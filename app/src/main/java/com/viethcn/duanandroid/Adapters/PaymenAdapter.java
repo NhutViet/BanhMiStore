@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.viethcn.duanandroid.Models.MainModel;
 import com.viethcn.duanandroid.R;
 
@@ -32,19 +33,78 @@ public class PaymenAdapter extends RecyclerView.Adapter<PaymenAdapter.PaymentVie
     @Override
     public void onBindViewHolder(@NonNull PaymentViewHolder holder, int position) {
 
+        MainModel item = mList.get(position);
+
+        holder.txtModelName.setText(item.getName());
+        holder.txtModelPrice.setText(item.getPrice());
+        Glide.with(holder.imgItemPayout.getContext())
+                .load(item.getImg())
+                .placeholder(com.firebase.ui.database.R.drawable.common_google_signin_btn_icon_dark)
+                .error(com.firebase.ui.database.R.drawable.common_google_signin_btn_icon_dark_normal)
+                .centerCrop()
+                .into(holder.imgItemPayout);
+        holder.txtModelQuantity.setText(String.valueOf(item.getQuantity()));
+
+        // Event
+        holder.txtIncrease.setOnClickListener(v -> increaseQuantity(position));
+        holder.txtDecrease.setOnClickListener(v -> decreaseQuantity(position));
+        holder.txtRemove.setOnClickListener(v -> removeItem(position));
+
+    }
+
+    private void increaseQuantity(int position) {
+        MainModel item = mList.get(position);
+        item.setQuantity(item.getQuantity() + 1);
+        notifyItemChanged(position);
+    }
+    private void decreaseQuantity(int position) {
+        MainModel item = mList.get(position);
+        if (item.getQuantity() > 0) {
+            item.setQuantity(item.getQuantity() - 1);
+            notifyItemChanged(position);
+        }
+    }
+
+    public void removeItem(int position) {
+        mList.remove(position);
+        notifyItemRemoved(position);
+    }
+
+    public int calcTotal(){
+        int total = 0;
+        for (MainModel item : mList) {
+            total += Integer.parseInt(item.getPrice()) * item.getQuantity();
+        }
+        return total;
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mList.size();
     }
 
-    static class PaymentViewHolder extends RecyclerView.ViewHolder {
-        ImageView cartImg;
-        TextView txtName, txtPrice, txtQuanti;
-        public PaymentViewHolder(@NonNull View itemView) {
+    public static class PaymentViewHolder extends RecyclerView.ViewHolder {
+
+        ImageView imgItemPayout;
+        TextView txtIncrease,
+                txtModelQuantity,
+                txtDecrease,
+                txtModelName,
+                txtModelPrice, txtRemove;
+
+        public PaymentViewHolder (@NonNull View itemView) {
             super(itemView);
-            cartImg = itemView.findViewById(R.id.cartImg);
+            InitUI();
+        }
+        private void InitUI(){
+            txtIncrease = itemView.findViewById(R.id.txtPayoutIncreaseQuantity);
+            txtModelQuantity = itemView.findViewById(R.id.txtPayoutItemQuantity);
+            txtDecrease = itemView.findViewById(R.id.txtPayoutDecreaseQuantity);
+            txtModelName = itemView.findViewById(R.id.txtPayoutProductName);
+            txtModelPrice = itemView.findViewById(R.id.txtPayoutProductPrice);
+            txtRemove = itemView.findViewById(R.id.txtPayoutRemove);
+
+            imgItemPayout = itemView.findViewById(R.id.imgItemPayout);
         }
     }
 }
