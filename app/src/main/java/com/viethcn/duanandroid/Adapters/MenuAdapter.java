@@ -1,6 +1,7 @@
 package com.viethcn.duanandroid.Adapters;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,14 +21,26 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ViewHolder;
 import com.viethcn.duanandroid.Models.MainModel;
+import com.viethcn.duanandroid.Models.Product;
 import com.viethcn.duanandroid.R;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MenuAdapter extends FirebaseRecyclerAdapter<MainModel, MenuAdapter.myViewHolder> {
+    ArrayList<Product> list;
+    Context context;
+
+    public MenuAdapter(@NonNull FirebaseRecyclerOptions<MainModel> options, ArrayList<Product> list, Context context) {
+        super(options);
+        this.list = list;
+        this.context = context;
+    }
 
     public MenuAdapter(@NonNull FirebaseRecyclerOptions<MainModel> options) {
         super(options);
@@ -35,8 +48,20 @@ public class MenuAdapter extends FirebaseRecyclerAdapter<MainModel, MenuAdapter.
 
     @Override
     protected void onBindViewHolder(@NonNull myViewHolder holder, int position, @NonNull MainModel model) {
-        holder.name.setText("Tên: " + (model.getName() != null ? model.getName() : "Không xác định"));
-        holder.price.setText("Giá: " + (model.getPrice() != null ? model.getPrice() : "0"));
+        NumberFormat numberFormat = new DecimalFormat("#,###");
+        double myNumber = 0.0;
+
+        // Kiểm tra và định dạng giá
+        if (model.getPrice() != null && !model.getPrice().isEmpty()) {
+            try {
+                myNumber = Double.parseDouble(model.getPrice());
+            } catch (NumberFormatException e) {
+                myNumber = 0.0;
+            }
+        }
+        String formatterNumber = numberFormat.format(myNumber);
+        holder.name.setText( (model.getName() != null ? model.getName() : "Không xác định"));
+        holder.price.setText(formatterNumber + " VNĐ");
 
         Glide.with(holder.img.getContext())
                 .load(model.getImg())
