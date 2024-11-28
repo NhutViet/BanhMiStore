@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,7 +17,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.viethcn.duanandroid.Login;
+import com.viethcn.duanandroid.LoginActivity;
 import com.viethcn.duanandroid.R;
 
 public class SettingFragment extends Fragment {
@@ -56,7 +55,7 @@ public class SettingFragment extends Fragment {
         logOutSettingFragment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getContext(), Login.class));
+                startActivity(new Intent(getContext(), LoginActivity.class));
             }
         });
 

@@ -18,7 +18,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 
-public class Register extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity {
 
     TextView txtDangNhap;
 
@@ -46,33 +46,33 @@ public class Register extends AppCompatActivity {
 
                 // Kiểm tra nhập liệu
                 if (tenDangNhap.isEmpty() || matKhau.isEmpty() || rePass.isEmpty()) {
-                    Toast.makeText(Register.this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 // Kiểm tra mật khẩu và xác nhận mật khẩu
                 if (!matKhau.equals(rePass)) {
-                    Toast.makeText(Register.this, "Mật khẩu xác nhận không khớp", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "Mật khẩu xác nhận không khớp", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 // Đăng ký với Firebase Authentication
                 firebaseAuth = FirebaseAuth.getInstance();
                 firebaseAuth.createUserWithEmailAndPassword(tenDangNhap, matKhau)
-                        .addOnCompleteListener(Register.this, new OnCompleteListener<AuthResult>() {
+                        .addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                                    Toast.makeText(Register.this, "Đăng ký thành công!", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(Register.this, Login.class));
+                                    Toast.makeText(RegisterActivity.this, "Đăng ký thành công!", Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
                                     finish();
                                 } else {
                                     if (task.getException() instanceof FirebaseAuthUserCollisionException) {
                                         // Thông báo nếu email đã tồn tại
-                                        Toast.makeText(Register.this, "Email này đã được đăng ký. Vui lòng thử với email khác.", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(RegisterActivity.this, "Email này đã được đăng ký. Vui lòng thử với email khác.", Toast.LENGTH_SHORT).show();
                                     } else {
                                         // Thông báo lỗi chung nếu không phải lỗi trùng email
-                                        Toast.makeText(Register.this, "Đăng ký thất bại: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(RegisterActivity.this, "Đăng ký thất bại: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             }
@@ -84,7 +84,7 @@ public class Register extends AppCompatActivity {
         txtDangNhap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Register.this, Login.class));
+                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
             }
         });
     }

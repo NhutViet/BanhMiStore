@@ -50,8 +50,8 @@ dependencies {
     implementation (libs.firebase.auth.v2210)
     implementation(libs.play.services.auth)
     implementation (libs.glide)
-
     implementation(libs.firebase.ui.database)
+
     implementation (libs.circleimageview)
     implementation(libs.recyclerview)
     implementation(libs.cardview)

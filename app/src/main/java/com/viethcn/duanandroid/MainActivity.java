@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.viethcn.duanandroid.Fragments.HomePageFragment;
-import com.viethcn.duanandroid.Fragments.BillsFragment;
+import com.viethcn.duanandroid.Fragments.CardPaymentFragment;
 import com.viethcn.duanandroid.Fragments.MenuBanhMiFragment;
 import com.viethcn.duanandroid.Fragments.SettingFragment;
 
@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         bottomNav.setOnItemSelectedListener(item -> {
             int index = item.getItemId();
             if (index == R.id.bottom_nav_search) {
-                replaceFragment(new BillsFragment());
+                replaceFragment(new CardPaymentFragment());
             } else if (index == R.id.bottom_nav_menu) {
                 replaceFragment(new MenuBanhMiFragment());
             } else if (index == R.id.bottom_nav_setting) {
@@ -46,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
             return true;
         });
     }
-
     // This func to take the main fragment off and then replace another fragment
     private void replaceFragment(Fragment layout) {
         getSupportFragmentManager().beginTransaction().replace(R.id.mainViewHomePage, layout).commit();

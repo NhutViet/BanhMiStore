@@ -13,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,10 +23,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
@@ -35,7 +32,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
 
-public class Login extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
     private TextView txtDangKy, txtQuenMk;
     private EditText edtTenDangNhap, edtMatKhau;
     private TextView btnDangNhap;
@@ -74,7 +71,7 @@ public class Login extends AppCompatActivity {
         imgGG.setOnClickListener(v -> googleSignIn());
         btnDangNhap.setOnClickListener(v -> handleLogin());
         txtQuenMk.setOnClickListener(v -> showDialogQuenMK());
-        txtDangKy.setOnClickListener(v -> startActivity(new Intent(Login.this, Register.class)));
+        txtDangKy.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, RegisterActivity.class)));
     }
 
 
@@ -87,10 +84,10 @@ public class Login extends AppCompatActivity {
 
         firebaseAuth.signInWithEmailAndPassword(tenDangNhap, matKhau).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                Toast.makeText(Login.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(Login.this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(LoginActivity.this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
             } else {
-                Toast.makeText(Login.this, "Đăng nhập thất bại: " , Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "Đăng nhập thất bại: " , Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -148,7 +145,7 @@ public class Login extends AppCompatActivity {
                 database.getReference().child("users").child(user.getUid()).setValue(map);
 
                 Toast.makeText(this, "Đăng nhập Google thành công", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(Login.this, MainActivity.class));
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
             } else {
                 Toast.makeText(this, "Đăng nhập Google thất bại", Toast.LENGTH_SHORT).show();
             }
@@ -178,15 +175,15 @@ public class Login extends AppCompatActivity {
         btnSend.setOnClickListener(v -> {
             String email = edtUsername.getText().toString().trim();
             if (email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                Toast.makeText(Login.this, "Vui lòng nhập email hợp lệ", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "Vui lòng nhập email hợp lệ", Toast.LENGTH_SHORT).show();
                 return;
             }
 
             firebaseAuth.sendPasswordResetEmail(email).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
-                    Toast.makeText(Login.this, "Đã gửi email đặt lại mật khẩu. Kiểm tra hộp thư đến của bạn.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this, "Đã gửi email đặt lại mật khẩu. Kiểm tra hộp thư đến của bạn.", Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(Login.this, "Không thể gửi email đặt lại mật khẩu. Vui lòng thử lại sau.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Không thể gửi email đặt lại mật khẩu. Vui lòng thử lại sau.", Toast.LENGTH_SHORT).show();
                 }
                 alertDialog.dismiss();
             });

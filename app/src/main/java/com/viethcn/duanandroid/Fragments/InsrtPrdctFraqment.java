@@ -28,7 +28,7 @@ public class InsrtPrdctFraqment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_insrt_prdct, container, false);
 
-        snapshotComponent(view);
+        initUI(view);
 
         btnInsertPrdct.setOnClickListener(v -> InsertData());
         btnBack.setOnClickListener(v -> requireActivity()
@@ -37,7 +37,7 @@ public class InsrtPrdctFraqment extends Fragment {
 
         return view;
     }
-    private void snapshotComponent(View view){
+    private void initUI(View view){
         edtPrdctName = view.findViewById(R.id.edtPrdctName);
         edtPrdctPrice = view.findViewById(R.id.edtPrdctPrice);
         edtPrdctImg = view.findViewById(R.id.edtPrdctImg);
