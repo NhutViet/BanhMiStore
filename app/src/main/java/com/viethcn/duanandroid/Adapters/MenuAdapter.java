@@ -125,7 +125,10 @@ public class MenuAdapter extends FirebaseRecyclerAdapter<MainModel, MenuAdapter.
             builder.setNegativeButton("Huỷ", (dialog, which) -> dialog.dismiss());
             builder.show();
         });
+
+
     }
+
 
     // Đảm bảo RecyclerView luôn cập nhật khi dữ liệu thay đổi
     @Override

@@ -1,6 +1,4 @@
 package com.viethcn.duanandroid;
-
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -8,114 +6,115 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class CheckoutActivity extends AppCompatActivity {
 
-    private EditText etName, etAddress, etPhone;
+    private RecyclerView paymentRecyclerView;
+    private TextView totalAmountTextView;
+    private EditText cartBillOwner, cartBillAddressOwner, cartBillPhoneOwner;
     private RadioGroup paymentOptions;
+    private RadioButton rdbCreditCard, rdbCashOnDelivery, rdbEWallet;
+    private LinearLayout subMenuEWallet;
+    private Spinner eWalletSpinner;
+    private EditText etVoucher, etNote;
     private Button btnCheckout;
-    private TextView  grandTotal, tvSelectedToppings;
 
-    private int productPrice = 80000;  // Giá sản phẩm cơ bản
-    private int shippingCost = 15000;   // Phí vận chuyển cố định
-    private int toppingCost = 10000;     // Giả sử mỗi topping có giá 10000 VND
+    private double totalAmount = 0.0;
 
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout);
 
-        // Ánh xạ các thành phần giao diện
-        etName = findViewById(R.id.etName);
-        etAddress = findViewById(R.id.etAddress);
-        etPhone = findViewById(R.id.etPhone);
+        // Initialize views
+        paymentRecyclerView = findViewById(R.id.paymentRcV);
+        totalAmountTextView = findViewById(R.id.totalAmount);
+        cartBillOwner = findViewById(R.id.cartBillOwner);
+        cartBillAddressOwner = findViewById(R.id.cartBillAddressOwner);
+        cartBillPhoneOwner = findViewById(R.id.cartBillPhoneOwner);
         paymentOptions = findViewById(R.id.paymentOptions);
+        rdbCreditCard = findViewById(R.id.rdbCreditCard);
+        rdbCashOnDelivery = findViewById(R.id.rdbCashOnDelivery);
+        rdbEWallet = findViewById(R.id.rdbEWallet);
+        subMenuEWallet = findViewById(R.id.subMenuEWallet);
+        eWalletSpinner = findViewById(R.id.eWalletSpinner);
+        etVoucher = findViewById(R.id.etVoucher);
+        etNote = findViewById(R.id.etNote);
         btnCheckout = findViewById(R.id.btnCheckout);
-        grandTotal = findViewById(R.id.grandTotal);
-        tvSelectedToppings = findViewById(R.id.selectedToppings);
-        LinearLayout subMenuCreditCard = findViewById(R.id.subMenuCreditCard);
-        LinearLayout subMenuEWallet = findViewById(R.id.subMenuEWallet);
 
-        // Nhận dữ liệu từ Intent
-        int quantity = getIntent().getIntExtra("quantity", 1);
-        double totalPrice = getIntent().getDoubleExtra("totalPrice", 0);
+        // Set up RecyclerView
+        paymentRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        // Set up adapter for RecyclerView if necessary, e.g., paymentRecyclerView.setAdapter(adapter);
 
-        boolean topping1 = getIntent().getBooleanExtra("topping1", false);
-        boolean topping2 = getIntent().getBooleanExtra("topping2", false);
+        // Update total amount
+        updateTotalAmount();
 
-        // Lấy và hiển thị tên topping đã chọn
-        StringBuilder toppings = new StringBuilder("Toppings: ");
-        if (topping1) toppings.append("EGG, ");
-        if (topping2) toppings.append("PATE, ");
-
-        // Xóa dấu phẩy cuối cùng nếu có
-        if (toppings.length() > 9) {
-            toppings.setLength(toppings.length() - 2);
-        } else {
-            toppings.append("Không có");
-        }
-
-        tvSelectedToppings.setText(toppings.toString());
-
-        // Hiển thị tùy chọn thanh toán
+        // Handle radio button selection
         paymentOptions.setOnCheckedChangeListener((group, checkedId) -> {
-            subMenuCreditCard.setVisibility(View.GONE);
-            subMenuEWallet.setVisibility(View.GONE);
-
-            if (checkedId == R.id.rbCreditCard) {
-                subMenuCreditCard.setVisibility(View.VISIBLE);
-            } else if (checkedId == R.id.rbEWallet) {
+            if (checkedId == R.id.rdbEWallet) {
                 subMenuEWallet.setVisibility(View.VISIBLE);
+            } else {
+                subMenuEWallet.setVisibility(View.GONE);
             }
         });
 
-        // Xử lý sự kiện cho nút "Hoàn tất thanh toán"
-        btnCheckout.setOnClickListener(v -> {
-            String name = etName.getText().toString().trim();
-            String address = etAddress.getText().toString().trim();
-            String phone = etPhone.getText().toString().trim();
-
-            if (name.isEmpty() || address.isEmpty() || phone.isEmpty()) {
-                Toast.makeText(CheckoutActivity.this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            int selectedPaymentId = paymentOptions.getCheckedRadioButtonId();
-            if (selectedPaymentId == -1) {
-                Toast.makeText(CheckoutActivity.this, "Vui lòng chọn phương thức thanh toán", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            RadioButton selectedPaymentOption = findViewById(selectedPaymentId);
-            String paymentMethod = selectedPaymentOption.getText().toString();
-
-            Toast.makeText(CheckoutActivity.this, "Thanh toán thành công bằng " + paymentMethod, Toast.LENGTH_LONG).show();
-            // Logic thanh toán và xác nhận đơn hàng ở đây
-        });
-
-        // Cập nhật thông tin tổng cộng khi có thay đổi về số lượng và topping
-        updateTotal(quantity, topping1, topping2);
+        // Handle checkout button click
+        btnCheckout.setOnClickListener(v -> handleCheckout());
     }
 
-    private void updateTotal(int quantity, boolean topping1, boolean topping2) {
-        // Tính toán tổng tiền sản phẩm, topping và phí vận chuyển
-        int toppingCount = 0;
-        if (topping1) toppingCount++;
-        if (topping2) toppingCount++;
+    private void updateTotalAmount() {
+        // Logic to update total amount based on selected products in RecyclerView
+        // This could involve iterating through a list of items and summing up their prices
+        totalAmount = 100000; // Example, replace with actual calculation logic
+        totalAmountTextView.setText("Tổng cộng: " + totalAmount + " VND");
+    }
 
-        // Tổng giá trị sản phẩm
-        int productTotal = productPrice * quantity;
-        // Tổng phí topping
-        int toppingTotal = toppingCount * toppingCost;
-        // Tổng phí vận chuyển
-        int total = productTotal + toppingTotal;
-        int grandTotalAmount = total + shippingCost;
+    private void handleCheckout() {
+        // Validate input fields
+        String ownerName = cartBillOwner.getText().toString().trim();
+        String address = cartBillAddressOwner.getText().toString().trim();
+        String phone = cartBillPhoneOwner.getText().toString().trim();
+        String voucherCode = etVoucher.getText().toString().trim();
+        String note = etNote.getText().toString().trim();
 
-        grandTotal.setText("Tổng cộng: " + grandTotalAmount + " VND");
+        if (ownerName.isEmpty() || address.isEmpty() || phone.isEmpty()) {
+            Toast.makeText(this, "Vui lòng điền đầy đủ thông tin!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Check payment method
+        String paymentMethod = "Không chọn phương thức";
+        if (rdbCreditCard.isChecked()) {
+            paymentMethod = "Thẻ tín dụng/Ghi nợ";
+        } else if (rdbCashOnDelivery.isChecked()) {
+            paymentMethod = "Thanh toán khi nhận hàng";
+        } else if (rdbEWallet.isChecked()) {
+            paymentMethod = "Ví điện tử: " + eWalletSpinner.getSelectedItem().toString();
+        }
+
+        // Process payment and order
+        // For example, create an order object, send it to the server, etc.
+        String orderSummary = "Thông tin đơn hàng:\n" +
+                "Tên người nhận: " + ownerName + "\n" +
+                "Địa chỉ: " + address + "\n" +
+                "Số điện thoại: " + phone + "\n" +
+                "Voucher: " + voucherCode + "\n" +
+                "Ghi chú: " + note + "\n" +
+                "Phương thức thanh toán: " + paymentMethod + "\n" +
+                "Tổng cộng: " + totalAmount + " VND";
+
+        // Show order summary as a Toast for demonstration (can be replaced with actual order submission)
+        Toast.makeText(this, orderSummary, Toast.LENGTH_LONG).show();
+
+        // Optionally, navigate to confirmation screen or complete the order
+        // Intent intent = new Intent(CheckoutActivity.this, ConfirmationActivity.class);
+        // startActivity(intent);
     }
 }
