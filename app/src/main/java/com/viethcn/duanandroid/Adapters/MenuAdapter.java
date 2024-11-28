@@ -65,15 +65,15 @@ public class MenuAdapter extends FirebaseRecyclerAdapter<MainModel, MenuAdapter.
 
         Glide.with(holder.img.getContext())
                 .load(model.getImg())
-                .placeholder(com.firebase.ui.database.R.drawable.common_google_signin_btn_icon_dark)
+                .placeholder(R.drawable.erroimage)
                 .circleCrop()
-                .error(com.firebase.ui.database.R.drawable.common_google_signin_btn_icon_dark_normal)
+                .error(R.drawable.erroimage)
                 .into(holder.img);
 
         holder.btnEdit.setOnClickListener(v -> {
             final DialogPlus dialogPlus = DialogPlus.newDialog(holder.img.getContext())
                     .setContentHolder(new ViewHolder(R.layout.update_product))
-                    .setExpanded(true, 1200)
+                    .setExpanded(true, 1600)
                     .create();
 
             View view = dialogPlus.getHolderView();

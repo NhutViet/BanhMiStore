@@ -33,7 +33,6 @@
             android:layout_gravity="center"
             app:cardCornerRadius="100dp"
             app:cardElevation="4dp"
-
             android:layout_margin="8dp">
 
         <ImageView
