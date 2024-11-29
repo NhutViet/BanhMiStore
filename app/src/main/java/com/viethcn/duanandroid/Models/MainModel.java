@@ -3,7 +3,7 @@ package com.viethcn.duanandroid.Models;
 public class MainModel {
 
     String name, price, img;
-    int quantity = 1;
+    int quantity;
 
     public MainModel() {
     }

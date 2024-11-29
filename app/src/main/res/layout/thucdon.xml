@@ -65,7 +65,7 @@
 
     <!-- Nút MUA NGAY -->
     <Button
-        android:id="@+id/btnBuyNow"
+        android:id="@+id/btnBuy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
