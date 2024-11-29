@@ -63,6 +63,7 @@ public class MenuBanhMiFragment extends Fragment {
         });
 
 
+
         return view;
     }
 
@@ -74,7 +75,7 @@ public class MenuBanhMiFragment extends Fragment {
                 .setQuery(FirebaseDatabase.getInstance().getReference().child("Product"), MainModel.class)
                 .build();
 
-        mainAdapter = new MenuAdapter(options);
+        mainAdapter = new MenuAdapter(options, requireActivity());
         recyclerViewMain.setAdapter(mainAdapter);
 
     }
