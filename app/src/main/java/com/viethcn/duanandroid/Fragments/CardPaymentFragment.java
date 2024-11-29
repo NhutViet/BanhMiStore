@@ -87,13 +87,8 @@ public class CardPaymentFragment extends Fragment {
             String address = edtAddress.getText().toString();
             String phone = edtPhone.getText().toString();
 
-            SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
-            String objectID = sharedPreferences.getString("ObjectID", null);
-
-
             Map<String, Object> map = new HashMap<>();
             map.put("owner", owner);
-            map.put("objectID", objectID);
             map.put("address", address);
             map.put("phone", phone);
             map.put("listProduct", list);
@@ -102,7 +97,7 @@ public class CardPaymentFragment extends Fragment {
                 Toast.makeText(getContext(), "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
             }
 
-            FirebaseDatabase.getInstance().getReference().child("Recipts").child(objectID).push()
+            FirebaseDatabase.getInstance().getReference().child("Recipts").push()
                     .setValue(map)
                     .addOnCompleteListener(task -> {
                         Toast.makeText(requireContext(), "Thêm thành công", Toast.LENGTH_SHORT).show();
