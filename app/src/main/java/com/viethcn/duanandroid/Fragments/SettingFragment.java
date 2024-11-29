@@ -5,6 +5,8 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,10 +26,13 @@ public class SettingFragment extends Fragment {
     Button logOutSettingFragment;
     private TextView nameField, emailField;
     private ImageView profileImage;
+    Button cartoderFragment;
 
 
     public SettingFragment() {
         // Required empty public constructor
+
+
     }
 
 
@@ -45,6 +50,7 @@ public class SettingFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_setting, container, false);
 
+        cartoderFragment= view.findViewById(R.id.cartoderFragment);
         logOutSettingFragment = view.findViewById(R.id.logOutSettingFragment);
         nameField = view.findViewById(R.id.nameField);
         emailField = view.findViewById(R.id.emailField);
@@ -59,7 +65,22 @@ public class SettingFragment extends Fragment {
             }
         });
 
-return view;
+
+
+        // Logic điều hướng đến PaidOrdersFragment khi nhấn nút "Đơn hàng đã thanh toán"
+        cartoderFragment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Thực hiện điều hướng đến PaidOrdersFragment
+                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                transaction.replace(R.id.container, new PaidOrdersFragment());  // 'container' là ID của ViewGroup chứa các Fragment
+                transaction.addToBackStack(null);  // Cho phép quay lại fragment trước
+                transaction.commit();
+            }
+        });
+
+        
+        return view;
     }
 
     private void loadGoogleAccountInfo() {
@@ -82,4 +103,5 @@ return view;
             Toast.makeText(getContext(), "Không tìm thấy thông tin tài khoản Google", Toast.LENGTH_SHORT).show();
         }
     }
+
 }
