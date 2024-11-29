@@ -39,7 +39,7 @@ public class MenuBanhMiFragment extends Fragment {
 
         setMenuData();
 
-
+        searchView.setOnClickListener(v -> searchView.setIconified(false));
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {

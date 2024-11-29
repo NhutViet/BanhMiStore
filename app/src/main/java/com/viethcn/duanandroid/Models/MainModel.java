@@ -3,6 +3,7 @@ package com.viethcn.duanandroid.Models;
 public class MainModel {
 
     String name, price, img;
+    int quantity = 1;
 
     public MainModel() {
     }
@@ -35,5 +36,13 @@ public class MainModel {
 
     public void setImg(String img) {
         this.img = img;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }
