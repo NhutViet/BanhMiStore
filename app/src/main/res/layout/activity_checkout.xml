@@ -27,7 +27,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/paymentRcV"
             android:layout_width="match_parent"
-            android:layout_height="400dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal" />
 
         <TextView
@@ -72,7 +72,8 @@
             android:layout_height="50dp"
             android:hint="Số điện thoại"
             android:singleLine="true"
-            android:inputType="numberDecimal"
+            android:maxLength="10"
+            android:digits="0123456789"
             />
 
         <TextView
