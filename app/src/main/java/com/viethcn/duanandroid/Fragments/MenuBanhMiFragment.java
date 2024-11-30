@@ -36,6 +36,8 @@ public class MenuBanhMiFragment extends Fragment {
         recyclerViewMain = view.findViewById(R.id.recyclerMain);
         fabAdd = view.findViewById(R.id.fabAdd);
         searchView = view.findViewById(R.id.searchView);
+        searchView.setQueryHint("Tìm kiếm sản phẩm...");
+        searchView.setIconifiedByDefault(false);
 
         setMenuData();
 

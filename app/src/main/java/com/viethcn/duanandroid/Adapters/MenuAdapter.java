@@ -1,6 +1,7 @@
 package com.viethcn.duanandroid.Adapters;
 
 import android.app.AlertDialog;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,6 +74,7 @@ public class MenuAdapter extends FirebaseRecyclerAdapter<MainModel, MenuAdapter.
             final DialogPlus dialogPlus = DialogPlus.newDialog(holder.img.getContext())
                     .setContentHolder(new ViewHolder(R.layout.update_product))
                     .setExpanded(true, 1600)
+                    .setContentBackgroundResource(R.color.MauNen)
                     .create();
 
             View view = dialogPlus.getHolderView();
