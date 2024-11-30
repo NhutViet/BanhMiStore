@@ -26,12 +26,9 @@ public class SettingFragment extends Fragment {
     Button logOutSettingFragment;
     private TextView nameField, emailField;
     private ImageView profileImage;
-    Button cartoderFragment;
-
+    TextView tvDonhang;
 
     public SettingFragment() {
-        // Required empty public constructor
-
 
     }
 
@@ -50,11 +47,18 @@ public class SettingFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_setting, container, false);
 
-        cartoderFragment= view.findViewById(R.id.cartoderFragment);
         logOutSettingFragment = view.findViewById(R.id.logOutSettingFragment);
         nameField = view.findViewById(R.id.nameField);
         emailField = view.findViewById(R.id.emailField);
         profileImage = view.findViewById(R.id.profileImage);
+        tvDonhang = view.findViewById(R.id.tvdonHang);
+
+        tvDonhang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.mainViewHomePage,new DonHangFragment()).commit();
+            }
+        });
 
         loadGoogleAccountInfo();
 
@@ -64,21 +68,6 @@ public class SettingFragment extends Fragment {
                 startActivity(new Intent(getContext(), LoginActivity.class));
             }
         });
-
-
-
-        // Logic điều hướng đến PaidOrdersFragment khi nhấn nút "Đơn hàng đã thanh toán"
-        cartoderFragment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Thực hiện điều hướng đến PaidOrdersFragment
-                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                transaction.replace(R.id.container, new PaidOrdersFragment());  // 'container' là ID của ViewGroup chứa các Fragment
-                transaction.addToBackStack(null);  // Cho phép quay lại fragment trước
-                transaction.commit();
-            }
-        });
-
         
         return view;
     }

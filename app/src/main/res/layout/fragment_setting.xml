@@ -88,16 +88,6 @@
             android:textSize="18sp" />
 
 
-        <Button
-            android:id="@+id/cartoderFragment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Đơn hàng đã thanh toán"
-            android:layout_marginLeft="100dp"
-            android:backgroundTint="#F68F13"
-            android:layout_marginTop="20dp"/>
-
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -115,11 +105,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-
                 android:gravity="center"
-                android:text="Thông báo"
+                android:text="Đơn Hàng"
                 android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:id="@+id/tvdonHang" />
 
             <ImageView
                 android:layout_width="40dp"
