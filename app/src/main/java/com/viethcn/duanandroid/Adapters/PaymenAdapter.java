@@ -7,26 +7,38 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.viethcn.duanandroid.Models.MainModel;
 import com.viethcn.duanandroid.R;
+import com.viethcn.duanandroid.Repositories.MainModelRepository;
 
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class PaymenAdapter extends RecyclerView.Adapter<PaymenAdapter.PaymentViewHolder> {
 
     List<MainModel> mList;
+    MainModelRepository repo;
 
-    public PaymenAdapter(List<MainModel> products) {
-        this.mList = products;
+    public PaymenAdapter(LiveData<List<MainModel>> liveData, LifecycleOwner lifecycleOwner) {
+        liveData.observe(lifecycleOwner, updatedList -> {
+            this.mList = updatedList;
+            notifyDataSetChanged();
+        });
     }
 
     @NonNull
     @Override
     public PaymentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_cart, parent, false);
+        repo = new ViewModelProvider((ViewModelStoreOwner) parent.getContext()).get(MainModelRepository.class);
         return new PaymentViewHolder(view);
     }
 
@@ -36,7 +48,7 @@ public class PaymenAdapter extends RecyclerView.Adapter<PaymenAdapter.PaymentVie
         MainModel item = mList.get(position);
 
         holder.txtModelName.setText(item.getName());
-        holder.txtModelPrice.setText(item.getPrice());
+        holder.txtModelPrice.setText(formatVND(Integer.parseInt(item.getPrice())));
         Glide.with(holder.imgItemPayout.getContext())
                 .load(item.getImg())
                 .placeholder(com.firebase.ui.database.R.drawable.common_google_signin_btn_icon_dark)
@@ -46,36 +58,30 @@ public class PaymenAdapter extends RecyclerView.Adapter<PaymenAdapter.PaymentVie
         holder.txtModelQuantity.setText(String.valueOf(item.getQuantity()));
 
         // Event
-        holder.txtIncrease.setOnClickListener(v -> increaseQuantity(position));
-        holder.txtDecrease.setOnClickListener(v -> decreaseQuantity(position));
-        holder.txtRemove.setOnClickListener(v -> removeItem(position));
-
-    }
-
-    private void increaseQuantity(int position) {
-        MainModel item = mList.get(position);
-        item.setQuantity(item.getQuantity() + 1);
-        notifyItemChanged(position);
-    }
-    private void decreaseQuantity(int position) {
-        MainModel item = mList.get(position);
-        if (item.getQuantity() > 0) {
-            item.setQuantity(item.getQuantity() - 1);
+        holder.txtIncrease.setOnClickListener(v -> {
+            item.setQuantity(item.getQuantity() + 1);
+            repo.updateQuanTityItem(item);
             notifyItemChanged(position);
-        }
+        });
+
+        holder.txtDecrease.setOnClickListener(v -> {
+            if (item.getQuantity() > 1) {
+                item.setQuantity(item.getQuantity() - 1);
+                repo.updateQuanTityItem(item);
+                notifyItemChanged(position);
+            }
+        });
+
+        holder.txtRemove.setOnClickListener(v -> {
+            repo.removeItem(item);
+            notifyItemRemoved(position);
+        });
     }
 
-    public void removeItem(int position) {
-        mList.remove(position);
-        notifyItemRemoved(position);
-    }
-
-    public int calcTotal(){
-        int total = 0;
-        for (MainModel item : mList) {
-            total += Integer.parseInt(item.getPrice()) * item.getQuantity();
-        }
-        return total;
+    private static String formatVND(int amount) {
+        NumberFormat formatter = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+        formatter.setMaximumFractionDigits(0);
+        return formatter.format(amount);
     }
 
     @Override

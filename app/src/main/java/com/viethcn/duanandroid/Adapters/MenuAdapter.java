@@ -1,7 +1,6 @@
 package com.viethcn.duanandroid.Adapters;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +11,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -21,25 +22,23 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ViewHolder;
 import com.viethcn.duanandroid.Models.MainModel;
-import com.viethcn.duanandroid.Models.Product;
 import com.viethcn.duanandroid.R;
+import com.viethcn.duanandroid.Repositories.MainModelRepository;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MenuAdapter extends FirebaseRecyclerAdapter<MainModel, MenuAdapter.myViewHolder> {
-    ArrayList<Product> list;
-    Context context;
 
-    public MenuAdapter(@NonNull FirebaseRecyclerOptions<MainModel> options, ArrayList<Product> list, Context context) {
+    private FragmentActivity context;
+
+    public MenuAdapter(@NonNull FirebaseRecyclerOptions<MainModel> options, FragmentActivity activity) {
         super(options);
-        this.list = list;
-        this.context = context;
+        this.context = activity;
     }
 
     public MenuAdapter(@NonNull FirebaseRecyclerOptions<MainModel> options) {
@@ -126,9 +125,20 @@ public class MenuAdapter extends FirebaseRecyclerAdapter<MainModel, MenuAdapter.
             builder.show();
         });
 
+        holder.btnBuy.setOnClickListener(v -> {
+            if (context != null) {
+                FragmentActivity activity =  context;
+                MainModelRepository viewModel = new ViewModelProvider(activity).get(MainModelRepository.class);
+
+                viewModel.addItem(model);
+
+                Toast.makeText(context, model.getName() + " đã được thêm vào giỏ hàng!", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(context, "Không thể thêm vào giỏ hàng!", Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
-
 
     // Đảm bảo RecyclerView luôn cập nhật khi dữ liệu thay đổi
     @Override
@@ -148,7 +158,7 @@ public class MenuAdapter extends FirebaseRecyclerAdapter<MainModel, MenuAdapter.
         CircleImageView img;
         TextView name, price;
         ImageView btnEdit, btnDelete;
-
+        Button btnBuy;
         public myViewHolder(@NonNull View itemView) {
             super(itemView);
             img = itemView.findViewById(R.id.menuItemImage);
@@ -156,6 +166,7 @@ public class MenuAdapter extends FirebaseRecyclerAdapter<MainModel, MenuAdapter.
             price = itemView.findViewById(R.id.menuItemPrice);
             btnEdit = itemView.findViewById(R.id.btnEdit);
             btnDelete = itemView.findViewById(R.id.btnDelete);
+            btnBuy = itemView.findViewById(R.id.btnBuy);
         }
     }
 }
