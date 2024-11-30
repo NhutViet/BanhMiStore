@@ -1,13 +1,16 @@
 package com.viethcn.duanandroid.Adapters;
 
 import android.app.AlertDialog;
+import android.app.Fragment;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +25,7 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.FirebaseDatabase;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ViewHolder;
+import com.viethcn.duanandroid.Fragments.DetalProductFragment;
 import com.viethcn.duanandroid.Models.MainModel;
 import com.viethcn.duanandroid.R;
 import com.viethcn.duanandroid.Repositories.MainModelRepository;
@@ -81,10 +85,12 @@ public class MenuAdapter extends FirebaseRecyclerAdapter<MainModel, MenuAdapter.
             EditText edtNamePR = view.findViewById(R.id.edtNamePR);
             EditText edtPricePR = view.findViewById(R.id.edtPricePR);
             EditText edtImgPR = view.findViewById(R.id.edtImgPR);
+            EditText edtDescribe = view.findViewById(R.id.edtDescribe);
             Button btnUpdatePR = view.findViewById(R.id.btnUpdate);
 
             edtNamePR.setText(model.getName());
             edtPricePR.setText(model.getPrice());
+            edtDescribe.setText(model.getDescription());
             edtImgPR.setText(model.getImg());
 
             dialogPlus.show();
@@ -98,6 +104,7 @@ public class MenuAdapter extends FirebaseRecyclerAdapter<MainModel, MenuAdapter.
                 Map<String, Object> map = new HashMap<>();
                 map.put("name", edtNamePR.getText().toString());
                 map.put("price", edtPricePR.getText().toString());
+                map.put("description", edtDescribe.getText().toString());
                 map.put("img", edtImgPR.getText().toString());
 
                 FirebaseDatabase.getInstance().getReference().child("Product")
@@ -140,6 +147,29 @@ public class MenuAdapter extends FirebaseRecyclerAdapter<MainModel, MenuAdapter.
             }
         });
 
+
+        holder.ItemPR.setOnClickListener(v -> {
+            DetalProductFragment detailFragment = new DetalProductFragment();
+
+            // Truyền dữ liệu sản phẩm qua Bundle
+            Bundle bundle = new Bundle();
+            bundle.putString("name", model.getName());
+            bundle.putString("price", model.getPrice());
+            bundle.putString("img", model.getImg());
+            bundle.putString("description", model.getDescription());
+            detailFragment.setArguments(bundle);
+
+            // Chuyển đổi Fragment
+            if (context != null) {
+                context.getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.MenuMainLayout_Container, detailFragment) // `fragment_container` là ID của container trong Activity
+                        .addToBackStack(null) // Để người dùng có thể quay lại
+                        .commit();
+            }
+        });
+
+
     }
 
     // Đảm bảo RecyclerView luôn cập nhật khi dữ liệu thay đổi
@@ -161,6 +191,9 @@ public class MenuAdapter extends FirebaseRecyclerAdapter<MainModel, MenuAdapter.
         TextView name, price;
         ImageView btnEdit, btnDelete;
         Button btnBuy;
+        LinearLayout ItemPR;
+
+        View MenuMainLayout_Container;
         public myViewHolder(@NonNull View itemView) {
             super(itemView);
             img = itemView.findViewById(R.id.menuItemImage);
@@ -169,6 +202,9 @@ public class MenuAdapter extends FirebaseRecyclerAdapter<MainModel, MenuAdapter.
             btnEdit = itemView.findViewById(R.id.btnEdit);
             btnDelete = itemView.findViewById(R.id.btnDelete);
             btnBuy = itemView.findViewById(R.id.btnBuy);
+            ItemPR = itemView.findViewById(R.id.ItemPR);
+            MenuMainLayout_Container = itemView.findViewById(R.id.MenuMainLayout_Container);
         }
+
     }
 }

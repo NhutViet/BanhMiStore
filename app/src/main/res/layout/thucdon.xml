@@ -7,6 +7,7 @@
     android:background="#FFFFFF"
     android:padding="8dp"
     android:elevation="4dp"
+    android:id="@+id/ItemPR"
     android:gravity="center">
 
     <!-- Khung chứa ảnh sản phẩm -->
