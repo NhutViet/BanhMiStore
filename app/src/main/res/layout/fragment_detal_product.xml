@@ -1,20 +1,45 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/MenuMainLayout_Container">
+
+<LinearLayout
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFF5E1"
-    tools:context=".ChiTietSanPhamAcitivity">
+    android:background="#FFF5E1">
 
-    <!-- Ảnh sản phẩm chính -->
-    <ImageView
-        android:id="@+id/imgChiTiet"
+    <!-- Hình ảnh sản phẩm -->
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:src="@drawable/banhmi"
-        android:scaleType="centerCrop"
-        android:layout_marginBottom="12dp"/>
+        android:layout_height="300dp">
+
+        <!-- Ảnh sản phẩm chính -->
+        <ImageView
+            android:id="@+id/imgChiTiet"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/banhmi"
+            android:scaleType="centerCrop" />
+
+        <!-- Nút Exit đặt lên trên ảnh -->
+        <ImageView
+            android:id="@+id/btnExit"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="top|end"
+            android:layout_margin="16dp"
+            android:backgroundTint="#FFF"
+            android:background="@drawable/btn_exit_background"
+            android:src="@drawable/logout"
+            android:padding="10dp"
+            android:textColor="#000"
+            android:textStyle="bold"
+            android:textAllCaps="false"
+            android:elevation="6dp" />
+    </FrameLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -78,23 +103,6 @@
             android:textColor="#FFF"
           />
     </LinearLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="SẢN PHẨM KHÁC"
-        android:textStyle="bold"
-        android:textAlignment="center"
-        android:textColor="#E82C2C"
-        android:textSize="20sp"
-        />
-
-    <!-- RecyclerView cho sản phẩm khác -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewSanPhamKhac"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clipToPadding="false"
-        android:padding="5dp"
-        tools:listitem="@layout/activity_main" />
 </LinearLayout>
+
+</FrameLayout>

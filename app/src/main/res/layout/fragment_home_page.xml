@@ -22,7 +22,6 @@
             />
         <com.denzcoskun.imageslider.ImageSlider
             android:id="@+id/image_slider"
-
             android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="170dp"
