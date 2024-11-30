@@ -26,8 +26,8 @@
             android:id="@+id/searchView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/whiteCustom"
-            android:layout_below="@+id/tvtitel"  />
+            android:layout_below="@+id/tvtitel"
+            android:layout_marginRight="8dp"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerMain"
