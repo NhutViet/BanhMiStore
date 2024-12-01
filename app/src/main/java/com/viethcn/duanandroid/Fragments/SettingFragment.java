@@ -5,6 +5,8 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,10 +26,10 @@ public class SettingFragment extends Fragment {
     Button logOutSettingFragment;
     private TextView nameField, emailField;
     private ImageView profileImage;
-
+    TextView tvDonhang;
 
     public SettingFragment() {
-        // Required empty public constructor
+
     }
 
 
@@ -49,6 +51,14 @@ public class SettingFragment extends Fragment {
         nameField = view.findViewById(R.id.nameField);
         emailField = view.findViewById(R.id.emailField);
         profileImage = view.findViewById(R.id.profileImage);
+        tvDonhang = view.findViewById(R.id.tvdonHang);
+
+        tvDonhang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.mainViewHomePage,new DonHangFragment()).commit();
+            }
+        });
 
         loadGoogleAccountInfo();
 
@@ -58,8 +68,8 @@ public class SettingFragment extends Fragment {
                 startActivity(new Intent(getContext(), LoginActivity.class));
             }
         });
-
-return view;
+        
+        return view;
     }
 
     private void loadGoogleAccountInfo() {
@@ -82,4 +92,5 @@ return view;
             Toast.makeText(getContext(), "Không tìm thấy thông tin tài khoản Google", Toast.LENGTH_SHORT).show();
         }
     }
+
 }
