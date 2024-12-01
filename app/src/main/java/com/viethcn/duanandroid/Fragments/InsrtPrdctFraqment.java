@@ -27,10 +27,19 @@ public class InsrtPrdctFraqment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_insrt_prdct, container, false);
-
         initUI(view);
 
-        btnInsertPrdct.setOnClickListener(v -> InsertData());
+        btnInsertPrdct.setOnClickListener(v -> {
+            String mName = edtPrdctName.getText().toString();
+            String mPrice = edtPrdctPrice.getText().toString();
+            String mLinkIMG = edtPrdctImg.getText().toString();
+            if ( mName.isEmpty() || mPrice.isEmpty() || mLinkIMG.isEmpty() ){
+                Toast.makeText(getContext(), "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
+            }else {
+                InsertData(mName, mPrice, mLinkIMG);
+            }
+        });
+
 
         return view;
     }
@@ -41,11 +50,11 @@ public class InsrtPrdctFraqment extends Fragment {
 
         btnInsertPrdct = view.findViewById(R.id.btnInsertPrdct);
     }
-    private void InsertData() {
+    private void InsertData(String mName, String mPrice, String mLinkIMG) {
         Map<String, Object> map = new HashMap<>();
-        map.put("name", edtPrdctName.getText().toString());
-        map.put("price", edtPrdctPrice.getText().toString());
-        map.put("img", edtPrdctImg.getText().toString());
+        map.put("name",mName);
+        map.put("price", mPrice);
+        map.put("img", mLinkIMG);
 
         FirebaseDatabase.getInstance().getReference().child("Product").push()
                 .setValue(map)

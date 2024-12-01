@@ -1,10 +1,9 @@
 package com.viethcn.duanandroid.Fragments;
 
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,8 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,7 +41,6 @@ public class CardPaymentFragment extends Fragment {
     EditText edtOwner, edtAddress, edtPhone, edtDiscription;
     Button btnCheckout;
 
-    int total;
     String totalString;
 
     public CardPaymentFragment() {}
@@ -71,44 +67,75 @@ public class CardPaymentFragment extends Fragment {
             adapter = new PaymenAdapter(mViewModel.getSelectedItems(), getViewLifecycleOwner());
             rcv.setAdapter(adapter);
 
-            total = mViewModel.calcTotal();
-            totalString = "Tổng cộng: " + formatVND(total);
+            totalString = "Tổng cộng: " + formatVND(mViewModel.calcTotal());
             txtTotal.setText(totalString);
 
             adapter.notifyDataSetChanged();
-
         });
 
-
         btnCheckout.setOnClickListener( v -> {
+            boolean flagCheck = true;
+            StringBuilder userErrorCheck = new StringBuilder();
+
 
             List<MainModel> list = mViewModel.getSelectedItems().getValue();
             String owner = edtOwner.getText().toString();
             String address = edtAddress.getText().toString();
             String phone = edtPhone.getText().toString();
+            String note = edtDiscription.getText().toString();
+            int totala = mViewModel.calcTotal();
 
-            Map<String, Object> map = new HashMap<>();
-            map.put("owner", owner);
-            map.put("address", address);
-            map.put("phone", phone);
-            map.put("listProduct", list);
-            map.put("total", total);
-
-            if(owner.isEmpty() || address.isEmpty() || phone.isEmpty()){
-                Toast.makeText(getContext(), "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
+            if ( list.isEmpty() ){
+                flagCheck = false;
+                userErrorCheck.append("Hiện bạn không có đơn nào để thanh toán\n");
+            }
+            if (owner.isEmpty()){
+                flagCheck = false;
+                userErrorCheck.append("Họ tên người nhận không được bỏ trống\n");
+            }
+            if (address.isEmpty()){
+                flagCheck = false;
+                userErrorCheck.append("Địa chỉ không hợp lệ\n");
+            }
+            if (phone.length() != 10){
+                flagCheck = false;
+                userErrorCheck.append("Số điện thoại không hợp lệ\n");
             }
 
-            FirebaseDatabase.getInstance().getReference().child("Recipts").push()
-                    .setValue(map)
-                    .addOnCompleteListener(task -> {
-                        Toast.makeText(requireContext(), "Thêm thành công", Toast.LENGTH_SHORT).show();
-                        clearAll();
-                        requireActivity().getSupportFragmentManager().popBackStack();
-                    })
-                    .addOnFailureListener(exception -> Toast.makeText(requireContext(), "Lỗi khi thêm", Toast.LENGTH_SHORT).show());
+            if (flagCheck){ Payout(list, owner, address, phone, note, totala);}
+
+            new AlertDialog.Builder(getContext())
+                    .setTitle("Thêm hoá đơn không thành công")
+                    .setMessage(userErrorCheck.toString().trim())
+                    .setPositiveButton("OK", null)
+                    .show();
         });
 
         return view;
+    }
+
+    private void Payout(List<MainModel> list,  String owner,  String address,  String phone,  String note, int total ){
+        Map<String, Object> map = new HashMap<>();
+
+        map.put("owner", owner);
+        map.put("address", address);
+        map.put("phone", phone);
+        map.put("listProduct", list);
+        map.put("note", note);
+        map.put("total", total);
+
+        if(owner.isEmpty() || address.isEmpty() || phone.isEmpty()){
+            Toast.makeText(getContext(), "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
+        }
+
+        FirebaseDatabase.getInstance().getReference().child("Recipts").push()
+                .setValue(map)
+                .addOnCompleteListener(task -> {
+                    Toast.makeText(requireContext(), "Thêm hoá đơn thành công", Toast.LENGTH_SHORT).show();
+                    clearAll();
+                    requireActivity().getSupportFragmentManager().popBackStack();
+                })
+                .addOnFailureListener(exception -> Toast.makeText(requireContext(), "Lỗi khi thêm", Toast.LENGTH_SHORT).show());
     }
 
     private void clearAll(){
@@ -116,8 +143,7 @@ public class CardPaymentFragment extends Fragment {
         edtAddress.setText("");
         edtPhone.setText("");
         edtDiscription.setText("");
-        MainModelRepository viewModel = new ViewModelProvider(getActivity()).get(MainModelRepository.class);
-        viewModel.clearAll();
+        mViewModel.clearAll();
     }
 
     private static String formatVND(int amount) {
@@ -125,7 +151,6 @@ public class CardPaymentFragment extends Fragment {
         formatter.setMaximumFractionDigits(0);
         return formatter.format(amount);
     }
-
 
     private void InitUI(View view){
         txtTotal = view.findViewById(R.id.totalAmount);

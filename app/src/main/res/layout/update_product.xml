@@ -49,6 +49,15 @@ android:padding="16dp">
     android:hint="Hình"
     android:padding="8dp"/>
 
+    <EditText
+        android:id="@+id/edtDescribe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:hint="Mô tả"
+        android:layout_marginTop="30dp"
+        android:padding="8dp"/>
+
 <Button
     android:id="@+id/btnUpdate"
     android:layout_width="match_parent"
