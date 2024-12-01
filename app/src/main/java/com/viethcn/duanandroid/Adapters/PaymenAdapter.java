@@ -51,8 +51,8 @@ public class PaymenAdapter extends RecyclerView.Adapter<PaymenAdapter.PaymentVie
         holder.txtModelPrice.setText(formatVND(Integer.parseInt(item.getPrice())));
         Glide.with(holder.imgItemPayout.getContext())
                 .load(item.getImg())
-                .placeholder(com.firebase.ui.database.R.drawable.common_google_signin_btn_icon_dark)
-                .error(com.firebase.ui.database.R.drawable.common_google_signin_btn_icon_dark_normal)
+                .placeholder(R.drawable.erroimage)
+                .error(R.drawable.erroimage)
                 .centerCrop()
                 .into(holder.imgItemPayout);
         holder.txtModelQuantity.setText(String.valueOf(item.getQuantity()));

@@ -20,7 +20,7 @@ import java.util.Map;
 
 public class InsrtPrdctFraqment extends Fragment {
 
-    EditText edtPrdctName, edtPrdctPrice, edtPrdctImg;
+    EditText edtPrdctName, edtPrdctPrice, edtPrdctImg,edtDescribe;
     Button btnInsertPrdct;
 
     @Nullable
@@ -33,10 +33,11 @@ public class InsrtPrdctFraqment extends Fragment {
             String mName = edtPrdctName.getText().toString();
             String mPrice = edtPrdctPrice.getText().toString();
             String mLinkIMG = edtPrdctImg.getText().toString();
+            String mDescribe = edtDescribe.getText().toString();
             if ( mName.isEmpty() || mPrice.isEmpty() || mLinkIMG.isEmpty() ){
                 Toast.makeText(getContext(), "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
             }else {
-                InsertData(mName, mPrice, mLinkIMG);
+                InsertData(mName, mPrice, mLinkIMG, mDescribe);
             }
         });
 
@@ -47,14 +48,16 @@ public class InsrtPrdctFraqment extends Fragment {
         edtPrdctName = view.findViewById(R.id.edtPrdctName);
         edtPrdctPrice = view.findViewById(R.id.edtPrdctPrice);
         edtPrdctImg = view.findViewById(R.id.edtPrdctImg);
+        edtDescribe = view.findViewById(R.id.edtDescribe);
 
         btnInsertPrdct = view.findViewById(R.id.btnInsertPrdct);
     }
-    private void InsertData(String mName, String mPrice, String mLinkIMG) {
+    private void InsertData(String mName, String mPrice, String mLinkIMG, String mDescribe) {
         Map<String, Object> map = new HashMap<>();
         map.put("name",mName);
         map.put("price", mPrice);
         map.put("img", mLinkIMG);
+        map.put("description", mDescribe);
 
         FirebaseDatabase.getInstance().getReference().child("Product").push()
                 .setValue(map)
@@ -70,5 +73,6 @@ public class InsrtPrdctFraqment extends Fragment {
         edtPrdctName.setText("");
         edtPrdctPrice.setText("");
         edtPrdctImg.setText("");
+        edtDescribe.setText("");
     }
 }
