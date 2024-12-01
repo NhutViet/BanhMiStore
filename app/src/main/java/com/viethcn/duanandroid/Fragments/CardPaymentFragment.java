@@ -102,13 +102,15 @@ public class CardPaymentFragment extends Fragment {
                 userErrorCheck.append("Số điện thoại không hợp lệ\n");
             }
 
-            if (flagCheck){ Payout(list, owner, address, phone, note, totala);}
-
-            new AlertDialog.Builder(getContext())
-                    .setTitle("Thêm hoá đơn không thành công")
-                    .setMessage(userErrorCheck.toString().trim())
-                    .setPositiveButton("OK", null)
-                    .show();
+            if (flagCheck){
+                Payout(list, owner, address, phone, note, totala);
+            }else {
+                new AlertDialog.Builder(getContext())
+                        .setTitle("Thêm hoá đơn không thành công")
+                        .setMessage(userErrorCheck.toString().trim())
+                        .setPositiveButton("OK", null)
+                        .show();
+            }
         });
 
         return view;
