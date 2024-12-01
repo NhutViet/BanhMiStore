@@ -20,6 +20,9 @@ import com.viethcn.duanandroid.Models.MainModel;
 import com.viethcn.duanandroid.R;
 import com.viethcn.duanandroid.Repositories.MainModelRepository;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+
 public class DetalProductFragment extends Fragment {
 
     @Nullable
@@ -36,11 +39,11 @@ public class DetalProductFragment extends Fragment {
         Button btnThemGioHang = view.findViewById(R.id.btnThemGioHang);
         ImageView imgProduct = view.findViewById(R.id.imgChiTiet);
 
-        // Layout gốc của Fragment
+
         view.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                // Trả về true để chặn tất cả sự kiện touch
+                // sử lý sự kiện khi vào description fragment nhấn xuống dưới không bị ghi đè sụ kiện
                 return true;
             }
         });
@@ -48,13 +51,25 @@ public class DetalProductFragment extends Fragment {
         // Nhận dữ liệu từ Bundle
         if (getArguments() != null) {
             String name = getArguments().getString("name", "Không xác định");
-            String price = getArguments().getString("price", "0 VNĐ");
+            String price = getArguments().getString("price", "0"); // Chỉ lấy số, không bao gồm "VNĐ"
             String img = getArguments().getString("img", "");
             String moTa = getArguments().getString("description", "Không có mô tả");
 
+            // Định dạng giá
+            NumberFormat numberFormat = new DecimalFormat("#,###");
+            double myNumber;
+
+            try {
+                myNumber = Double.parseDouble(price); // Chuyển đổi chuỗi giá trị sang số
+            } catch (NumberFormatException e) {
+                myNumber = 0.0; // Giá trị mặc định nếu không thể chuyển đổi
+            }
+
+            String formatterNumber = numberFormat.format(myNumber); // Định dạng giá trị
+
             // Gán dữ liệu cho View
             txtName.setText(name);
-            txtPrice.setText(price + " VNĐ");
+            txtPrice.setText(formatterNumber + " VNĐ"); // Hiển thị giá đã được định dạng
             txtMotaSp.setText(moTa);
 
             Glide.with(this)
@@ -63,12 +78,19 @@ public class DetalProductFragment extends Fragment {
                     .into(imgProduct);
         }
 
+
         btnExit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                requireActivity().getSupportFragmentManager().popBackStack();
+                // Chuyển sang Fragment menu
+                requireActivity()
+                        .getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.MenuMainLayout_Container, new MenuBanhMiFragment())
+                        .commit();
             }
         });
+
 
 
         btnThemGioHang.setOnClickListener(new View.OnClickListener() {
