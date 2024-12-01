@@ -39,6 +39,8 @@ public class MenuBanhMiFragment extends Fragment {
         searchView.setQueryHint("Tìm kiếm sản phẩm...");
         searchView.setIconifiedByDefault(false);
 
+
+
         setMenuData();
 
         searchView.setOnClickListener(v -> searchView.setIconified(false));
@@ -82,6 +84,17 @@ public class MenuBanhMiFragment extends Fragment {
 
     }
 
+    private void txtSearch(String str) {
+        FirebaseRecyclerOptions<MainModel> options = new FirebaseRecyclerOptions.Builder<MainModel>()
+                .setQuery(FirebaseDatabase.getInstance().getReference().child("Product").orderByChild("name").startAt(str).endAt(str+"~"), MainModel.class)
+                .build();
+
+
+        mainAdapter = new MenuAdapter(options);
+
+        mainAdapter.startListening();
+        recyclerViewMain.setAdapter(mainAdapter);
+    }
     @Override
     public void onStart() {
         super.onStart();
@@ -95,17 +108,7 @@ public class MenuBanhMiFragment extends Fragment {
     }
 
 
-    private void txtSearch(String str) {
-        FirebaseRecyclerOptions<MainModel> options = new FirebaseRecyclerOptions.Builder<MainModel>()
-                .setQuery(FirebaseDatabase.getInstance().getReference().child("Product").orderByChild("name").startAt(str).endAt(str+"~"), MainModel.class)
-                .build();
 
-
-        mainAdapter = new MenuAdapter(options);
-
-        mainAdapter.startListening();
-        recyclerViewMain.setAdapter(mainAdapter);
-    }
 
 
 }
