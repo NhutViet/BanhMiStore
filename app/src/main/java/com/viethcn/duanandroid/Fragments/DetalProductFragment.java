@@ -2,6 +2,7 @@ package com.viethcn.duanandroid.Fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -34,6 +35,15 @@ public class DetalProductFragment extends Fragment {
         ImageView btnExit = view.findViewById(R.id.btnExit);
         Button btnThemGioHang = view.findViewById(R.id.btnThemGioHang);
         ImageView imgProduct = view.findViewById(R.id.imgChiTiet);
+
+        // Layout gốc của Fragment
+        view.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                // Trả về true để chặn tất cả sự kiện touch
+                return true;
+            }
+        });
 
         // Nhận dữ liệu từ Bundle
         if (getArguments() != null) {
