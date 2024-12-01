@@ -92,6 +92,7 @@ public class CardPaymentFragment extends Fragment {
             map.put("address", address);
             map.put("phone", phone);
             map.put("listProduct", list);
+            map.put("total", total);
 
             if(owner.isEmpty() || address.isEmpty() || phone.isEmpty()){
                 Toast.makeText(getContext(), "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
@@ -115,6 +116,8 @@ public class CardPaymentFragment extends Fragment {
         edtAddress.setText("");
         edtPhone.setText("");
         edtDiscription.setText("");
+        MainModelRepository viewModel = new ViewModelProvider(getActivity()).get(MainModelRepository.class);
+        viewModel.clearAll();
     }
 
     private static String formatVND(int amount) {

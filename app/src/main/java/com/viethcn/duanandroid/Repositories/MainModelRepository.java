@@ -71,5 +71,8 @@ public class MainModelRepository extends ViewModel {
         }
     }
 
+    public void clearAll(){
+        selectedItems.setValue(new ArrayList<>());
+    }
 }
 
