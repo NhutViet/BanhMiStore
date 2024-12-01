@@ -18,22 +18,21 @@
         android:padding="16dp" />
 
     <!-- Profile Picture and Camera Icon -->
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:layout_marginTop="16dp">
+    <androidx.cardview.widget.CardView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        app:cardCornerRadius="60dp"
+        app:cardElevation="0dp"
+        android:layout_gravity="center">
 
         <ImageView
             android:id="@+id/profileImage"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:src="@drawable/profile"
-            android:layout_gravity="center"
-            android:scaleType="centerCrop"
-            android:background="@drawable/profileaa" />
-    </FrameLayout>
+            android:scaleType="centerCrop" />
+    </androidx.cardview.widget.CardView>
+
 
     <!-- Profile Settings Fields -->
     <TextView
@@ -43,12 +42,11 @@
         android:textSize="14sp"
         android:textColor="#808080"
         android:layout_marginTop="16dp" />
-
+    
     <EditText
         android:id="@+id/nameField"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:hint="Sunie Phạm"
         android:background="@drawable/rounded_background"
         android:textSize="16sp"
         android:padding="8dp"
@@ -68,7 +66,6 @@
         android:id="@+id/emailField"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:hint="sunieux@gmail.com"
         android:background="@drawable/rounded_background"
         android:textSize="16sp"
         android:padding="8dp"
@@ -76,74 +73,5 @@
         android:focusable="false"
         android:clickable="false" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Giới tính"
-        android:textSize="14sp"
-        android:textColor="#808080"
-        android:layout_marginTop="8dp" />
-
-    <EditText
-        android:id="@+id/genderField"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:hint="Nữ"
-        android:background="@drawable/rounded_background"
-        android:textSize="16sp"
-        android:padding="8dp"
-        android:inputType="text"
-        android:focusable="false"
-        android:clickable="false" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Số điện thoại"
-        android:textSize="14sp"
-        android:textColor="#808080"
-        android:layout_marginTop="8dp" />
-
-    <EditText
-        android:id="@+id/phoneField"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:hint="(+84) 234156789"
-        android:background="@drawable/rounded_background"
-        android:textSize="16sp"
-        android:padding="8dp"
-        android:inputType="phone"
-        android:focusable="false"
-        android:clickable="false" />
-
-    <!-- Save Button -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="16dp">
-
-        <!-- Edit Profile Button -->
-        <Button
-            android:id="@+id/editButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Sửa Hồ Sơ"
-            android:backgroundTint="#179EAF"
-            android:textColor="@android:color/white" />
-
-        <!-- Save Button -->
-        <Button
-            android:id="@+id/saveButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Lưu thay đổi"
-            android:backgroundTint="#179EAF"
-            android:textColor="@android:color/white"
-            android:enabled="false" /> <!-- Initially disabled -->
-
-    </LinearLayout>
 
 </LinearLayout>
