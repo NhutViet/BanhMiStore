@@ -56,7 +56,7 @@ public class SettingFragment extends Fragment {
         tvDonhang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.mainViewHomePage,new DonHangFragment()).commit();
+                requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.mainViewHomePage,new DonHangFragment()).commit();
             }
         });
 

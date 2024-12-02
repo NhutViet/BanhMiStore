@@ -69,6 +69,9 @@ public class PaymenAdapter extends RecyclerView.Adapter<PaymenAdapter.PaymentVie
                 item.setQuantity(item.getQuantity() - 1);
                 repo.updateQuanTityItem(item);
                 notifyItemChanged(position);
+            }else {
+                repo.removeItem(item);
+                notifyItemRemoved(position);
             }
         });
 
