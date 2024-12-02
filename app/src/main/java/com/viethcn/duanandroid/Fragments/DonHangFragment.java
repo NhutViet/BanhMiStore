@@ -29,13 +29,11 @@ import com.viethcn.duanandroid.R;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class DonHangFragment extends Fragment {
     private RecyclerView recyclerView;
     private DonHangAdapter adapter;
-    private List<DonHang> donHangList;
-    private List<MainModel> productList;
+    private List<DonHang> mListDonHang;
     private Query query;
 
     @Nullable
@@ -48,11 +46,11 @@ public class DonHangFragment extends Fragment {
         // Kết nối Firebase
         SharedPreferences tokenRef = requireActivity().getSharedPreferences("data", MODE_PRIVATE);
         String id = tokenRef.getString("token", "");
+
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Recipts");
         query = databaseReference.orderByChild("id").equalTo(id);
 
-        productList=new ArrayList<>();
-        donHangList= new ArrayList<>();
+        mListDonHang = new ArrayList<>();
         loadDonHangData();
 
         return view;
@@ -61,40 +59,31 @@ public class DonHangFragment extends Fragment {
 
     private void loadDonHangData() {
         query.addValueEventListener(new ValueEventListener() {
-
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot receiptSnapshot : snapshot.getChildren()) {
+                if (snapshot.exists()) {
+                    for (DataSnapshot item : snapshot.getChildren()) {
+                        String address = item.child("address").getValue(String.class);
+                        String owner = item.child("owner").getValue(String.class);
+                        String phone = item.child("phone").getValue(String.class);
+                        Double total = item.child("total").getValue(Double.class);
+                        String note = item.child("note").getValue(String.class);
 
-                    String owner = receiptSnapshot.child("owner").getValue(String.class);
-                    String address = receiptSnapshot.child("address").getValue(String.class);
-                    String phone = receiptSnapshot.child("phone").getValue(String.class);
-                    String note = receiptSnapshot.child("note").getValue(String.class);
-                    Double total = receiptSnapshot.child("total").getValue(Double.class);
+                        GenericTypeIndicator<List<MainModel>> typeIndicator = new GenericTypeIndicator<List<MainModel>>() {};
+                        List<MainModel> listProduct = item.child("listProduct").getValue(typeIndicator);
 
-                    DataSnapshot listProductSnapshot = receiptSnapshot.child("listProduct");
-
-
-                    for (DataSnapshot productSnapshot : listProductSnapshot.getChildren()) {
-                        MainModel product = productSnapshot.getValue(MainModel.class);
-                        if (product != null) {
-                            productList.add(product);
-                        }
-                    }
-                    if (note.isEmpty()) {
-                        donHangList.add(new DonHang(address,owner,phone,total,productList));
-                    }else{
-                        donHangList.add(new DonHang(address,owner,phone,total,note,productList));
+                        DonHang donHang = new DonHang(address, owner, phone, total, note, listProduct);
+                        mListDonHang.add(donHang);
                     }
                 }
-                adapter = new DonHangAdapter(getContext(), donHangList);
+
+                adapter = new DonHangAdapter(getContext(), mListDonHang);
                 recyclerView.setAdapter(adapter);
             }
-
-                    @Override
-                    public void onCancelled (@NonNull DatabaseError error){
-                        Log.e("FirebaseData", "Database error: " + error.getMessage());
-                    }
-                });
-        }
+            @Override
+            public void onCancelled (@NonNull DatabaseError error){
+                Log.e("FirebaseData", "Database error: " + error.getMessage());
+            }
+        });
     }
+}
