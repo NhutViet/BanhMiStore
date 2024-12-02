@@ -123,7 +123,7 @@ public class CardPaymentFragment extends Fragment {
     private void Payout(List<MainModel> list,  String owner,  String address,  String phone,  String note, int total ){
         Map<String, Object> map = new HashMap<>();
 
-        SharedPreferences tokenRef = getActivity().getSharedPreferences("data", MODE_PRIVATE);
+        SharedPreferences tokenRef = requireActivity().getSharedPreferences("data", MODE_PRIVATE);
         String id = tokenRef.getString("token", "");
 
         map.put("id", id);

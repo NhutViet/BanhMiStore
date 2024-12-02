@@ -29,13 +29,13 @@ import com.viethcn.duanandroid.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class DonHangFragment extends Fragment {
     private RecyclerView recyclerView;
     private DonHangAdapter adapter;
     private List<DonHang> donHangList;
     private List<MainModel> productList;
-    private DatabaseReference databaseReference;
     private Query query;
 
     @Nullable
@@ -46,10 +46,10 @@ public class DonHangFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         // Kết nối Firebase
-        SharedPreferences tokenRef = getActivity().getSharedPreferences("data", MODE_PRIVATE);
+        SharedPreferences tokenRef = requireActivity().getSharedPreferences("data", MODE_PRIVATE);
         String id = tokenRef.getString("token", "");
-        databaseReference = FirebaseDatabase.getInstance().getReference("Recipts");
-        query = databaseReference.orderByChild(id).equalTo(id);
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Recipts");
+        query = databaseReference.orderByChild("id").equalTo(id);
 
         productList=new ArrayList<>();
         donHangList= new ArrayList<>();
@@ -65,7 +65,7 @@ public class DonHangFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot receiptSnapshot : snapshot.getChildren()) {
-                    // Truy cập từng trường trong mỗi đơn hàng
+
                     String owner = receiptSnapshot.child("owner").getValue(String.class);
                     String address = receiptSnapshot.child("address").getValue(String.class);
                     String phone = receiptSnapshot.child("phone").getValue(String.class);

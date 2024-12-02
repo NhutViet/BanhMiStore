@@ -15,7 +15,9 @@ import com.viethcn.duanandroid.Models.MainModel;
 import com.viethcn.duanandroid.Models.Product;
 import com.viethcn.duanandroid.R;
 
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class RcvDonHangAdapter extends RecyclerView.Adapter<RcvDonHangAdapter.DonHangVhd> {
     private List<MainModel> listproduct;
@@ -35,10 +37,21 @@ public class RcvDonHangAdapter extends RecyclerView.Adapter<RcvDonHangAdapter.Do
     @Override
     public void onBindViewHolder(@NonNull DonHangVhd holder, int position) {
         MainModel item = listproduct.get(position);
-        holder.tvTenSp.setText("TenSanPham:  "+  item.getName());
-        String Soluong = "Soluong:  " + (String.valueOf(item.getQuantity()));
-        holder.tvSl.setText(Soluong); // Chuyển đổi sang chuỗi
-        holder.tvGiaSp.setText("Gia San Pham:  "+ item.getPrice());
+
+        String mName = "TenSanPham: " + item.getName();
+        holder.tvTenSp.setText(mName);
+
+        String mQuant = "Soluong:  " + item.getQuantity();
+        holder.tvSl.setText(mQuant);
+
+        String mPrice = "GiaSanPham: " + formatVND(Integer.parseInt(item.getPrice()));
+        holder.tvGiaSp.setText(mPrice);
+    }
+
+    private String formatVND(int amount) {
+        NumberFormat formatter = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+        formatter.setMaximumFractionDigits(0);
+        return formatter.format(amount);
     }
 
     @Override
