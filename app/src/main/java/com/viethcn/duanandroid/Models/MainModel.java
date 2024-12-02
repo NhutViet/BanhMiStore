@@ -5,6 +5,12 @@ public class MainModel {
     String name, price, img, description;
     int quantity;
 
+    public MainModel(String name, String price, int quantity) {
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
+    }
+
     public MainModel() {
     }
 

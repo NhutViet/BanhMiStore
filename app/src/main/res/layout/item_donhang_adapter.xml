@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:elevation="15dp"
+    app:cardCornerRadius="15dp"
+    android:backgroundTint="#FDB863"
+    android:paddingRight="3dp"
+    android:id="@+id/item_donhang_adapter">
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:orientation="vertical"
+       android:padding="15dp">
+       <TextView
+           android:id="@+id/tvTensp"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:paddingBottom="3dp"
+           android:textSize="15sp"
+           android:textStyle="bold"
+           android:text="Ten San Pham"/>
+       <TextView
+           android:id="@+id/tvGiaSp"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:paddingBottom="3dp"
+           android:textSize="15sp"
+           android:textStyle="bold"
+           android:text="Gia San Pham"/>
+       <TextView
+           android:id="@+id/tvSl"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:textSize="15sp"
+           android:textStyle="bold"
+           android:text="Soluong"/>
+   </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>
