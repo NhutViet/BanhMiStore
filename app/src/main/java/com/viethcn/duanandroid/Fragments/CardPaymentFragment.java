@@ -1,6 +1,9 @@
 package com.viethcn.duanandroid.Fragments;
 
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
@@ -8,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -119,6 +123,10 @@ public class CardPaymentFragment extends Fragment {
     private void Payout(List<MainModel> list,  String owner,  String address,  String phone,  String note, int total ){
         Map<String, Object> map = new HashMap<>();
 
+        SharedPreferences tokenRef = requireActivity().getSharedPreferences("data", MODE_PRIVATE);
+        String id = tokenRef.getString("token", "");
+
+        map.put("id", id);
         map.put("owner", owner);
         map.put("address", address);
         map.put("phone", phone);

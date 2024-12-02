@@ -1,5 +1,8 @@
 package com.viethcn.duanandroid.Fragments;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +20,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.viethcn.duanandroid.Adapters.DonHangAdapter;
 import com.viethcn.duanandroid.Models.DonHang;
@@ -25,13 +29,14 @@ import com.viethcn.duanandroid.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class DonHangFragment extends Fragment {
     private RecyclerView recyclerView;
     private DonHangAdapter adapter;
     private List<DonHang> donHangList;
     private List<MainModel> productList;
-    private DatabaseReference databaseReference;
+    private Query query;
 
     @Nullable
     @Override
@@ -40,11 +45,12 @@ public class DonHangFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-
-
-
         // Kết nối Firebase
-        databaseReference = FirebaseDatabase.getInstance().getReference("Recipts");
+        SharedPreferences tokenRef = requireActivity().getSharedPreferences("data", MODE_PRIVATE);
+        String id = tokenRef.getString("token", "");
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Recipts");
+        query = databaseReference.orderByChild("id").equalTo(id);
+
         productList=new ArrayList<>();
         donHangList= new ArrayList<>();
         loadDonHangData();
@@ -54,12 +60,12 @@ public class DonHangFragment extends Fragment {
 
 
     private void loadDonHangData() {
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        query.addValueEventListener(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot receiptSnapshot : snapshot.getChildren()) {
-                    // Truy cập từng trường trong mỗi đơn hàng
+
                     String owner = receiptSnapshot.child("owner").getValue(String.class);
                     String address = receiptSnapshot.child("address").getValue(String.class);
                     String phone = receiptSnapshot.child("phone").getValue(String.class);

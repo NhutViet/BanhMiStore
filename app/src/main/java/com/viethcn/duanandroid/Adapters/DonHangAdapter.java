@@ -22,6 +22,7 @@ import com.viethcn.duanandroid.Models.DonHang;
 import com.viethcn.duanandroid.Models.MainModel;
 import com.viethcn.duanandroid.R;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import android.content.Context;
@@ -39,6 +40,7 @@ import com.viethcn.duanandroid.Models.MainModel;
 import com.viethcn.duanandroid.R;
 
 import java.util.List;
+import java.util.Locale;
 
 public class DonHangAdapter extends RecyclerView.Adapter<DonHangAdapter.DonHangViewHolder> {
     private List<DonHang> donHangList;
@@ -62,12 +64,17 @@ public class DonHangAdapter extends RecyclerView.Adapter<DonHangAdapter.DonHangV
         holder.tvOwner.setText("Khách Hàng: " + donHang.getOwner());
         holder.tvAddress.setText("Địa Chỉ: " + donHang.getAddress());
         holder.tvPhone.setText("SĐT: " + donHang.getPhone());
-        holder.tvTotal.setText("Tổng Bill: " + donHang.getTotal());
+        holder.tvTotal.setText("Tổng Bill: " + formatVND(donHang.getTotal()));
 
-        // Gắn adapter cho danh sách sản phẩm
         RcvDonHangAdapter DonHangAdapter = new RcvDonHangAdapter(donHang.getListProduct(), context);
         holder.rcvProducts.setAdapter(DonHangAdapter);
         holder.rcvProducts.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+    }
+
+    private String formatVND(Double amount) {
+        NumberFormat formatter = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+        formatter.setMaximumFractionDigits(2);
+        return formatter.format(amount);
     }
 
     @Override

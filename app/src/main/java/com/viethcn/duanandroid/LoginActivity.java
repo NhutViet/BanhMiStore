@@ -1,6 +1,7 @@
 package com.viethcn.duanandroid;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -126,6 +127,10 @@ public class LoginActivity extends AppCompatActivity {
             try {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 firebaseAuthAccount(account.getIdToken());
+                SharedPreferences tokenRef = getSharedPreferences("data",MODE_PRIVATE);
+                SharedPreferences.Editor editor = tokenRef.edit();
+                editor.putString("token", account.getIdToken());
+                editor.apply();
             } catch (ApiException e) {
                 Toast.makeText(this, "Lỗi đăng nhập: " + e.getStatusCode(), Toast.LENGTH_SHORT).show();
             }
