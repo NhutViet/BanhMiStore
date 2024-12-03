@@ -1,5 +1,7 @@
 package com.viethcn.duanandroid.Fragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,9 +30,10 @@ public class MenuBanhMiFragment extends Fragment {
 
     SearchView searchView;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout
+
         View view = inflater.inflate(R.layout.fragment_menu, container, false);
 
         recyclerViewMain = view.findViewById(R.id.recyclerMain);
@@ -39,6 +42,19 @@ public class MenuBanhMiFragment extends Fragment {
         searchView.setQueryHint("Tìm kiếm sản phẩm...");
         searchView.setIconifiedByDefault(false);
 
+
+        // Lấy context từ getContext() (hoặc requireContext() nếu bạn muốn chắc chắn)
+        SharedPreferences sharedPreferences = getContext() != null
+                ? getContext().getSharedPreferences("thongtin", Context.MODE_PRIVATE)
+                : null;
+
+        // Kiểm tra role và ẩn nút nếu không phải admin
+        if (sharedPreferences != null) {
+            String loai = sharedPreferences.getString("rule", "");
+            if (!"admin".equals(loai)) {
+                fabAdd.setVisibility(View.GONE);
+            }
+        }
 
 
         setMenuData();
