@@ -8,8 +8,8 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.viethcn.duanandroid.Fragments.HomePageFragment;
-import com.viethcn.duanandroid.Fragments.ProfileFragment;
-import com.viethcn.duanandroid.Fragments.SearchFragment;
+import com.viethcn.duanandroid.Fragments.CardPaymentFragment;
+import com.viethcn.duanandroid.Fragments.MenuBanhMiFragment;
 import com.viethcn.duanandroid.Fragments.SettingFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -34,9 +34,9 @@ public class MainActivity extends AppCompatActivity {
         bottomNav.setOnItemSelectedListener(item -> {
             int index = item.getItemId();
             if (index == R.id.bottom_nav_search) {
-                replaceFragment(new SearchFragment());
-            } else if (index == R.id.bottom_nav_userIdentify) {
-                replaceFragment(new ProfileFragment());
+                replaceFragment(new CardPaymentFragment());
+            } else if (index == R.id.bottom_nav_menu) {
+                replaceFragment(new MenuBanhMiFragment());
             } else if (index == R.id.bottom_nav_setting) {
                 replaceFragment(new SettingFragment());
             } else if (index == R.id.bottom_nav_homePage) {
@@ -46,9 +46,8 @@ public class MainActivity extends AppCompatActivity {
             return true;
         });
     }
-
     // This func to take the main fragment off and then replace another fragment
     private void replaceFragment(Fragment layout) {
-        getSupportFragmentManager().beginTransaction().replace(R.id.homePageMain, layout).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.mainViewHomePage, layout).commit();
     }
 }

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/MenuMainLayout_Container">
+
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFF5E1">
+
+    <!-- Hình ảnh sản phẩm -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp">
+
+        <!-- Ảnh sản phẩm chính -->
+        <ImageView
+            android:id="@+id/imgChiTiet"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/banhmi"
+            android:scaleType="centerCrop" />
+
+        <!-- Nút Exit đặt lên trên ảnh -->
+        <ImageView
+            android:id="@+id/btnExit"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="top|end"
+            android:layout_margin="16dp"
+            android:backgroundTint="#FFF"
+            android:background="@drawable/btn_exit_background"
+            android:src="@drawable/logout"
+            android:padding="10dp"
+            android:textColor="#000"
+            android:textStyle="bold"
+            android:textAllCaps="false"
+            android:elevation="6dp" />
+    </FrameLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="8dp"
+        >
+
+        <TextView
+            android:id="@+id/txtTensp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:textAlignment="center"
+            android:layout_height="wrap_content"
+            android:text="Bánh Mì Đặc Biệt"
+            android:textColor="#000"
+            android:textSize="22sp"
+            android:textStyle="bold"
+             />
+
+        <!-- Giá sản phẩm -->
+        <TextView
+            android:id="@+id/txtGiasp"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="68.000 VND"
+            android:textColor="#E82A1C"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            />
+    </LinearLayout>
+
+    <!-- Tên sản phẩm -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/txtMotaSp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="2dp"
+            android:text="Một ổ bánh mì siêu to với đầy ụ nhân: thịt nguội, chả lụa, dăm bông, chà bông."
+            android:textSize="16sp"
+           />
+
+        <Button
+            android:id="@+id/btnThemGioHang"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#BC0909"
+            android:text="Thêm Giỏ hàng"
+            android:textAllCaps="true"
+            android:textColor="#FFF"
+          />
+    </LinearLayout>
+</LinearLayout>
+
+</FrameLayout>

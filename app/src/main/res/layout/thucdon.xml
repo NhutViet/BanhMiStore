@@ -7,6 +7,7 @@
     android:background="#FFFFFF"
     android:padding="8dp"
     android:elevation="4dp"
+    android:id="@+id/ItemPR"
     android:gravity="center">
 
     <!-- Khung chứa ảnh sản phẩm -->
@@ -20,42 +21,80 @@
             android:id="@+id/menuItemImage"
             android:layout_width="100dp"
             android:layout_height="100dp"
+            android:layout_gravity="center"
             android:src="@drawable/banhmi" />
     </FrameLayout>
 
-    <!-- Tên sản phẩm -->
+
+
+
     <TextView
         android:id="@+id/menuItemName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:gravity="center"
         android:text="Tên sản phẩm"
         android:textColor="#000"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
         android:textSize="16sp"
         android:textStyle="bold" />
+
+
+    <LinearLayout
+        android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:text="Giá: "
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
     <!-- Giá sản phẩm -->
     <TextView
         android:id="@+id/menuItemPrice"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:text="Giá sản phẩm"
         android:textColor="#E82A1C"
         android:textSize="14sp"
         android:textStyle="bold" />
+    </LinearLayout>
 
     <!-- Nút MUA NGAY -->
     <Button
-        android:id="@+id/btnBuyNow"
+        android:id="@+id/btnBuy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:backgroundTint="#E82A1C"
-        android:text="MUA NGAY"
+        android:text="THÊM GIỎ HÀNG"
         android:textColor="#FFF"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:layout_gravity="center" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp">
+        <ImageView
+            android:id="@+id/btnEdit"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:src="@drawable/pencil"
+            android:layout_height="wrap_content"
+            />
+        <ImageView
+            android:id="@+id/btnDelete"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:src="@drawable/delete"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
 </LinearLayout>

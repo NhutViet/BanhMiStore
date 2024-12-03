@@ -2,7 +2,14 @@ package com.viethcn.duanandroid.Models;
 
 public class MainModel {
 
-    String name, price, img;
+    String name, price, img, description;
+    int quantity;
+
+    public MainModel(String name, String price, int quantity) {
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
+    }
 
     public MainModel() {
     }
@@ -11,6 +18,21 @@ public class MainModel {
         this.name = name;
         this.price = price;
         this.img = img;
+    }
+
+    public MainModel(String name, String price, String img, String description) {
+        this.name = name;
+        this.price = price;
+        this.img = img;
+        this.description = description;
+    }
+
+    public MainModel(String name, String price, String img, String description, int quantity) {
+        this.name = name;
+        this.price = price;
+        this.img = img;
+        this.description = description;
+        this.quantity = quantity;
     }
 
     public String getName() {
@@ -35,5 +57,21 @@ public class MainModel {
 
     public void setImg(String img) {
         this.img = img;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }

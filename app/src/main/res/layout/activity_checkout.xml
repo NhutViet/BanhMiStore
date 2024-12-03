@@ -1,263 +1,96 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
-    android:id="@+id/scrollView">
+    android:id="@+id/scrollView"
+    android:background="@color/MauNen"
+    >
 
     <LinearLayout
         android:id="@+id/checkoutContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:padding="10dp"
+        android:orientation="vertical"
+        >
 
         <!-- Phần: Thông tin sản phẩm -->
         <TextView
-            android:id="@+id/productSectionTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Sản phẩm"
-            android:textSize="20sp"
+            android:textSize="24sp"
+            android:textAlignment="center"
             android:paddingBottom="8dp"
             android:textStyle="bold"
             />
 
-        <LinearLayout
-            android:id="@+id/productContainer"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/paymentRcV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="8dp"
-            android:background="@drawable/custom_btn">
+            android:orientation="horizontal" />
 
-            <!-- Hình ảnh sản phẩm -->
-            <ImageView
-                android:id="@+id/productImage"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:src="@drawable/banhmi"
-                android:scaleType="centerCrop" />
-
-            <!-- Tên, giá và số lượng sản phẩm -->
-            <LinearLayout
-                android:id="@+id/productDetailsContainer"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:paddingLeft="8dp">
-
-                <TextView
-                    android:id="@+id/productName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Banh Mi Dac Biet"
-                    android:textSize="16sp"
-                    android:textColor="#000000" />
-
-                <TextView
-                    android:id="@+id/productPrice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Giá: 100,000 VND"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/productQuantity"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Số lượng: 1"
-                    android:textSize="14sp" />
-
-                <!-- Thêm TextView để hiển thị topping đã chọn -->
-                <TextView
-                    android:id="@+id/selectedToppings"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Toppings: "
-                    android:textSize="14sp" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <!-- Phần: Thành tiền và phí vận chuyển -->
         <TextView
             android:id="@+id/totalAmount"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Thành tiền: 100,000 VND"
-            android:textSize="16sp"
-            android:paddingTop="8dp" />
-
-        <TextView
-            android:id="@+id/shippingFee"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Phí vận chuyển: 20,000 VND"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/grandTotal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tổng cộng: 120,000 VND"
+            android:text="Tổng cộng: 0 VND"
             android:textSize="18sp"
-            android:paddingTop="8dp"
+            android:padding="5dp"
             android:textColor="#FF5722" />
 
         <!-- Các bước thanh toán -->
         <TextView
-            android:id="@+id/stepOneTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Thông tin giao hàng"
-            android:textSize="18sp"
+            android:textSize="24sp"
             android:textStyle="bold"
-            android:paddingTop="16dp" />
+            android:textAlignment="center"
+            android:layout_marginTop="15dp"
+            />
 
         <EditText
-            android:id="@+id/etName"
+            android:id="@+id/cartBillOwner"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Tên người nhận" />
+            android:layout_height="50dp"
+            android:hint="Tên người nhận"
+            android:singleLine="true"
+            />
 
         <EditText
-            android:id="@+id/etAddress"
+            android:id="@+id/cartBillAddressOwner"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Địa chỉ giao hàng" />
+            android:layout_height="50dp"
+            android:hint="Địa chỉ giao hàng"
+            android:singleLine="true"
+            />
 
         <EditText
-            android:id="@+id/etPhone"
+            android:id="@+id/cartBillPhoneOwner"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Số điện thoại" />
-
-        <!-- Bước 2: Phương thức thanh toán -->
-        <TextView
-            android:id="@+id/stepTwoTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Phương thức thanh toán"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:paddingTop="16dp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
-
-            <!-- RadioGroup -->
-            <RadioGroup
-                android:id="@+id/paymentOptions"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <RadioButton
-                    android:id="@+id/rbCreditCard"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Thẻ tín dụng/Ghi nợ" />
-
-                <RadioButton
-                    android:id="@+id/rbCashOnDelivery"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Thanh toán khi nhận hàng" />
-
-                <RadioButton
-                    android:id="@+id/rbEWallet"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Ví điện tử" />
-            </RadioGroup>
-
-            <!-- Submenu for Credit Card -->
-            <LinearLayout
-                android:id="@+id/subMenuCreditCard"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="gone"
-                android:padding="8dp"
-                android:background="#f0f0f0">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Nhập thông tin thẻ tín dụng"
-                    android:textStyle="bold" />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Số thẻ" />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Ngày hết hạn (MM/YY)" />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Mã bảo mật (CVV)" />
-            </LinearLayout>
-
-            <!-- Submenu for E-Wallet -->
-            <LinearLayout
-                android:id="@+id/subMenuEWallet"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="gone"
-                android:padding="8dp"
-                android:background="#f0f0f0">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Chọn ví điện tử"
-                    android:textStyle="bold" />
-
-                <Spinner
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:entries="@array/eWalletOptions" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <!-- Bước 3: Thêm Voucher và Ghi chú -->
-        <TextView
-            android:id="@+id/stepThreeTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Voucher"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:paddingTop="16dp" />
-
-        <EditText
-            android:id="@+id/etVoucher"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Nhập mã giảm giá (nếu có)" />
+            android:layout_height="50dp"
+            android:hint="Số điện thoại"
+            android:singleLine="true"
+            android:maxLength="10"
+            android:digits="0123456789"
+            />
 
         <TextView
             android:id="@+id/stepFourTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Ghi chú"
             android:textSize="18sp"
             android:textStyle="bold"
+            android:singleLine="true"
             android:paddingTop="16dp" />
 
         <EditText
             android:id="@+id/etNote"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
+            android:singleLine="true"
             android:hint="Ghi chú cho đơn hàng" />
 
         <!-- Bước 4: Xác nhận thanh toán -->
@@ -268,7 +101,8 @@
             android:text="Hoàn tất thanh toán"
             android:backgroundTint="@color/design_default_color_primary"
             android:textColor="#FFFFFF"
-            android:layout_marginTop="16dp" />
+            android:singleLine="true"
+            android:layout_marginTop="15dp" />
 
     </LinearLayout>
 </ScrollView>

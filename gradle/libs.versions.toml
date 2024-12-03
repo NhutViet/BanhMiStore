@@ -1,7 +1,12 @@
 [versions]
 agp = "8.3.2"
+cardview = "1.0.0"
+circleimageview = "3.1.0"
+dialogplus = "1.11"
 firebaseAuthVersion = "22.1.0"
 firebaseBom = "33.6.0"
+firebaseStorage = "21.0.1"
+firebaseUiDatabase = "8.0.1"
 glide = "4.16.0"
 imageslideshow = "0.1.2"
 junit = "4.13.2"
@@ -16,13 +21,20 @@ googleServices = "4.4.2"
 firebaseDatabase = "21.0.0"
 googleGmsGoogleServices = "4.4.2"
 playServicesAuth = "21.2.0"
+firebaseFirestore = "25.1.1"
+recyclerview = "1.3.2"
 
 [libraries]
+cardview = { module = "androidx.cardview:cardview", version.ref = "cardview" }
+circleimageview = { module = "de.hdodenhof:circleimageview", version.ref = "circleimageview" }
 com-google-firebase-firebase-auth = { module = "com.google.firebase:firebase-auth" }
+dialogplus = { module = "com.orhanobut:dialogplus", version.ref = "dialogplus" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
 firebase-auth-v2210 = { module = "com.google.firebase:firebase-auth", version.ref = "firebaseAuthVersion" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 firebase-firestore = { module = "com.google.firebase:firebase-firestore" }
+firebase-storage = { module = "com.google.firebase:firebase-storage", version.ref = "firebaseStorage" }
+firebase-ui-database = { module = "com.firebaseui:firebase-ui-database", version.ref = "firebaseUiDatabase" }
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 google-firebase-auth = { module = "com.google.firebase:firebase-auth" }
 imageslideshow = { module = "com.github.denzcoskun:ImageSlideshow", version.ref = "imageslideshow" }
@@ -37,6 +49,8 @@ firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version
 google-services = { group = "com.google.gms", name = "google-services", version.ref = "googleServices" }
 firebase-database = { group = "com.google.firebase", name = "firebase-database", version.ref = "firebaseDatabase" }
 play-services-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "playServicesAuth" }
+google-firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore", version.ref = "firebaseFirestore" }
+recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "recyclerview" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
