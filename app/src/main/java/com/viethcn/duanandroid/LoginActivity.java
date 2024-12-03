@@ -29,7 +29,13 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.HashMap;
 
@@ -76,38 +82,64 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    // XỬ lý đăng nhập login
     private void handleLogin() {
         String tenDangNhap = edtTenDangNhap.getText().toString().trim();
         String matKhau = edtMatKhau.getText().toString().trim();
 
-        if (!validateInputs(tenDangNhap, matKhau)) return;
+        // Kiểm tra đầu vào
+        if (tenDangNhap.isEmpty() || matKhau.isEmpty()) {
+            Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-        firebaseAuth.signInWithEmailAndPassword(tenDangNhap, matKhau).addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(LoginActivity.this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-            } else {
-                Toast.makeText(LoginActivity.this, "Đăng nhập thất bại: " , Toast.LENGTH_SHORT).show();
+        // Lấy tham chiếu tới Firebase Database
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("login");
+
+        // Tìm kiếm tài khoản theo tên đăng nhập
+        userRef.orderByChild("name").equalTo(tenDangNhap).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    for (DataSnapshot userSnapshot : snapshot.getChildren()) {
+                        String correctPassword = userSnapshot.child("password").getValue(String.class);
+                        String role = userSnapshot.child("rule").getValue(String.class);
+
+                        if (correctPassword != null && correctPassword.equals(matKhau)) {
+                            // Lưu vai trò vào SharedPreferences
+                            SharedPreferences sharedPreferences = getSharedPreferences("thongtin", LoginActivity.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putString("rule", role);
+                            editor.apply();
+
+                            // Kiểm tra vai trò và chuyển hướng
+                            if ("admin".equals(role)) {
+                                startActivity(new Intent(LoginActivity.this, MainActivity.class)
+                                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                            } else if ("".equals(role)) {
+                                startActivity(new Intent(LoginActivity.this, MainActivity.class)
+                                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                            }
+                            Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(LoginActivity.this, "Mật khẩu không chính xác", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                } else {
+                    Toast.makeText(LoginActivity.this, "Tên đăng nhập không tồn tại", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(LoginActivity.this, "Lỗi cơ sở dữ liệu: " + error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    private boolean validateInputs(String email, String password) {
-        if (email.isEmpty() || password.isEmpty()) {
-            Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            Toast.makeText(this, "Email không hợp lệ", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if (password.length() < 6) {
-            Toast.makeText(this, "Mật khẩu phải có ít nhất 6 ký tự", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        return true;
-    }
+
+
+
 
     // XỬ lý đăng nhập bằng google
     private void googleSignIn() {
@@ -144,7 +176,6 @@ public class LoginActivity extends AppCompatActivity {
                 HashMap<String, Object> map = new HashMap<>();
                 map.put("id", user.getUid());
                 map.put("name", user.getDisplayName());
-                map.put("phone", user.getPhoneNumber());
                 map.put("profile", user.getPhotoUrl() != null ? user.getPhotoUrl().toString() : null);
 
                 database.getReference().child("users").child(user.getUid()).setValue(map);
