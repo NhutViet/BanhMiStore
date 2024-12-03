@@ -173,20 +173,48 @@ public class LoginActivity extends AppCompatActivity {
         firebaseAuth.signInWithCredential(credential).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
-                HashMap<String, Object> map = new HashMap<>();
-                map.put("id", user.getUid());
-                map.put("name", user.getDisplayName());
-                map.put("profile", user.getPhotoUrl() != null ? user.getPhotoUrl().toString() : null);
+                if (user != null) {
+                    DatabaseReference userRef = database.getReference().child("users").child(user.getUid());
+                    userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            String role = "user"; // Vai trò mặc định
+                            if (!snapshot.exists()) {
+                                // Người dùng mới - Lưu vào Firebase
+                                HashMap<String, Object> map = new HashMap<>();
+                                map.put("id", user.getUid());
+                                map.put("name", user.getDisplayName());
+                                map.put("profile", user.getPhotoUrl() != null ? user.getPhotoUrl().toString() : null);
+                                map.put("rule", role);
+                                userRef.setValue(map);
+                            } else {
+                                // Người dùng cũ - Lấy vai trò từ Firebase
+                                role = snapshot.child("rule").getValue(String.class);
+                            }
 
-                database.getReference().child("users").child(user.getUid()).setValue(map);
+                            // Lưu role vào SharedPreferences
+                            SharedPreferences sharedPreferences = getSharedPreferences("thongtin", MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putString("rule", role);
+                            editor.apply();
 
-                Toast.makeText(this, "Đăng nhập Google thành công", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                            Toast.makeText(LoginActivity.this, "Đăng nhập Google thành công", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            Toast.makeText(LoginActivity.this, "Lỗi cơ sở dữ liệu: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
             } else {
                 Toast.makeText(this, "Đăng nhập Google thất bại", Toast.LENGTH_SHORT).show();
             }
         });
     }
+
+
 
 
 
