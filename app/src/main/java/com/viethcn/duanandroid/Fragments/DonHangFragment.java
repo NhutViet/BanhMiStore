@@ -23,11 +23,13 @@ import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.viethcn.duanandroid.Adapters.DonHangAdapter;
+import com.viethcn.duanandroid.LoginActivity;
 import com.viethcn.duanandroid.Models.DonHang;
 import com.viethcn.duanandroid.Models.MainModel;
 import com.viethcn.duanandroid.R;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class DonHangFragment extends Fragment {
@@ -35,6 +37,7 @@ public class DonHangFragment extends Fragment {
     private DonHangAdapter adapter;
     private List<DonHang> mListDonHang;
     private Query query;
+    DatabaseReference databaseReference;
 
     @Nullable
     @Override
@@ -44,14 +47,17 @@ public class DonHangFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         // Kết nối Firebase
-        SharedPreferences tokenRef = requireActivity().getSharedPreferences("data", MODE_PRIVATE);
-        String id = tokenRef.getString("token", "");
+        SharedPreferences tokenRef = requireActivity().getSharedPreferences("userID", LoginActivity.MODE_PRIVATE);
+        String userId = tokenRef.getString("userID", "");
 
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Recipts");
-        query = databaseReference.orderByChild("id").equalTo(id);
+        databaseReference = FirebaseDatabase.getInstance().getReference("Recipts");
+        query = databaseReference.orderByChild("userId").equalTo(userId);
 
         mListDonHang = new ArrayList<>();
         loadDonHangData();
+
+        adapter = new DonHangAdapter(requireActivity(), mListDonHang);
+        recyclerView.setAdapter(adapter);
 
         return view;
     }
@@ -63,25 +69,29 @@ public class DonHangFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     for (DataSnapshot item : snapshot.getChildren()) {
+                        String reciptsID = item.child("reciptsID").getValue(String.class);
                         String address = item.child("address").getValue(String.class);
                         String owner = item.child("owner").getValue(String.class);
                         String phone = item.child("phone").getValue(String.class);
                         Double total = item.child("total").getValue(Double.class);
                         String note = item.child("note").getValue(String.class);
+                        String status = item.child("status").getValue(String.class);
+                        Double createdAt = item.child("createdAt").getValue(Double.class);
 
                         GenericTypeIndicator<List<MainModel>> typeIndicator = new GenericTypeIndicator<List<MainModel>>() {};
                         List<MainModel> listProduct = item.child("listProduct").getValue(typeIndicator);
 
-                        DonHang donHang = new DonHang(address, owner, phone, total, note, listProduct);
+                        DonHang donHang = new DonHang(reciptsID ,address, owner, phone, total, note, listProduct, status, createdAt);
                         mListDonHang.add(donHang);
                     }
-                }
+                    mListDonHang.sort( (r1, r2) -> Double.compare(r2.getCreateAt(), r1.getCreateAt()));
 
-                adapter = new DonHangAdapter(getContext(), mListDonHang);
-                recyclerView.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+                }
             }
+
             @Override
-            public void onCancelled (@NonNull DatabaseError error){
+            public void onCancelled(@NonNull DatabaseError error) {
                 Log.e("FirebaseData", "Database error: " + error.getMessage());
             }
         });

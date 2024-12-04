@@ -103,6 +103,7 @@ public class LoginActivity extends AppCompatActivity {
                     for (DataSnapshot userSnapshot : snapshot.getChildren()) {
                         String correctPassword = userSnapshot.child("password").getValue(String.class);
                         String role = userSnapshot.child("rule").getValue(String.class);
+                        String userID = userSnapshot.child("id").getValue(String.class);
 
                         if (correctPassword != null && correctPassword.equals(matKhau)) {
                             // Lưu vai trò vào SharedPreferences
@@ -197,6 +198,11 @@ public class LoginActivity extends AppCompatActivity {
                             SharedPreferences.Editor editor = sharedPreferences.edit();
                             editor.putString("rule", role);
                             editor.apply();
+
+                            SharedPreferences userIDShared = getSharedPreferences("userID", MODE_PRIVATE);
+                            SharedPreferences.Editor userIDEditor = userIDShared.edit();
+                            userIDEditor.putString("userID", user.getUid());
+                            userIDEditor.apply();
 
                             Toast.makeText(LoginActivity.this, "Đăng nhập Google thành công", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(LoginActivity.this, MainActivity.class));
