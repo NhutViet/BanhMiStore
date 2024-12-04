@@ -175,11 +175,11 @@ public class LoginActivity extends AppCompatActivity {
             if (task.isSuccessful()) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
-                    DatabaseReference userRef = database.getReference().child("users").child(user.getUid());
+                    DatabaseReference userRef = database.getReference().child("login").child(user.getUid());
                     userRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            String role = "user"; // Vai trò mặc định
+                            String role = "google";
                             if (!snapshot.exists()) {
                                 // Người dùng mới - Lưu vào Firebase
                                 HashMap<String, Object> map = new HashMap<>();

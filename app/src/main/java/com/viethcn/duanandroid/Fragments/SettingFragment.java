@@ -1,6 +1,8 @@
 package com.viethcn.duanandroid.Fragments;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -73,24 +75,30 @@ public class SettingFragment extends Fragment {
     }
 
     private void loadGoogleAccountInfo() {
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(requireContext());
-        if (account != null) {
-            // Get account info
-            String email = account.getEmail();
-            String name = account.getDisplayName();
-            Uri photo = account.getPhotoUrl();
+        SharedPreferences sharedPreferences = requireContext().getSharedPreferences("thongtin", Context.MODE_PRIVATE);
+        String loginType = sharedPreferences.getString("rule", "google");
 
-            // Display info in fields
-            emailField.setText(email);
-            nameField.setText(name);
+        if ("google".equals(loginType)) {
+            GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(requireContext());
+            if (account != null) {
+                // Lấy thông tin tài khoản Google
+                String email = account.getEmail();
+                String name = account.getDisplayName();
+                Uri photo = account.getPhotoUrl();
 
-            // Load profile image using Glide
-            if (photo != null) {
-                Glide.with(this).load(photo).into(profileImage);
+                emailField.setText(email);
+                nameField.setText(name);
+
+                if (photo != null) {
+                    Glide.with(this).load(photo).into(profileImage);
+                }
+            } else {
+                Toast.makeText(getContext(), "Không tìm thấy thông tin tài khoản Google", Toast.LENGTH_SHORT).show();
             }
         } else {
-            Toast.makeText(getContext(), "Không tìm thấy thông tin tài khoản Google", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Không phải tài khoản Google", Toast.LENGTH_SHORT).show();
         }
     }
+
 
 }
