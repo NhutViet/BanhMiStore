@@ -2,6 +2,8 @@ package com.viethcn.duanandroid.Adapters;
 
 import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -52,6 +54,21 @@ public class MenuAdapter extends FirebaseRecyclerAdapter<MainModel, MenuAdapter.
 
     @Override
     protected void onBindViewHolder(@NonNull myViewHolder holder, int position, @NonNull MainModel model) {
+        SharedPreferences sharedPreferences = context != null
+                ? context.getSharedPreferences("thongtin", Context.MODE_PRIVATE)
+                : holder.itemView.getContext().getSharedPreferences("thongtin", Context.MODE_PRIVATE);
+
+        String loai = sharedPreferences.getString("rule", "");
+
+        // Kiểm tra vai trò và ẩn nút nếu không phải admin
+        if (!"admin".equals(loai)) {
+            holder.btnDelete.setVisibility(View.GONE);
+            holder.btnEdit.setVisibility(View.GONE);
+        }
+
+
+
+
         NumberFormat numberFormat = new DecimalFormat("#,###");
         double myNumber = 0.0;
 

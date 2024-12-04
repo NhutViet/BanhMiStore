@@ -12,25 +12,22 @@ import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.viethcn.duanandroid.Models.User;
 
 public class RegisterActivity extends AppCompatActivity {
 
     TextView txtDangNhap;
-
     Button btnDangKy;
     EditText edtTenDangNhap, edtNhapPass, edtRePass;
-    private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_register);
+
         txtDangNhap = findViewById(R.id.txtDangNhap);
         btnDangKy = findViewById(R.id.btnDangKy);
         edtTenDangNhap = findViewById(R.id.edtTenDangNhap);
@@ -56,36 +53,28 @@ public class RegisterActivity extends AppCompatActivity {
                     return;
                 }
 
-                // Đăng ký với Firebase Authentication
-                firebaseAuth = FirebaseAuth.getInstance();
-                firebaseAuth.createUserWithEmailAndPassword(tenDangNhap, matKhau)
-                        .addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    Toast.makeText(RegisterActivity.this, "Đăng ký thành công!", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
-                                    finish();
-                                } else {
-                                    if (task.getException() instanceof FirebaseAuthUserCollisionException) {
-                                        // Thông báo nếu email đã tồn tại
-                                        Toast.makeText(RegisterActivity.this, "Email này đã được đăng ký. Vui lòng thử với email khác.", Toast.LENGTH_SHORT).show();
-                                    } else {
-                                        // Thông báo lỗi chung nếu không phải lỗi trùng email
-                                        Toast.makeText(RegisterActivity.this, "Đăng ký thất bại: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            }
-                        });
+                // Lưu thông tin tài khoản vào Firebase Realtime Database
+                DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("login");
+                String userId = userRef.push().getKey(); // Tạo ID duy nhất cho người dùng
+
+                if (userId != null) {
+                    User user = new User(userId, tenDangNhap, matKhau, ""); // Truyền ID vào User
+                    userRef.child(userId).setValue(user).addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(RegisterActivity.this, "Đăng ký thành công!", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+                            finish();
+                        } else {
+                            Toast.makeText(RegisterActivity.this, "Đăng ký thất bại: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } else {
+                    Toast.makeText(RegisterActivity.this, "Lỗi hệ thống. Vui lòng thử lại.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
 
-        txtDangNhap.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
-            }
-        });
+        txtDangNhap.setOnClickListener(v -> startActivity(new Intent(RegisterActivity.this, LoginActivity.class)));
     }
 }

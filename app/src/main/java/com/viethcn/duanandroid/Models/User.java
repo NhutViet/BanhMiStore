@@ -1,19 +1,19 @@
 package com.viethcn.duanandroid.Models;
 
 public class User {
-    private String name;
-    private int age;
+    public String name;
+    public String password;
+    public String rule;
+    private String id;
 
     public User() {
     }
 
-    public User(String name) {
+    public User(String id, String name, String password, String rule) {
+        this.id = id;
         this.name = name;
-    }
-
-    public User(String name, int age) {
-        this.name = name;
-        this.age = age;
+        this.password = password;
+        this.rule = rule;
     }
 
     public String getName() {
@@ -24,11 +24,27 @@ public class User {
         this.name = name;
     }
 
-    public int getAge() {
-        return age;
+    public String getPassword() {
+        return password;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getRule() {
+        return rule;
+    }
+
+    public void setRule(String rule) {
+        this.rule = rule;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

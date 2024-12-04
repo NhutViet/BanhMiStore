@@ -1,5 +1,6 @@
 package com.viethcn.duanandroid;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -15,6 +16,7 @@ import com.viethcn.duanandroid.Fragments.SettingFragment;
 public class MainActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNav;
+    public static SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +47,11 @@ public class MainActivity extends AppCompatActivity {
             }
             return true;
         });
+    }
+
+    public String checkUser(){
+        sharedPreferences = getSharedPreferences("thongtin", MODE_PRIVATE);
+        return sharedPreferences.getString("name", "");
     }
     // This func to take the main fragment off and then replace another fragment
     private void replaceFragment(Fragment layout) {
