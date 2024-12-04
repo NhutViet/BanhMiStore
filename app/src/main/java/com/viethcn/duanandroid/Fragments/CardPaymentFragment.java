@@ -1,8 +1,6 @@
 package com.viethcn.duanandroid.Fragments;
 
 
-import static android.content.Context.MODE_PRIVATE;
-
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -11,7 +9,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +19,7 @@ import android.widget.Toast;
 
 import com.google.firebase.database.FirebaseDatabase;
 import com.viethcn.duanandroid.Adapters.PaymenAdapter;
+import com.viethcn.duanandroid.LoginActivity;
 import com.viethcn.duanandroid.Models.MainModel;
 import com.viethcn.duanandroid.R;
 import com.viethcn.duanandroid.Repositories.MainModelRepository;
@@ -32,6 +30,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.UUID;
 
 import androidx.lifecycle.ViewModelProvider;
 
@@ -109,7 +108,7 @@ public class CardPaymentFragment extends Fragment {
             if (flagCheck){
                 Payout(list, owner, address, phone, note, totala);
             }else {
-                new AlertDialog.Builder(getContext())
+                new AlertDialog.Builder(requireContext())
                         .setTitle("Thêm hoá đơn không thành công")
                         .setMessage(userErrorCheck.toString().trim())
                         .setPositiveButton("OK", null)
@@ -123,20 +122,20 @@ public class CardPaymentFragment extends Fragment {
     private void Payout(List<MainModel> list,  String owner,  String address,  String phone,  String note, int total ){
         Map<String, Object> map = new HashMap<>();
 
-        SharedPreferences tokenRef = requireActivity().getSharedPreferences("data", MODE_PRIVATE);
-        String id = tokenRef.getString("token", "");
+        SharedPreferences tokenRef = requireActivity().getSharedPreferences("userID", LoginActivity.MODE_PRIVATE);
+        String userId = tokenRef.getString("userID", "");
+        String reciptsID = UUID.randomUUID().toString();
 
-        map.put("id", id);
+        map.put("userId", userId);
+        map.put("reciptsID", reciptsID);
         map.put("owner", owner);
         map.put("address", address);
         map.put("phone", phone);
         map.put("listProduct", list);
         map.put("note", note);
         map.put("total", total);
-
-        if(owner.isEmpty() || address.isEmpty() || phone.isEmpty()){
-            Toast.makeText(getContext(), "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
-        }
+        map.put("status", "chờ xác nhận");
+        map.put("createdAt", System.currentTimeMillis());
 
         FirebaseDatabase.getInstance().getReference().child("Recipts").push()
                 .setValue(map)

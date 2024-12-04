@@ -1,6 +1,8 @@
 package com.viethcn.duanandroid.Models;
 
-public class MainModel {
+import java.io.Serializable;
+
+public class MainModel implements Serializable {
 
     String name, price, img, description;
     int quantity;

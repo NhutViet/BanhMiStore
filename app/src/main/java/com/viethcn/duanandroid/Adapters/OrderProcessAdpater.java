@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.viethcn.duanandroid.Models.MainModel;
 import com.viethcn.duanandroid.R;
 
@@ -34,6 +35,22 @@ public class OrderProcessAdpater extends RecyclerView.Adapter<OrderProcessAdpate
 
     @Override
     public void onBindViewHolder(@NonNull OPviewHolder holder, int position) {
+        MainModel item = mList.get(position);
+
+        String owner = "Họ tên: " + item.getName();
+        holder.tvOpProductName.setText(owner);
+
+        String price = "Giá: " + item.getPrice();
+        holder.tvOpProductPrice.setText(price);
+
+        String quant = "Số lượng: " + item.getQuantity();
+        holder.tvOpProductQuant.setText(quant);
+
+        Glide.with(context)
+                .load(item.getImg())
+                .placeholder(R.drawable.erroimage)
+                .error(R.drawable.erroimage)
+                .into(holder.imgOpProduct);
     }
 
     @Override
@@ -42,10 +59,14 @@ public class OrderProcessAdpater extends RecyclerView.Adapter<OrderProcessAdpate
     }
 
     public static class OPviewHolder extends RecyclerView.ViewHolder{
-        TextView tvItemOpName, tvItemOpPrice, tvItemOpQuantity;
-        ImageView imgItemPayout;
+        TextView tvOpProductName, tvOpProductPrice, tvOpProductQuant;
+        ImageView imgOpProduct;
         public OPviewHolder(@NonNull View itemView) {
             super(itemView);
+            tvOpProductName = itemView.findViewById(R.id.tvOpProductName);
+            tvOpProductPrice = itemView.findViewById(R.id.tvOpProductPrice);
+            tvOpProductQuant = itemView.findViewById(R.id.tvOpProductQuant);
+            imgOpProduct = itemView.findViewById(R.id.imgOpProduct);
         }
     }
 }
