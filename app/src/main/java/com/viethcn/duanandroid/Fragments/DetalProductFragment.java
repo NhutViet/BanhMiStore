@@ -86,7 +86,7 @@ public class DetalProductFragment extends Fragment {
                 requireActivity()
                         .getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.MenuMainLayout_Container, new MenuBanhMiFragment())
+                        .replace(R.id.mainViewHomePage, new MenuBanhMiFragment())
                         .commit();
             }
         });
