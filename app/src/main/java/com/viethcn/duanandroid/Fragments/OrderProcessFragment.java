@@ -76,14 +76,12 @@ public class OrderProcessFragment extends Fragment {
         initUI(view);
 
         SharedPreferences sharedPreferences = context.getSharedPreferences("thongtin", Context.MODE_PRIVATE);
-
         String loai = sharedPreferences.getString("rule", "");
 
         if (!"admin".equals(loai)) {
             btnCancel.setVisibility(View.GONE);
             btnApprove.setVisibility(View.GONE);
         }
-
 
 
         tvOPOwner.setText("Khách Hàng: " + mDonHang.getOwner());
@@ -100,7 +98,7 @@ public class OrderProcessFragment extends Fragment {
         btnCancel.setOnClickListener( v -> {
             mDonHang.setStatus("Đã hủy");
             updateRecipts(mDonHang);
-
+            adapter.notifyDataSetChanged();
             requireActivity().getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.mainViewHomePage, new SettingFragment())
@@ -111,7 +109,7 @@ public class OrderProcessFragment extends Fragment {
         btnApprove.setOnClickListener( v-> {
             mDonHang.setStatus("Đã xác nhận");
             updateRecipts(mDonHang);
-
+            adapter.notifyDataSetChanged();
             requireActivity().getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.mainViewHomePage, new SettingFragment())
@@ -126,12 +124,11 @@ public class OrderProcessFragment extends Fragment {
         reciptsDB.orderByChild("reciptsID").equalTo(mItem.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (!isAdded()) return;
                 if (snapshot.exists()) {
                     for (DataSnapshot item : snapshot.getChildren()) {
                         item.getRef().child("status").setValue(mItem.getStatus())
                                 .addOnSuccessListener(aVoid -> Toast.makeText(context, mItem.getStatus() + " thành công", Toast.LENGTH_SHORT).show())
-                                .addOnFailureListener(e -> Toast.makeText(context, "Lỗi khi cập nhật trạng thái", Toast.LENGTH_SHORT).show());
+                                .addOnFailureListener(e -> Log.i("/////ERROR", e.getMessage()+" "));
                     }
                 } else {
                     Toast.makeText(requireContext(), "Không tìm thấy đơn hàng", Toast.LENGTH_SHORT).show();
