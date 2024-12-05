@@ -54,7 +54,7 @@ public class RegisterActivity extends AppCompatActivity {
                 }
 
                 // Lưu thông tin tài khoản vào Firebase Realtime Database
-                DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("login");
+                DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Accounts");
                 String userId = userRef.push().getKey(); // Tạo ID duy nhất cho người dùng
 
                 if (userId != null) {
