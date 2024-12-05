@@ -93,7 +93,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         // Lấy tham chiếu tới Firebase Database
-        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("login");
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Accounts");
 
         // Tìm kiếm tài khoản theo tên đăng nhập
         userRef.orderByChild("name").equalTo(tenDangNhap).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -175,7 +175,7 @@ public class LoginActivity extends AppCompatActivity {
             if (task.isSuccessful()) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
-                    DatabaseReference userRef = database.getReference().child("login").child(user.getUid());
+                    DatabaseReference userRef = database.getReference().child("Accounts").child(user.getUid());
                     userRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
