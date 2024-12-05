@@ -95,10 +95,8 @@ public class SettingFragment extends Fragment {
             } else {
                 Toast.makeText(getContext(), "Không tìm thấy thông tin tài khoản Google", Toast.LENGTH_SHORT).show();
             }
-        } else {
-            Toast.makeText(getContext(), "Không phải tài khoản Google", Toast.LENGTH_SHORT).show();
+//        } else {
+//            Toast.makeText(getContext(), "Không phải tài khoản Google", Toast.LENGTH_SHORT).show();
         }
     }
-
-
 }

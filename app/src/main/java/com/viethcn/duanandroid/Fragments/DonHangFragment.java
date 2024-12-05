@@ -47,11 +47,21 @@ public class DonHangFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         // Kết nối Firebase
+
+        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("thongtin", MODE_PRIVATE);
+        String role = sharedPreferences.getString("rule", "");
+
         SharedPreferences tokenRef = requireActivity().getSharedPreferences("userID", LoginActivity.MODE_PRIVATE);
         String userId = tokenRef.getString("userID", "");
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("Recipts");
-        query = databaseReference.orderByChild("userId").equalTo(userId);
+
+        if (role == null || !role.equals("admin")){
+            databaseReference = FirebaseDatabase.getInstance().getReference("Recipts");
+            query = databaseReference.orderByChild("userId").equalTo(userId);
+        }else{
+            databaseReference = FirebaseDatabase.getInstance().getReference("Recipts");
+            query = databaseReference;
+        }
 
         mListDonHang = new ArrayList<>();
         loadDonHangData();

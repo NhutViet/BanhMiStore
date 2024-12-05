@@ -2,8 +2,6 @@ package com.viethcn.duanandroid.Adapters;
 
 import static java.security.AccessController.getContext;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,17 +16,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.viethcn.duanandroid.Fragments.OrderProcessFragment;
 import com.viethcn.duanandroid.Models.DonHang;
-import com.viethcn.duanandroid.Models.MainModel;
 import com.viethcn.duanandroid.R;
 
 import java.io.Serializable;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.UUID;
 
 public class DonHangAdapter extends RecyclerView.Adapter<DonHangAdapter.DonHangViewHolder> {
 
