@@ -63,11 +63,12 @@ public class LoginActivity extends AppCompatActivity {
         txtQuenMk = findViewById(R.id.txtQuenMk);
         imgGG = findViewById(R.id.imgGG);
 
-        // Firebase Authentication & Database
+        // Cấu hình Firebase
         firebaseAuth = FirebaseAuth.getInstance();
+        // Kết nối cơ sở dữ liệu Firebase.
         database = FirebaseDatabase.getInstance();
 
-        // Cấu hình Google Sign-In
+        // Cấu hình Google Sign-In Yêu cầu đăng nhập với email và token ID.
         GoogleSignInOptions gos = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
@@ -77,9 +78,73 @@ public class LoginActivity extends AppCompatActivity {
         // Xử lý sự kiện click
         imgGG.setOnClickListener(v -> googleSignIn());
         btnDangNhap.setOnClickListener(v -> handleLogin());
-        txtQuenMk.setOnClickListener(v -> showDialogQuenMK());
         txtDangKy.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, RegisterActivity.class)));
+        txtQuenMk.setOnClickListener(v -> showResetPasswordDialog());
+
     }
+
+    private void showResetPasswordDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.dialog_forgot, null);
+        builder.setView(dialogView);
+
+        EditText edtUsername = dialogView.findViewById(R.id.edtUsername);
+        EditText edtNewPassword = dialogView.findViewById(R.id.edtNewPassword);
+        EditText edtConfirmPassword = dialogView.findViewById(R.id.edtConfirmPassword);
+        Button btnResetPassword = dialogView.findViewById(R.id.btnResetPassword);
+
+        AlertDialog alertDialog = builder.create();
+
+        btnResetPassword.setOnClickListener(v -> {
+            String username = edtUsername.getText().toString().trim();
+            String newPassword = edtNewPassword.getText().toString().trim();
+            String confirmPassword = edtConfirmPassword.getText().toString().trim();
+
+            if (username.isEmpty() || newPassword.isEmpty() || confirmPassword.isEmpty()) {
+                Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
+            } else if (!newPassword.equals(confirmPassword)) {
+                Toast.makeText(this, "Mật khẩu xác nhận không khớp", Toast.LENGTH_SHORT).show();
+            } else {
+                resetPassword(username, newPassword);
+                alertDialog.dismiss();
+            }
+        });
+
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        alertDialog.show();
+    }
+
+    private void resetPassword(String username, String newPassword) {
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Accounts");
+
+        userRef.orderByChild("name").equalTo(username).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    for (DataSnapshot userSnapshot : snapshot.getChildren()) {
+                        // Cập nhật mật khẩu
+                        userSnapshot.getRef().child("password").setValue(newPassword)
+                                .addOnCompleteListener(task -> {
+                                    if (task.isSuccessful()) {
+                                        Toast.makeText(LoginActivity.this, "Đặt lại mật khẩu thành công", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(LoginActivity.this, "Có lỗi xảy ra, vui lòng thử lại", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                    }
+                } else {
+                    Toast.makeText(LoginActivity.this, "Tên đăng nhập không tồn tại", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(LoginActivity.this, "Lỗi cơ sở dữ liệu: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 
 
     private void handleLogin() {
@@ -112,15 +177,9 @@ public class LoginActivity extends AppCompatActivity {
                             editor.putString("rule", role);
                             editor.apply();
 
-                            // Kiểm tra vai trò và chuyển hướng
-                            if ("admin".equals(role)) {
-                                startActivity(new Intent(LoginActivity.this, MainActivity.class)
-                                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-                            } else if ("".equals(role)) {
-                                startActivity(new Intent(LoginActivity.this, MainActivity.class)
-                                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-                            }
                             Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(LoginActivity.this, MainActivity.class)
+                                    .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                         } else {
                             Toast.makeText(LoginActivity.this, "Mật khẩu không chính xác", Toast.LENGTH_SHORT).show();
                         }
@@ -140,25 +199,27 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
-
-
     // XỬ lý đăng nhập bằng google
     private void googleSignIn() {
         googleSignInClient.signOut().addOnCompleteListener(task -> {
             Intent signInIntent = googleSignInClient.getSignInIntent();
+            // đăng nhập bằng gg và gọi startActivityForResult chờ phản hồi
             startActivityForResult(signInIntent, RC_SIGN_IN);
         });
     }
 
 
+    // xử lý kết quả đăng nhập gg
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == RC_SIGN_IN) {
+            // Lấy thông tin tài khoản Google.
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
+                // Xác thực Google với Firebase.
                 firebaseAuthAccount(account.getIdToken());
                 SharedPreferences tokenRef = getSharedPreferences("data",MODE_PRIVATE);
                 SharedPreferences.Editor editor = tokenRef.edit();
@@ -170,6 +231,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
     private void firebaseAuthAccount(String idToken) {
+        // Lấy thông tin xác thực từ Google
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         firebaseAuth.signInWithCredential(credential).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
@@ -217,46 +279,6 @@ public class LoginActivity extends AppCompatActivity {
             } else {
                 Toast.makeText(this, "Đăng nhập Google thất bại", Toast.LENGTH_SHORT).show();
             }
-        });
-    }
-
-
-
-
-
-    // Xử lý quên mật khẩu
-    private void showDialogQuenMK() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        LayoutInflater inflater = getLayoutInflater();
-        View view = inflater.inflate(R.layout.dialog_forgot, null);
-        builder.setView(view);
-
-        AlertDialog alertDialog = builder.create();
-        alertDialog.setCancelable(false);
-        alertDialog.show();
-        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        EditText edtUsername = view.findViewById(R.id.edtUserName);
-        Button btnSend = view.findViewById(R.id.btnSend);
-        Button btnCancel = view.findViewById(R.id.btnCancel);
-
-        btnCancel.setOnClickListener(v -> alertDialog.dismiss());
-
-        btnSend.setOnClickListener(v -> {
-            String email = edtUsername.getText().toString().trim();
-            if (email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                Toast.makeText(LoginActivity.this, "Vui lòng nhập email hợp lệ", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            firebaseAuth.sendPasswordResetEmail(email).addOnCompleteListener(task -> {
-                if (task.isSuccessful()) {
-                    Toast.makeText(LoginActivity.this, "Đã gửi email đặt lại mật khẩu. Kiểm tra hộp thư đến của bạn.", Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(LoginActivity.this, "Không thể gửi email đặt lại mật khẩu. Vui lòng thử lại sau.", Toast.LENGTH_SHORT).show();
-                }
-                alertDialog.dismiss();
-            });
         });
     }
 }
