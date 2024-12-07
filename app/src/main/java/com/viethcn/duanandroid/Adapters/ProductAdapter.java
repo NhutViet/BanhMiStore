@@ -40,8 +40,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
         Glide.with(holder.imgProduct.getContext())
                 .load(item.getImg())
-                .placeholder(com.firebase.ui.database.R.drawable.common_google_signin_btn_icon_dark)
-                .error(com.firebase.ui.database.R.drawable.common_google_signin_btn_icon_dark_normal)
+                .placeholder(R.drawable.erroimage)
+                .error(R.drawable.erroimage)
                 .centerCrop()
                 .into(holder.imgProduct);
 
