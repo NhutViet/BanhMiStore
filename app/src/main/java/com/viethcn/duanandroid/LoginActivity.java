@@ -47,6 +47,7 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private FirebaseDatabase database;
     private GoogleSignInClient googleSignInClient;
+    // mã yêu cầu
     private final int RC_SIGN_IN = 20;
 
     @Override
@@ -83,6 +84,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+// Xử lý quên mật khẩu
     private void showResetPasswordDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
@@ -116,11 +118,13 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void resetPassword(String username, String newPassword) {
+        // tham chiếu tới table Accounts
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Accounts");
 
         userRef.orderByChild("name").equalTo(username).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                // kiểm tra có tài khoản không
                 if (snapshot.exists()) {
                     for (DataSnapshot userSnapshot : snapshot.getChildren()) {
                         // Cập nhật mật khẩu
@@ -146,7 +150,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-
+// Xử lý đăng nhập tài khoản
     private void handleLogin() {
         String tenDangNhap = edtTenDangNhap.getText().toString().trim();
         String matKhau = edtMatKhau.getText().toString().trim();
@@ -157,18 +161,18 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        // Lấy tham chiếu tới Firebase Database
+        // Lấy tham chiếu table Accounts
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Accounts");
 
         // Tìm kiếm tài khoản theo tên đăng nhập
         userRef.orderByChild("name").equalTo(tenDangNhap).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                // Kiểm tra xem dữ liệu có tồn tại không
                 if (snapshot.exists()) {
                     for (DataSnapshot userSnapshot : snapshot.getChildren()) {
                         String correctPassword = userSnapshot.child("password").getValue(String.class);
                         String role = userSnapshot.child("rule").getValue(String.class);
-                        String userID = userSnapshot.child("id").getValue(String.class);
 
                         if (correctPassword != null && correctPassword.equals(matKhau)) {
                             // Lưu vai trò vào SharedPreferences
@@ -210,6 +214,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
     // xử lý kết quả đăng nhập gg
+    // Phương thức được gọi khi một Activity khác được khởi chạy từ Activity hiện tại bằng cách sử dụng và sau đó Activity đó trả về kết quả.
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -219,7 +224,7 @@ public class LoginActivity extends AppCompatActivity {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
-                // Xác thực Google với Firebase.
+                // gửi token Xác thực Google với Firebase.
                 firebaseAuthAccount(account.getIdToken());
                 SharedPreferences tokenRef = getSharedPreferences("data",MODE_PRIVATE);
                 SharedPreferences.Editor editor = tokenRef.edit();

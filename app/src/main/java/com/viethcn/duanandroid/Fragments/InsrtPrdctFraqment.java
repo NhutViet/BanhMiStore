@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,6 +23,8 @@ public class InsrtPrdctFraqment extends Fragment {
 
     EditText edtPrdctName, edtPrdctPrice, edtPrdctImg,edtDescribe;
     Button btnInsertPrdct;
+
+
 
     @Nullable
     @Override
@@ -50,9 +53,14 @@ public class InsrtPrdctFraqment extends Fragment {
         edtPrdctImg = view.findViewById(R.id.edtPrdctImg);
         edtDescribe = view.findViewById(R.id.edtDescribe);
 
+
         btnInsertPrdct = view.findViewById(R.id.btnInsertPrdct);
     }
     private void InsertData(String mName, String mPrice, String mLinkIMG, String mDescribe) {
+        // Kiểm tra nếu mDescribe rỗng
+        if (mDescribe == null || mDescribe.trim().isEmpty()) {
+            mDescribe = "Không có mô tả";
+        }
         Map<String, Object> map = new HashMap<>();
         map.put("name",mName);
         map.put("price", mPrice);
